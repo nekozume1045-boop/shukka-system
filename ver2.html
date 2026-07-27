@@ -319,8 +319,36 @@ tableBody.appendChild(tr);
 });
 
 }
-createTable();
+  function recalc(){
 
+let grand=0;
+
+const rows=tableBody.querySelectorAll("tr");
+
+rows.forEach(row=>{
+
+const inputs=row.querySelectorAll("input");
+
+let sum=0;
+
+inputs.forEach(input=>{
+sum+=Number(input.value)||0;
+});
+
+row.querySelector(".plan").textContent=sum;
+row.querySelector(".total").textContent=sum;
+
+grand+=sum;
+
+});
+
+grandTotalValue.textContent=grand;
+
+}
+
+tableBody.addEventListener("input",recalc);
+createTable();
+recalc();
 </script>
 </body>
 
