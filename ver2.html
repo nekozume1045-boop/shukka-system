@@ -284,6 +284,44 @@ const items=[
 
 const tableBody=document.getElementById("tableBody");
 const grandTotalValue=document.getElementById("grandTotalValue");
+function createTable(){
+
+tableBody.innerHTML="";
+
+items.forEach(item=>{
+
+const tr=document.createElement("tr");
+
+let html="";
+
+html+=`<td>${item.name}</td>`;
+
+html+=`<td>${item.price}</td>`;
+
+html+=`<td class="plan">0</td>`;
+
+html+=`<td class="total">0</td>`;
+
+stores.forEach(()=>{
+
+html+=`<td>
+<input type="number"
+value="0"
+min="0">
+</td>`;
+
+});
+
+tr.innerHTML=html;
+
+tableBody.appendChild(tr);
+
+});
+
+}
+createTable();
+
+</script>
 </body>
 
 </html>
