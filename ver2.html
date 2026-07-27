@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>野菜出荷管理 Ver1</title>
+<style>
+
+body{
+margin:0;
+padding:12px;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:#f3f6fa;
+color:#222;
+}
+
+.header{
+background:#2e7d32;
+color:#fff;
+padding:15px;
+border-radius:10px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.subTitle{
+margin:5px 0 0;
+font-size:13px;
+}
+
+.menu{
+display:flex;
+gap:8px;
+overflow-x:auto;
+margin-bottom:15px;
+}
+
+.menu button{
+
+background:#43a047;
+color:white;
+border:none;
+border-radius:8px;
+padding:10px 16px;
+font-size:15px;
+white-space:nowrap;
+
+}
+
+.tableWrap{
+
+overflow:auto;
+background:white;
+border-radius:10px;
+padding:10px;
+
+box-shadow:0 2px 6px rgba(0,0,0,.1);
+
+}
+
+table{
+
+border-collapse:collapse;
+width:max-content;
+
+}
+
+th{
+
+background:#4caf50;
+color:white;
+padding:8px;
+border:1px solid #ddd;
+
+}
+
+td{
+
+border:1px solid #ddd;
+padding:5px;
+
+}
+
+input[type=number]{
+
+width:55px;
+padding:5px;
+text-align:center;
+
+}
+
+footer{
+
+margin-top:20px;
+
+background:white;
+
+padding:15px;
+
+border-radius:10px;
+
+font-size:22px;
+
+font-weight:bold;
+
+text-align:center;
+
+box-shadow:0 2px 6px rgba(0,0,0,.1);
+
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>🥬 野菜出荷管理</h1>
+
+<p class="subTitle">
+GitHub Pages版
+</p>
+
+</header>
+
+<nav class="menu">
+
+<button id="btnInput">
+出荷入力
+</button>
+
+<button id="btnPrint">
+納品書
+</button>
+
+<button id="btnSave">
+保存
+</button>
+
+<button id="btnLoad">
+読込
+</button>
+
+<button id="btnClear">
+クリア
+</button>
+
+</nav>
+
+<main>
+
+<section id="shippingArea">
+
+<h2>
+
+今日の出荷
+
+</h2>
+
+<div class="tableWrap">
+
+<table id="shippingTable">
+
+<thead>
+
+<tr>
+
+<th>商品</th>
+
+<th>単価</th>
+
+<th>予定</th>
+
+<th>合計</th>
+
+<th>わさだ</th>
+
+<th>大在</th>
+
+<th>南大分</th>
+
+<th>本店</th>
+
+<th>竹田</th>
+
+<th>すごう</th>
+
+<th>天神</th>
+
+<th>サンリブ</th>
+
+<th>サンライフ</th>
+
+<th>道の駅</th>
+
+<th>古国府</th>
+
+<th>光吉</th>
+
+<th>日出</th>
+
+<th>高城</th>
+
+<th>志手</th>
+
+<th>高尾</th>
+
+<th>清川</th>
+
+<th>神楽苑</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+<!-- app.js が自動生成 -->
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<div id="grandTotal">
+
+総袋数
+
+<span id="grandTotalValue">
+
+0
+
+</span>
+
+</div>
+
+</footer>
+
+
+<script>
+const stores=[
+"わさだ","大在","南大分","本店","竹田","すごう",
+"天神","サンリブ","サンライフ","道の駅",
+"古国府","光吉","日出","高城","志手",
+"高尾","清川","神楽苑"
+];
+
+const items=[
+{name:"白ねぎ",price:180},
+{name:"小ねぎ",price:150},
+{name:"にら",price:130},
+{name:"ほうれん草",price:180},
+{name:"水菜",price:150},
+{name:"春菊",price:180},
+{name:"チンゲンサイ",price:150},
+{name:"小松菜",price:150},
+{name:"レタス",price:180},
+{name:"サニーレタス",price:180},
+{name:"キャベツ",price:200},
+{name:"白菜",price:250},
+{name:"きゅうり",price:180},
+{name:"トマト",price:250},
+{name:"ミニトマト",price:200},
+{name:"ピーマン",price:180},
+{name:"なす",price:180},
+{name:"オクラ",price:180},
+{name:"かぼちゃ",price:350},
+{name:"大根",price:180},
+{name:"人参",price:180},
+{name:"玉ねぎ",price:180},
+{name:"じゃがいも",price:180},
+{name:"さつまいも",price:250}
+];
+
+const tableBody=document.getElementById("tableBody");
+const grandTotalValue=document.getElementById("grandTotalValue");
+</body>
+
+</html>
