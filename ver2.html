@@ -347,6 +347,30 @@ grandTotalValue.textContent=grand;
 }
 
 tableBody.addEventListener("input",recalc);
+  function saveData(){
+
+const data=[];
+
+tableBody.querySelectorAll("tr").forEach(row=>{
+
+const rowData=[];
+
+row.querySelectorAll("input").forEach(input=>{
+
+rowData.push(Number(input.value)||0);
+
+});
+
+data.push(rowData);
+
+});
+
+localStorage.setItem(
+"vegetableShippingData",
+JSON.stringify(data)
+);
+
+}
 createTable();
 recalc();
 </script>
