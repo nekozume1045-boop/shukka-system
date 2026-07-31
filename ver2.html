@@ -400,6 +400,23 @@ JSON.stringify(data)
 );
 
 }
+  document.getElementById("btnSave")
+.addEventListener("click",()=>{
+
+saveData();
+
+alert("保存しました");
+
+});
+
+document.getElementById("btnLoad")
+.addEventListener("click",()=>{
+
+loadData();
+
+alert("読込みました");
+
+});
 createTable();
 recalc();
   loadData();
