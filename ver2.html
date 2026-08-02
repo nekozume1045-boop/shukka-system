@@ -347,37 +347,9 @@ grandTotalValue.textContent=grand;
 }
 
 tableBody.addEventListener("input",recalc);
-  function saveData(){
-function loadData(){
 
-const data=JSON.parse(
-localStorage.getItem("vegetableShippingData")
-);
+function saveData(){
 
-if(!data)return;
-
-const rows=tableBody.querySelectorAll("tr");
-
-rows.forEach((row,rowIndex)=>{
-
-const inputs=row.querySelectorAll("input");
-
-inputs.forEach((input,colIndex)=>{
-
-if(
-data[rowIndex] &&
-data[rowIndex][colIndex]!=null
-){
-input.value=data[rowIndex][colIndex];
-}
-
-});
-
-});
-
-recalc();
-
-}
 const data=[];
 
 tableBody.querySelectorAll("tr").forEach(row=>{
@@ -400,7 +372,38 @@ JSON.stringify(data)
 );
 
 }
-  document.getElementById("btnSave")
+
+function loadData(){
+
+const data=JSON.parse(
+localStorage.getItem("vegetableShippingData")
+);
+
+if(!data)return;
+
+const rows=tableBody.querySelectorAll("tr");
+
+rows.forEach((row,rowIndex)=>{
+
+const inputs=row.querySelectorAll("input");
+
+inputs.forEach((input,colIndex)=>{
+
+if(data[rowIndex] && data[rowIndex][colIndex]!=null){
+
+input.value=data[rowIndex][colIndex];
+
+}
+
+});
+
+});
+
+recalc();
+
+}
+
+document.getElementById("btnSave")
 .addEventListener("click",()=>{
 
 saveData();
