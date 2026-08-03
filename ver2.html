@@ -418,7 +418,22 @@ document.getElementById("btnLoad")
 loadData();
 
 alert("読込みました");
+document.getElementById("btnClear")
+.addEventListener("click",()=>{
 
+    if(!confirm("入力したデータをすべて削除します。\nよろしいですか？")){
+        return;
+    }
+
+    document
+    .querySelectorAll("input[type='number']")
+    .forEach(input=>{
+        input.value=0;
+    });
+
+    recalc();
+
+});
 });
 createTable();
 loadData();
