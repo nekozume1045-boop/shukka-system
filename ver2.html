@@ -108,7 +108,54 @@ text-align:center;
 box-shadow:0 2px 6px rgba(0,0,0,.1);
 
 }
+@media print{
 
+    @page{
+        size:A6 portrait;
+        margin:8mm;
+    }
+
+    body *{
+        visibility:hidden;
+    }
+
+    #printArea,
+    #printArea *{
+        visibility:visible;
+    }
+
+    #printArea{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+    }
+
+    .a6Page{
+        width:100%;
+        min-height:120mm;
+        page-break-after:always;
+        box-sizing:border-box;
+    }
+
+    .a6Page h2{
+        text-align:center;
+        margin:0 0 8mm 0;
+        font-size:20px;
+    }
+
+    .a6Page h3{
+        margin:0 0 6mm 0;
+        font-size:16px;
+    }
+
+    .printItem{
+        font-size:15px;
+        padding:3mm 0;
+        border-bottom:1px solid #000;
+    }
+
+}
 </style>
 
 
@@ -448,7 +495,83 @@ document.getElementById("btnClear")
 createTable();
 loadData();
 recalc();
+function printA6(){
 
+    const table=document.getElementById("shippingTable");
+
+    if(!table){
+        alert("出荷表が見つかりません");
+        return;
+    }
+
+    const printArea=document.createElement("div");
+    printArea.id="printArea";
+
+    const headers=table.querySelectorAll("thead th");
+    const rows=table.querySelectorAll("tbody tr");
+
+    for(let col=2;col<headers.length;col++){
+
+        const storeName=headers[col].textContent.trim();
+
+        if(!storeName) continue;
+
+        const page=document.createElement("div");
+        page.className="a6Page";
+
+        const title=document.createElement("h2");
+        title.textContent="本日の出荷";
+        page.appendChild(title);
+
+        const store=document.createElement("h3");
+        store.textContent="店舗： "+storeName;
+        page.appendChild(store);
+
+        const list=document.createElement("div");
+        list.className="printList";
+
+        rows.forEach(row=>{
+
+            const cells=row.querySelectorAll("td");
+
+            if(cells.length<=col) return;
+
+            const product=cells[0].textContent.trim();
+            const input=cells[col].querySelector("input");
+
+            if(!input) return;
+
+            const quantity=Number(input.value)||0;
+
+            if(quantity>0){
+
+                const item=document.createElement("div");
+                item.className="printItem";
+
+                item.textContent=product+"　"+quantity+"袋";
+
+                list.appendChild(item);
+            }
+
+        });
+
+        page.appendChild(list);
+        printArea.appendChild(page);
+    }
+
+    document.body.appendChild(printArea);
+
+    window.print();
+
+}
+
+
+document.getElementById("btnPrintA6")
+.addEventListener("click",()=>{
+
+    printA6();
+
+});
 </script>
 </body>
 
