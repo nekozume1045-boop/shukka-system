@@ -415,9 +415,13 @@ alert("保存しました");
 document.getElementById("btnLoad")
 .addEventListener("click",()=>{
 
-loadData();
+    loadData();
 
-alert("読込みました");
+    alert("読み込みました");
+
+});
+
+
 document.getElementById("btnClear")
 .addEventListener("click",()=>{
 
@@ -432,9 +436,11 @@ document.getElementById("btnClear")
     });
 
     recalc();
-localStorage.removeItem("vegetableShippingData");
 
-alert("データを削除しました");
+    localStorage.removeItem("vegetableShippingData");
+
+    alert("データを削除しました");
+
 });
 });
 createTable();
