@@ -547,10 +547,14 @@ function printA6(){
 
   document.body.appendChild(printArea);
 
-  window.print();
+setTimeout(()=>{
+    window.print();
 
-  printArea.remove();
-}
+    setTimeout(()=>{
+        printArea.remove();
+    },500);
+
+},100);
 
 document.getElementById("btnPrintA6")
 .addEventListener("click",()=>{
