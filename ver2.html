@@ -510,20 +510,21 @@ loadData();
 recalc();
 function printA6(){
 
-const table=document.getElementById("shippingTable");
+  const table=document.getElementById("shippingTable");
 
-if(!table){
+  if(!table){
     alert("出荷表が見つかりません");
     return;
-}
+  }
 
-const printArea=document.createElement("div");
-printArea.id="printArea";
+  const printArea=document.createElement("div");
+  printArea.id="printArea";
 
-const headers=table.querySelectorAll("thead th");
-const rows=table.querySelectorAll("tbody tr");
+  const headers=table.querySelectorAll("thead th");
+  const rows=table.querySelectorAll("tbody tr");
 
-for(let col=4;col<headers.length;col++){
+  /* 店舗ごとにページを作る */
+  for(let col=4;col<headers.length;col++){
 
     const storeName=headers[col].textContent.trim();
 
@@ -541,44 +542,48 @@ for(let col=4;col<headers.length;col++){
     page.appendChild(store);
 
     const list=document.createElement("div");
+    list.className="printList";
 
     rows.forEach(row=>{
 
-        const cells=row.querySelectorAll("td");
+      const cells=row.querySelectorAll("td");
 
-        if(cells.length<=col) return;
+      if(cells.length<=col) return;
 
-        const product=cells[0].textContent.trim();
-        const input=cells[col].querySelector("input");
+      const product=cells[0].textContent.trim();
 
-        if(!input) return;
+      const input=cells[col].querySelector("input");
 
-        const quantity=Number(input.value)||0;
+      if(!input) return;
 
-        if(quantity>0){
+      const quantity=Number(input.value)||0;
 
-            const item=document.createElement("div");
-            item.className="printItem";
+      /* 0袋の商品は印刷しない */
+      if(quantity<=0) return;
 
-            item.textContent=product+"　"+quantity+"袋";
+      const item=document.createElement("div");
+      item.className="printItem";
 
-            list.appendChild(item);
-        }
+      item.textContent=product+"　"+quantity+"袋";
+
+      list.appendChild(item);
 
     });
 
-    if(list.children.length===0){
-        continue;
-    }
+    /* 商品が1つもない店舗は印刷しない */
+    if(list.children.length===0) continue;
 
     page.appendChild(list);
     printArea.appendChild(page);
+
+  }
+
+  document.body.appendChild(printArea);
+
+  window.print();
+
+  printArea.remove();
 }
-
-document.body.appendChild(printArea);
-
-window.print();
-
 printArea.remove();
 
 }
