@@ -544,12 +544,14 @@ function printA6(){
     printArea.appendChild(page);
 
   }
-
-  document.body.appendChild(printArea);
-
+document.body.appendChild(printArea);
+setTimeout(()=>{
 window.print();
+setTimeout(()=>{
+printArea.remove
+   },500);
 
-printArea.remove();
+},100);  
 }
 document.getElementById("btnPrintA6")
 .addEventListener("click",()=>{
