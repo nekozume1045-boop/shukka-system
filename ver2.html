@@ -545,16 +545,19 @@ function printA6(){
 
   }
 document.body.appendChild(printArea);
-setTimeout(()=>{
-window.print();
-   setTimeout(()=>{
-
+    
+window.addEventListener("afterprint",()=>{
     printArea.remove();
+},{once:true});
 
-},500); 
+requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+        window.print();
+    });
+});
 
-},100);  
 }
+
 document.getElementById("btnPrintA6")
 .addEventListener("click",()=>{
 
