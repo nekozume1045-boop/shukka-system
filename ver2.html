@@ -144,17 +144,20 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
         width:100%;
     }
 
-    .printPage{
-        width:194mm;
-        min-height:281mm;
-        margin:0 auto;
-        padding:5mm;
-        box-sizing:border-box;
-        page-break-after:always;
-        break-after:page;
-        font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
-        color:#000;
-    }
+.printPage{
+    width:194mm;
+    height:281mm;
+    margin:0;
+    padding:5mm;
+    box-sizing:border-box;
+    page-break-after:always;
+    break-after:page;
+    overflow:hidden;
+    font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
+    color:#000;
+    display:flex;
+    flex-direction:column;
+}
 
     /* タイトル */
     .deliveryTitle{
@@ -182,6 +185,10 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
     }
 
     .deliveryLine{
+     .deliveryLine:first-child span:last-child{
+    font-size:24px;
+    font-weight:bold;
+}
         height:8mm;
         border-bottom:1px solid #000;
         margin-bottom:2mm;
@@ -229,11 +236,13 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
     }
 
     /* 商品表 */
-    .deliveryTable{
-        width:100%;
-        border-collapse:collapse;
-        table-layout:fixed;
-    }
+.deliveryTable{
+    width:100%;
+    flex:1;
+    min-height:0;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
 
     .deliveryTable th,
     .deliveryTable td{
@@ -270,13 +279,18 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
         width:18%;
     }
 
-    .deliveryTable td{
-        text-align:right;
-    }
+.deliveryTable td.quantity,
+.deliveryTable td:nth-child(4),
+.deliveryTable td:nth-child(5){
+    font-weight:bold;
+    font-size:18px;
+}
 
     .deliveryTable td.productName{
-        text-align:left;
-    }
+    text-align:left;
+    font-size:24px;
+    font-weight:bold;
+}
 
     .deliveryTable td.productNumber{
         text-align:center;
@@ -821,7 +835,7 @@ function printA6(){
     });
 
     /* 空白行を追加 */
-    const blankRows=Math.max(0,8-itemsForStore.length);
+    const blankRows=Math.max(0,9-itemsForStore.length);
 
     for(let i=0;i<blankRows;i++){
 
