@@ -1017,6 +1017,24 @@ activeInput.dispatchEvent(new Event("input",{bubbles:true}));
     });
 
 });
+    /* 10キーのCボタン */
+document.querySelectorAll("#numPad .numKey").forEach(button=>{
+
+    if(button.textContent!=="C") return;
+
+    button.addEventListener("click",()=>{
+
+        if(!activeInput) return;
+
+        activeInput.value="0";
+
+        activeInput.dispatchEvent(
+            new Event("input",{bubbles:true})
+        );
+
+    });
+
+});
 /* 10キーの十字キー */
 document.querySelectorAll("#numPad .direction").forEach(button=>{
 
