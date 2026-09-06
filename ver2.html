@@ -1012,7 +1012,49 @@ document.querySelectorAll("#numPad .numKey").forEach(button=>{
     });
 
 });
+/* 10キーの十字キー */
+document.querySelectorAll("#numPad .direction").forEach(button=>{
 
+    button.addEventListener("click",()=>{
+
+        if(!activeInput) return;
+
+        const inputs=[
+            ...tableBody.querySelectorAll('input[type="number"]')
+        ];
+
+        const index=inputs.indexOf(activeInput);
+
+        if(index===-1) return;
+
+        let nextIndex=index;
+
+        if(button.textContent==="→"){
+            nextIndex=index+1;
+        }
+
+        if(button.textContent==="←"){
+            nextIndex=index-1;
+        }
+
+        if(button.textContent==="↓"){
+            nextIndex=index+stores.length;
+        }
+
+        if(button.textContent==="↑"){
+            nextIndex=index-stores.length;
+        }
+
+        if(nextIndex<0) return;
+        if(nextIndex>=inputs.length) return;
+
+        inputs[nextIndex].focus();
+
+        activeInput=inputs[nextIndex];
+
+    });
+
+});
 </script>
 </body>
 
