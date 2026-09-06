@@ -125,7 +125,7 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
 
     @page{
         size:A4 portrait;
-        margin:10mm;
+        margin:8mm;
     }
 
     body *{
@@ -135,47 +135,166 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
     #printArea,
     #printArea *{
         visibility:visible;
-
     }
-       #printArea{
 
-    display:block;
-
-    position:absolute;
-
-    left:0;
-
-    top:0;
-
-    width:100%;
-
-}     
+    #printArea{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+    }
 
     .printPage{
-        width:190mm;
-        min-height:277mm;
+        width:194mm;
+        min-height:281mm;
         margin:0 auto;
-        padding:10mm;
+        padding:5mm;
         box-sizing:border-box;
         page-break-after:always;
         break-after:page;
+        font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
+        color:#000;
     }
 
-    .printPage h2{
+    /* タイトル */
+    .deliveryTitle{
         text-align:center;
-        margin:0 0 10mm 0;
         font-size:24px;
-    }
-
-    .printPage h3{
+        font-weight:bold;
         margin:0 0 8mm 0;
-        font-size:20px;
+        letter-spacing:5px;
     }
 
-    .printItem{
-        font-size:18px;
-        padding:4mm 0;
+    /* 上部情報 */
+    .deliveryInfo{
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:4mm;
+        font-size:14px;
+    }
+
+    .deliveryLeft{
+        width:55%;
+    }
+
+    .deliveryRight{
+        width:40%;
+    }
+
+    .deliveryLine{
+        height:8mm;
         border-bottom:1px solid #000;
+        margin-bottom:2mm;
+        display:flex;
+        align-items:center;
+    }
+
+    .deliveryLabel{
+        width:28mm;
+        font-weight:bold;
+    }
+
+    /* 納品文 */
+    .deliveryMessage{
+        font-size:15px;
+        margin:4mm 0;
+    }
+
+    /* 合計金額 */
+    .deliveryTotalBox{
+        display:flex;
+        width:90mm;
+        height:13mm;
+        border:1px solid #000;
+        margin-bottom:5mm;
+    }
+
+    .deliveryTotalLabel{
+        width:30mm;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        border-right:1px solid #000;
+        font-weight:bold;
+    }
+
+    .deliveryTotalValue{
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        padding-right:4mm;
+        font-size:18px;
+        font-weight:bold;
+    }
+
+    /* 商品表 */
+    .deliveryTable{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+    }
+
+    .deliveryTable th,
+    .deliveryTable td{
+        border:1px solid #000;
+        padding:2mm;
+        font-size:14px;
+        height:10mm;
+        box-sizing:border-box;
+    }
+
+    .deliveryTable th{
+        text-align:center;
+        font-weight:bold;
+        height:12mm;
+    }
+
+    .deliveryTable th:nth-child(1){
+        width:38%;
+    }
+
+    .deliveryTable th:nth-child(2){
+        width:17%;
+    }
+
+    .deliveryTable th:nth-child(3){
+        width:13%;
+    }
+
+    .deliveryTable th:nth-child(4){
+        width:14%;
+    }
+
+    .deliveryTable th:nth-child(5){
+        width:18%;
+    }
+
+    .deliveryTable td{
+        text-align:right;
+    }
+
+    .deliveryTable td.productName{
+        text-align:left;
+    }
+
+    .deliveryTable td.productNumber{
+        text-align:center;
+    }
+
+    .deliveryTable td.quantity{
+        text-align:center;
+    }
+
+    /* 合計行 */
+    .deliveryGrandTotal td{
+        height:13mm;
+        font-weight:bold;
+        font-size:16px;
+    }
+
+    .deliveryGrandTotal td:first-child{
+        text-align:center;
     }
 
 }
@@ -517,19 +636,9 @@ function printA6(){
 
     if(!storeName) continue;
 
-    const page=document.createElement("div");
-    page.className="printPage";
+    const itemsForStore=[];
 
-    const title=document.createElement("h2");
-    title.textContent="本日の出荷";
-    page.appendChild(title);
-
-    const store=document.createElement("h3");
-    store.textContent="店舗："+storeName;
-    page.appendChild(store);
-
-    const list=document.createElement("div");
-    list.className="printList";
+    let storeTotal=0;
 
     rows.forEach(row=>{
 
@@ -538,6 +647,9 @@ function printA6(){
       if(cells.length<=col) return;
 
       const product=cells[0].textContent.trim();
+
+      /* 単価 */
+      const price=Number(cells[1].textContent.trim())||0;
 
       const input=cells[col].querySelector("input");
 
@@ -548,41 +660,234 @@ function printA6(){
       /* 0袋の商品は印刷しない */
       if(quantity<=0) return;
 
-      const item=document.createElement("div");
-      item.className="printItem";
+      const amount=quantity*price;
 
-      item.textContent=product+"　"+quantity+"袋";
+      storeTotal+=amount;
 
-      list.appendChild(item);
+      itemsForStore.push({
+        product:product,
+        quantity:quantity,
+        price:price,
+        amount:amount
+      });
 
     });
 
-    /* 商品が1つもない店舗は印刷しない */
-    if(list.children.length===0) continue;
+    /* 商品がない店舗は印刷しない */
+    if(itemsForStore.length===0) continue;
 
-    page.appendChild(list);
+    /* ページ */
+    const page=document.createElement("div");
+    page.className="printPage";
+
+    /* タイトル */
+    const title=document.createElement("h2");
+    title.className="deliveryTitle";
+    title.textContent="納　品　書（生産者控）";
+    page.appendChild(title);
+
+    /* 上部情報 */
+    const info=document.createElement("div");
+    info.className="deliveryInfo";
+
+    const left=document.createElement("div");
+    left.className="deliveryLeft";
+
+    /* 出荷先 */
+    const destination=document.createElement("div");
+    destination.className="deliveryLine";
+    destination.innerHTML=
+      '<span class="deliveryLabel">出荷先：</span>'+
+      '<span>'+storeName+'</span>';
+    left.appendChild(destination);
+
+    /* 日付 */
+    const dateLine=document.createElement("div");
+    dateLine.className="deliveryLine";
+
+    const today=new Date();
+
+    const year=today.getFullYear();
+    const month=today.getMonth()+1;
+    const day=today.getDate();
+
+    dateLine.innerHTML=
+      '<span class="deliveryLabel">年月日：</span>'+
+      '<span>'+year+'年　'+month+'月　'+day+'日</span>';
+
+    left.appendChild(dateLine);
+
+    info.appendChild(left);
+
+    const right=document.createElement("div");
+    right.className="deliveryRight";
+
+    /* 会員番号 */
+    const memberNumber=document.createElement("div");
+    memberNumber.className="deliveryLine";
+    memberNumber.innerHTML=
+      '<span class="deliveryLabel">会員番号</span>';
+
+    right.appendChild(memberNumber);
+
+    /* 会員名 */
+    const memberName=document.createElement("div");
+    memberName.className="deliveryLine";
+    memberName.innerHTML=
+      '<span class="deliveryLabel">会員名</span>';
+
+    right.appendChild(memberName);
+
+    info.appendChild(right);
+
+    page.appendChild(info);
+
+    /* 納品文 */
+    const message=document.createElement("div");
+    message.className="deliveryMessage";
+    message.textContent="下記のとおり納品いたしました";
+    page.appendChild(message);
+
+    /* 合計金額 */
+    const totalBox=document.createElement("div");
+    totalBox.className="deliveryTotalBox";
+
+    const totalLabel=document.createElement("div");
+    totalLabel.className="deliveryTotalLabel";
+    totalLabel.textContent="合計金額";
+
+    const totalValue=document.createElement("div");
+    totalValue.className="deliveryTotalValue";
+    totalValue.textContent=
+      storeTotal.toLocaleString()+"円";
+
+    totalBox.appendChild(totalLabel);
+    totalBox.appendChild(totalValue);
+
+    page.appendChild(totalBox);
+
+    /* 商品表 */
+    const deliveryTable=document.createElement("table");
+    deliveryTable.className="deliveryTable";
+
+    const thead=document.createElement("thead");
+    const headerRow=document.createElement("tr");
+
+    ["品　名","商品番号","数量","単価","金額（税抜）"]
+      .forEach(text=>{
+        const th=document.createElement("th");
+        th.textContent=text;
+        headerRow.appendChild(th);
+      });
+
+    thead.appendChild(headerRow);
+    deliveryTable.appendChild(thead);
+
+    const tbody=document.createElement("tbody");
+
+    /* 商品 */
+    itemsForStore.forEach(item=>{
+
+      const tr=document.createElement("tr");
+
+      const productTd=document.createElement("td");
+      productTd.className="productName";
+      productTd.textContent=item.product;
+
+      const numberTd=document.createElement("td");
+      numberTd.className="productNumber";
+      numberTd.textContent="";
+
+      const quantityTd=document.createElement("td");
+      quantityTd.className="quantity";
+      quantityTd.textContent=item.quantity+"袋";
+
+      const priceTd=document.createElement("td");
+      priceTd.textContent=
+        item.price.toLocaleString()+"円";
+
+      const amountTd=document.createElement("td");
+      amountTd.textContent=
+        item.amount.toLocaleString()+"円";
+
+      tr.appendChild(productTd);
+      tr.appendChild(numberTd);
+      tr.appendChild(quantityTd);
+      tr.appendChild(priceTd);
+      tr.appendChild(amountTd);
+
+      tbody.appendChild(tr);
+
+    });
+
+    /* 空白行を追加 */
+    const blankRows=Math.max(0,8-itemsForStore.length);
+
+    for(let i=0;i<blankRows;i++){
+
+      const tr=document.createElement("tr");
+
+      for(let j=0;j<5;j++){
+        const td=document.createElement("td");
+
+        if(j===0){
+          td.className="productName";
+        }
+
+        tr.appendChild(td);
+      }
+
+      tbody.appendChild(tr);
+    }
+
+    /* 合計行 */
+    const totalRow=document.createElement("tr");
+    totalRow.className="deliveryGrandTotal";
+
+    const totalName=document.createElement("td");
+    totalName.colSpan=4;
+    totalName.textContent="合　計";
+
+    const totalAmount=document.createElement("td");
+    totalAmount.textContent=
+      storeTotal.toLocaleString()+"円";
+
+    totalRow.appendChild(totalName);
+    totalRow.appendChild(totalAmount);
+
+    tbody.appendChild(totalRow);
+
+    deliveryTable.appendChild(tbody);
+
+    page.appendChild(deliveryTable);
+
     printArea.appendChild(page);
 
   }
-document.body.appendChild(printArea);
-    
-window.addEventListener("afterprint",()=>{
-    printArea.remove();
-},{once:true});
 
-requestAnimationFrame(()=>{
+  /* 印刷する店舗がない場合 */
+  if(printArea.children.length===0){
+    alert("印刷する出荷データがありません");
+    return;
+  }
+
+  document.body.appendChild(printArea);
+
+  window.addEventListener("afterprint",()=>{
+    printArea.remove();
+  },{once:true});
+
+  requestAnimationFrame(()=>{
     requestAnimationFrame(()=>{
-        window.print();
+      window.print();
     });
-});
+  });
 
 }
 
 document.getElementById("btnPrintA6")
 .addEventListener("click",()=>{
-
     printA6();
-
 });
 </script>
 </body>
