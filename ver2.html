@@ -949,8 +949,14 @@ document.getElementById("btnPrintA6")
 .addEventListener("click",()=>{
     printA6();
 });
- /* 10キー */
+ /* 10キー用：現在選択している入力欄 */
+let activeInput = null;
 
+tableBody.addEventListener("focusin",(event)=>{
+    if(event.target.matches('input[type="number"]')){
+        activeInput = event.target;
+    }
+});
 </script>
 
 <!-- 10キー -->
