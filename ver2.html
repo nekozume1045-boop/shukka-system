@@ -957,24 +957,7 @@ tableBody.addEventListener("focusin",(event)=>{
         activeInput = event.target;
     }
 });
-  /* 10キーの数字入力 */
-document.querySelectorAll("#numPad .numKey").forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-        const value=button.textContent;
-
-        if(!/^[0-9]$/.test(value)) return;
-
-        if(!activeInput) return;
-
-        activeInput.value += value;
-
-        activeInput.dispatchEvent(new Event("input",{bubbles:true}));
-
-    });
-
-});  
+  
 </script>
 
 <!-- 10キー -->
