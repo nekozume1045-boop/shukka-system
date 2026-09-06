@@ -237,20 +237,20 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
     /* 商品表 */
 .deliveryTable{
     width:100%;
-    flex:1;
-    min-height:0;
+    height:178mm;
+    flex:none;
     border-collapse:collapse;
     table-layout:fixed;
 }
 
     .deliveryTable th,
-    .deliveryTable td{
-        border:1px solid #000;
-        padding:2mm;
-        font-size:14px;
-        height:10mm;
-        box-sizing:border-box;
-    }
+.deliveryTable td{
+    border:1px solid #000;
+    padding:1mm 2mm;
+    font-size:14px;
+    height:9mm;
+    box-sizing:border-box;
+}
 
     .deliveryTable th{
         text-align:center;
@@ -301,11 +301,17 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
 
     /* 合計行 */
     .deliveryGrandTotal td{
-        height:13mm;
+        height:11mm;
         font-weight:bold;
         font-size:16px;
     }
+.deliveryTable tbody tr{
+    height:9mm;
+}
 
+.deliveryTable tbody tr td{
+    height:9mm;
+}
     .deliveryGrandTotal td:first-child{
         text-align:center;
     }
