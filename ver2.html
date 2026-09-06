@@ -1006,9 +1006,13 @@ document.querySelectorAll("#numPad .numKey").forEach(button=>{
 
         if(!activeInput) return;
 
-        activeInput.value += value;
+        if(activeInput.value==="0"){
+    activeInput.value=value;
+}else{
+    activeInput.value+=value;
+}
 
-        activeInput.dispatchEvent(new Event("input",{bubbles:true}));
+activeInput.dispatchEvent(new Event("input",{bubbles:true}));
 
     });
 
