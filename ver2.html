@@ -1036,6 +1036,30 @@ document.querySelectorAll("#numPad .numKey").forEach(button=>{
     });
 
 });
+    /* 10キーの1桁削除 */
+document.querySelectorAll("#numPad .numKey").forEach(button=>{
+
+    if(button.textContent!=="⌫") return;
+
+    button.addEventListener("click",()=>{
+
+        if(!activeInput) return;
+
+        let value=activeInput.value;
+
+        if(value.length<=1){
+            activeInput.value="0";
+        }else{
+            activeInput.value=value.slice(0,-1);
+        }
+
+        activeInput.dispatchEvent(
+            new Event("input",{bubbles:true})
+        );
+
+    });
+
+});
 /* 10キーの十字キー */
 document.querySelectorAll("#numPad .direction").forEach(button=>{
 
