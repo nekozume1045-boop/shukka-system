@@ -46,7 +46,46 @@ font-size:15px;
 white-space:nowrap;
 
 }
+/* 10キー */
+#numPad{
+    position:fixed;
+    right:15px;
+    bottom:15px;
+    z-index:9999;
 
+    width:180px;
+    padding:10px;
+
+    background:#fff;
+    border:2px solid #555;
+    border-radius:12px;
+
+    box-shadow:0 3px 12px rgba(0,0,0,.25);
+
+    text-align:center;
+}
+
+#numPad .numRow{
+    display:flex;
+    justify-content:center;
+}
+
+#numPad .numKey{
+    width:50px;
+    height:50px;
+    margin:3px;
+
+    font-size:22px;
+    font-weight:bold;
+
+    border:1px solid #888;
+    border-radius:8px;
+    background:#f5f5f5;
+}
+
+#numPad .direction{
+    background:#e8e8e8;
+}
 .tableWrap{
 
 overflow:auto;
@@ -318,46 +357,7 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
 .deliveryGrandTotal td:first-child{
     text-align:center;
 }
-/* 10キー */
-#numPad{
-    position:fixed;
-    right:15px;
-    bottom:15px;
-    z-index:9999;
-
-    width:180px;
-    padding:10px;
-
-    background:#fff;
-    border:2px solid #555;
-    border-radius:12px;
-
-    box-shadow:0 3px 12px rgba(0,0,0,.25);
-
-    text-align:center;
-}
-
-#numPad .numRow{
-    display:flex;
-    justify-content:center;
-}
-
-#numPad .numKey{
-    width:50px;
-    height:50px;
-    margin:3px;
-
-    font-size:22px;
-    font-weight:bold;
-
-    border:1px solid #888;
-    border-radius:8px;
-    background:#f5f5f5;
-}
-
-#numPad .direction{
-    background:#e8e8e8;
-}
+        
 </style>
 
 
