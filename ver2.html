@@ -299,13 +299,12 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
     font-weight:bold;
     font-size:18px;
 }
-
-/* 9段を均等にする */
-.deliveryTable tbody tr{
+/* 商品9行だけ均等にする */
+.deliveryTable tbody tr:not(.deliveryGrandTotal){
     height:20mm;
 }
 
-.deliveryTable tbody tr td{
+.deliveryTable tbody tr:not(.deliveryGrandTotal) td{
     height:20mm;
 }
 
@@ -319,18 +318,7 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
 .deliveryGrandTotal td:first-child{
     text-align:center;
 }
-.deliveryTable tbody tr{
-    height:20mm;
-}
 
-.deliveryTable tbody tr td{
-    height:20mm;
-}
-    .deliveryGrandTotal td:first-child{
-        text-align:center;
-    }
-
-}
 </style>
 
 
