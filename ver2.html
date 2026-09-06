@@ -184,16 +184,20 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
         width:40%;
     }
 
-     .deliveryLine:first-child span:last-child{
+    .deliveryLine{
+    height:8mm;
+    border-bottom:1px solid #000;
+    margin-bottom:2mm;
+    display:flex;
+    align-items:center;
+}
+
+.deliveryLine:first-child span:last-child{
     font-size:24px;
     font-weight:bold;
 }
-        height:8mm;
-        border-bottom:1px solid #000;
-        margin-bottom:2mm;
-        display:flex;
-        align-items:center;
-    }
+
+.deliveryLabel{
 
     .deliveryLabel{
         width:28mm;
@@ -237,10 +241,9 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
     /* 商品表 */
 .deliveryTable{
     width:100%;
-    height:178mm;
-    flex:none;
     border-collapse:collapse;
     table-layout:fixed;
+    flex:none;
 }
 
     .deliveryTable th,
@@ -306,11 +309,11 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
         font-size:16px;
     }
 .deliveryTable tbody tr{
-    height:9mm;
+    height:20mm;
 }
 
 .deliveryTable tbody tr td{
-    height:9mm;
+    height:20mm;
 }
     .deliveryGrandTotal td:first-child{
         text-align:center;
