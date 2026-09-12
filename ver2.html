@@ -824,12 +824,13 @@ function printA6(){
     right.appendChild(memberNumber);
 
     /* 会員名 */
-    const memberName=document.createElement("div");
-    memberName.className="deliveryLine";
-    memberName.innerHTML=
-      '<span class="deliveryLabel">会員名</span>';
- '<span>佐藤利彦</span>';
-    right.appendChild(memberName);
+const memberName=document.createElement("div");
+memberName.className="deliveryLine";
+memberName.innerHTML=
+  '<span class="deliveryLabel">会員名</span>'+
+  '<span>佐藤利彦</span>';
+
+right.appendChild(memberName);
 
     info.appendChild(right);
 
