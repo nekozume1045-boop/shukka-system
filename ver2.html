@@ -916,22 +916,7 @@ right.appendChild(memberName);
       tbody.appendChild(tr);
     }
 
-    /* 合計行 */
-    const totalRow=document.createElement("tr");
-    totalRow.className="deliveryGrandTotal";
-
-    const totalName=document.createElement("td");
-    totalName.colSpan=4;
-    totalName.textContent="合　計";
-
-    const totalAmount=document.createElement("td");
-    totalAmount.textContent=
-      storeTotal.toLocaleString()+"円";
-
-    totalRow.appendChild(totalName);
-    totalRow.appendChild(totalAmount);
-
-    tbody.appendChild(totalRow);
+    
 
     deliveryTable.appendChild(tbody);
 
