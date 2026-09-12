@@ -884,15 +884,13 @@ right.appendChild(memberName);
       priceTd.textContent=
         item.price.toLocaleString()+"円";
 
-      const amountTd=document.createElement("td");
-      amountTd.textContent=
-        item.amount.toLocaleString()+"円";
+      
 
       tr.appendChild(productTd);
       tr.appendChild(numberTd);
       tr.appendChild(quantityTd);
       tr.appendChild(priceTd);
-      tr.appendChild(amountTd);
+      
 
       tbody.appendChild(tr);
 
