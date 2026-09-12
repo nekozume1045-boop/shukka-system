@@ -841,23 +841,7 @@ function printA6(){
     message.textContent="下記のとおり納品いたしました";
     page.appendChild(message);
 
-    /* 合計金額 */
-    const totalBox=document.createElement("div");
-    totalBox.className="deliveryTotalBox";
-
-    const totalLabel=document.createElement("div");
-    totalLabel.className="deliveryTotalLabel";
-    totalLabel.textContent="合計金額";
-
-    const totalValue=document.createElement("div");
-    totalValue.className="deliveryTotalValue";
-    totalValue.textContent=
-      storeTotal.toLocaleString()+"円";
-
-    totalBox.appendChild(totalLabel);
-    totalBox.appendChild(totalValue);
-
-    page.appendChild(totalBox);
+ 
 
     /* 商品表 */
     const deliveryTable=document.createElement("table");
