@@ -239,21 +239,74 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
         letter-spacing:5px;
     }
 
-    /* 上部情報 */
-    .deliveryInfo{
-        display:flex;
-        justify-content:space-between;
-        margin-bottom:4mm;
-        font-size:14px;
-    }
+/* 上部情報 */
+.deliveryInfo{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:4mm;
+    font-size:14px;
+}
 
-    .deliveryLeft{
-        width:55%;
-    }
+/* 店舗名 */
+.deliveryStoreLine{
+    height:38mm;
+    margin-bottom:3mm;
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid #000;
+}
 
-    .deliveryRight{
-        width:
+.deliveryStoreLine .deliveryLabel{
+    width:28mm;
+    font-size:20px;
+    font-weight:bold;
+}
 
+.deliveryStoreLine span:last-child{
+    font-size:42px;
+    font-weight:bold;
+}
+
+/* 日付・七ツ森農業・会員名 */
+.deliveryMeta{
+    display:flex;
+    width:100%;
+    align-items:center;
+    gap:5mm;
+}
+
+.deliveryMeta .deliveryLine{
+    flex:1;
+    height:8mm;
+    margin-bottom:2mm;
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid #000;
+}
+
+.deliveryMeta .deliveryLabel{
+    width:auto;
+    margin-right:3mm;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.deliveryMeta .deliveryLine span:last-child{
+    font-size:24px;
+    font-weight:bold;
+}
+
+/* 会員名 */
+.deliveryMeta .deliveryLine:last-child span:last-child{
+    font-size:24px;
+    font-weight:bold;
+}
+
+/* 納品文 */
+.deliveryMessage{
+    font-size:15px;
+    margin:4mm 0;
+}
 /* 商品表 */
 .deliveryTable{
     width:100%;
