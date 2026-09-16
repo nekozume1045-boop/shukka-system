@@ -754,62 +754,59 @@ function printA6(){
     title.textContent="納　品　書";
     page.appendChild(title);
 
-    /* 上部情報 */
-    const info=document.createElement("div");
-    info.className="deliveryInfo";
+/* 上部情報 */
+const info=document.createElement("div");
+info.className="deliveryInfo";
 
-    const left=document.createElement("div");
-    left.className="deliveryLeft";
+/* 店舗名 */
+const destination=document.createElement("div");
+destination.className="deliveryLine deliveryStoreLine";
+destination.innerHTML=
+  '<span class="deliveryLabel">出荷先：</span>'+
+  '<span>'+storeName+'</span>';
 
-    /* 出荷先 */
-    const destination=document.createElement("div");
-    destination.className="deliveryLine";
-    destination.innerHTML=
-      '<span class="deliveryLabel">出荷先：</span>'+
-      '<span>'+storeName+'</span>';
-    left.appendChild(destination);
+info.appendChild(destination);
 
-    /* 日付 */
-    const dateLine=document.createElement("div");
-    dateLine.className="deliveryLine";
+/* 日付・七ツ森農業・会員名 */
+const metaRow=document.createElement("div");
+metaRow.className="deliveryMeta";
 
-    const today=new Date();
+/* 日付 */
+const dateLine=document.createElement("div");
+dateLine.className="deliveryLine";
 
-    const year=today.getFullYear();
-    const month=today.getMonth()+1;
-    const day=today.getDate();
+const today=new Date();
 
-    dateLine.innerHTML=
-      '<span class="deliveryLabel">年月日：</span>'+
-      '<span>'+year+'年　'+month+'月　'+day+'日</span>';
+const year=today.getFullYear();
+const month=today.getMonth()+1;
+const day=today.getDate();
 
-    left.appendChild(dateLine);
+dateLine.innerHTML=
+  '<span class="deliveryLabel">年月日：</span>'+
+  '<span>'+year+'年　'+month+'月　'+day+'日</span>';
 
-    info.appendChild(left);
+metaRow.appendChild(dateLine);
 
-    const right=document.createElement("div");
-    right.className="deliveryRight";
+/* 七ツ森農業 */
+const groupLine=document.createElement("div");
+groupLine.className="deliveryLine";
+groupLine.innerHTML=
+  '<span>七ツ森農業</span>';
 
-    /* 会員番号 */
-    const memberNumber=document.createElement("div");
-    memberNumber.className="deliveryLine";
-    memberNumber.innerHTML=
-      '<span class="deliveryLabel">会員番号</span>';
+metaRow.appendChild(groupLine);
 
-    right.appendChild(memberNumber);
-
-    /* 会員名 */
+/* 会員名 */
 const memberName=document.createElement("div");
 memberName.className="deliveryLine";
 memberName.innerHTML=
   '<span class="deliveryLabel">会員名</span>'+
   '<span>佐藤利彦</span>';
 
-right.appendChild(memberName);
+metaRow.appendChild(memberName);
 
-    info.appendChild(right);
+info.appendChild(metaRow);
 
-    page.appendChild(info);
+page.appendChild(info);
 
     /* 納品文 */
     const message=document.createElement("div");
