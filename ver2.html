@@ -571,7 +571,19 @@ dailyTotals=JSON.parse(data);
 
 }
 
-}    
+}  
+function saveDailyTotal(){
+
+const today=getTodayKey();
+
+dailyTotals[today]=dailyTotalAmount;
+
+localStorage.setItem(
+"vegetableDailyTotals",
+JSON.stringify(dailyTotals)
+);
+
+}
 function createTable(){
 
 tableBody.innerHTML="";
