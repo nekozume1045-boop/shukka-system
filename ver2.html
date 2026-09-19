@@ -561,6 +561,17 @@ const now=new Date();
 return now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
 
 }
+function loadDailyTotals(){
+
+const data=localStorage.getItem("vegetableDailyTotals");
+
+if(data){
+
+dailyTotals=JSON.parse(data);
+
+}
+
+}    
 function createTable(){
 
 tableBody.innerHTML="";
