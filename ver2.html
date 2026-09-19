@@ -607,7 +607,11 @@ dates.forEach(date=>{
 
 const div=document.createElement("div");
 
-div.textContent=date+"　"+Number(dailyTotals[date]).toLocaleString()+" 円";
+div.className="dailyHistoryRow";
+
+div.innerHTML=
+"<span>"+date+"</span>"+
+"<span>"+Number(dailyTotals[date]).toLocaleString()+" 円</span>";
 
 list.appendChild(div);
 
