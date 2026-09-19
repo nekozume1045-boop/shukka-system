@@ -591,6 +591,25 @@ JSON.stringify(dailyTotals)
 );
 
 }
+function displayDailyTotals(){
+
+const list=document.getElementById("dailyHistoryList");
+
+list.innerHTML="";
+
+const dates=Object.keys(dailyTotals).sort().reverse();
+
+dates.forEach(date=>{
+
+const div=document.createElement("div");
+
+div.textContent=date+"　"+Number(dailyTotals[date]).toLocaleString()+" 円";
+
+list.appendChild(div);
+
+});
+
+}    
 function createTable(){
 
 tableBody.innerHTML="";
