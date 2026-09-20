@@ -657,11 +657,14 @@ displayDailyTotals();
 
 });
 
-div.appendChild(
-Object.assign(document.createElement("span"),{
-textContent:date
-})
-);
+const dateSpan=document.createElement("span");
+
+dateSpan.textContent=date;
+
+dateSpan.style.cursor="pointer";
+dateSpan.style.textDecoration="underline";
+
+div.appendChild(dateSpan);
 
 div.appendChild(amountSpan);
 
