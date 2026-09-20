@@ -637,6 +637,7 @@ function displayDailyTotals(){
 const list=document.getElementById("dailyHistoryList");
 
 list.innerHTML="";
+let cumulative=0;
 
 const dates=Object.keys(dailyTotals).sort().reverse();
 
