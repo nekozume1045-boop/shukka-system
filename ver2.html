@@ -760,7 +760,38 @@ JSON.stringify(data)
 );
 
 }
+function saveDailyShippingData(){
 
+const today=getTodayKey();
+
+const data=[];
+
+tableBody.querySelectorAll("tr").forEach(row=>{
+
+const rowData=[];
+
+row.querySelectorAll("input").forEach(input=>{
+
+rowData.push(Number(input.value)||0);
+
+});
+
+data.push(rowData);
+
+});
+
+let dailyShippingData=JSON.parse(
+localStorage.getItem("vegetableDailyShippingData")
+) || {};
+
+dailyShippingData[today]=data;
+
+localStorage.setItem(
+"vegetableDailyShippingData",
+JSON.stringify(dailyShippingData)
+);
+
+}
 function loadData(){
 
 const data=JSON.parse(
