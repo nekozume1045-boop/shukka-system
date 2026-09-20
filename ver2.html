@@ -666,8 +666,8 @@ dateSpan.style.cursor="pointer";
 dateSpan.style.textDecoration="underline";
 
 div.appendChild(dateSpan);
-    dateSpan.addEventListener("click",()=>{
-
+dateSpan.addEventListener("click",()=>{
+editingDate=date;
 const dailyShippingData=JSON.parse(
 localStorage.getItem("vegetableDailyShippingData")
 ) || {};
