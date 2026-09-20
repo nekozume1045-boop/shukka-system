@@ -610,7 +610,9 @@ function saveDailyTotal(){
 
 const today=getTodayKey();
 
-dailyTotals[today]=dailyTotalAmount;
+const saveDate=editingDate || today;
+
+dailyTotals[saveDate]=dailyTotalAmount;
 
 localStorage.setItem(
 "vegetableDailyTotals",
