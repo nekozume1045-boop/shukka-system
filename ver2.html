@@ -631,9 +631,41 @@ const div=document.createElement("div");
 
 div.className="dailyHistoryRow";
 
-div.innerHTML=
-"<span>"+date+"</span>"+
-"<span>"+Number(dailyTotals[date]).toLocaleString()+" 円</span>";
+const amountSpan=document.createElement("span");
+
+amountSpan.textContent=
+Number(dailyTotals[date]).toLocaleString()+" 円";
+
+const deleteButton=document.createElement("button");
+
+deleteButton.textContent="削除";
+
+deleteButton.addEventListener("click",()=>{
+
+if(!confirm(date+" のデータを削除します。\nよろしいですか？")){
+return;
+}
+
+delete dailyTotals[date];
+
+localStorage.setItem(
+"vegetableDailyTotals",
+JSON.stringify(dailyTotals)
+);
+
+displayDailyTotals();
+
+});
+
+div.appendChild(
+Object.assign(document.createElement("span"),{
+textContent:date
+})
+);
+
+div.appendChild(amountSpan);
+
+div.appendChild(deleteButton);
 
 list.appendChild(div);
 
