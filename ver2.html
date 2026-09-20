@@ -829,7 +829,7 @@ let dailyShippingData=JSON.parse(
 localStorage.getItem("vegetableDailyShippingData")
 ) || {};
 
-dailyShippingData[today]=data;
+dailyShippingData[saveDate]=data;
 
 localStorage.setItem(
 "vegetableDailyShippingData",
