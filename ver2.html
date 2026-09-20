@@ -642,7 +642,7 @@ let cumulative=0;
 const dates=Object.keys(dailyTotals).sort().reverse();
 
 dates.forEach(date=>{
-
+cumulative += Number(dailyTotals[date]) || 0;
 const div=document.createElement("div");
 
 div.className="dailyHistoryRow";
