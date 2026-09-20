@@ -743,7 +743,13 @@ let html="";
 
 html+=`<td>${item.name}</td>`;
 
-html+=`<td>${item.price}</td>`;
+html+=`<td>
+<input type="number"
+value="${item.price}"
+min="0"
+inputmode="none"
+class="priceInput">
+</td>`;
 
 html+=`<td class="plan">0</td>`;
 
