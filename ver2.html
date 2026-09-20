@@ -807,6 +807,8 @@ function saveDailyShippingData(){
 
 const today=getTodayKey();
 
+
+const saveDate=editingDate || today;
 const data=[];
 
 tableBody.querySelectorAll("tr").forEach(row=>{
