@@ -665,6 +665,45 @@ dateSpan.style.cursor="pointer";
 dateSpan.style.textDecoration="underline";
 
 div.appendChild(dateSpan);
+    dateSpan.addEventListener("click",()=>{
+
+const dailyShippingData=JSON.parse(
+localStorage.getItem("vegetableDailyShippingData")
+) || {};
+
+const data=dailyShippingData[date];
+
+if(!data){
+
+alert("この日の出荷データは保存されていません。");
+
+return;
+
+}
+
+const rows=tableBody.querySelectorAll("tr");
+
+rows.forEach((row,rowIndex)=>{
+
+const inputs=row.querySelectorAll("input");
+
+inputs.forEach((input,colIndex)=>{
+
+if(data[rowIndex] && data[rowIndex][colIndex]!=null){
+
+input.value=data[rowIndex][colIndex];
+
+}
+
+});
+
+});
+
+recalc();
+
+alert(date+" の出荷データを読み込みました");
+
+});
 
 div.appendChild(amountSpan);
 
