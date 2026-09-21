@@ -793,10 +793,14 @@ let sum=0;
 inputs.forEach(input=>{
 sum+=Number(input.value)||0;
 });
-const price =
-Number(row.querySelector(".priceInput").value)||0;
 
-dailyTotalAmount+=sum*price;
+ const priceInput =
+row.querySelector(".priceInput");
+
+const price =
+Number(priceInput.value)||0;
+
+dailyTotalAmount+=sum*price;   
 
 row.querySelector(".total").textContent=sum;
 
