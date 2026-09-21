@@ -927,10 +927,10 @@ document.getElementById("btnClear")
     }
 
     document
-    .querySelectorAll("input[type='number']")
-    .forEach(input=>{
-        input.value=0;
-    });
+.querySelectorAll("input[type='number']:not(.priceInput)")
+.forEach(input=>{
+    input.value=0;
+});
 
     recalc();
 
