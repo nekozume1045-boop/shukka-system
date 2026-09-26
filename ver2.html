@@ -809,11 +809,24 @@ grand+=sum;
 });
 
 grandTotalValue.textContent=grand;
-dailyTotalAmountValue.textContent=dailyTotalAmount.toLocaleString();
+dailyTotalAmountValue.textContent=
+    
+tableBody.addEventListener("input",e=>{
+
+if(e.target.classList.contains("priceInput")){
+
+const row=e.target.closest("tr");
+const rowIndex=Array.from(tableBody.querySelectorAll("tr")).indexOf(row);
+
+if(rowIndex>=0){
+items[rowIndex].price=Number(e.target.value)||0;
 }
 
-tableBody.addEventListener("input",recalc);
+}
 
+recalc();
+
+});
 function saveData(){
 
 const data=[];
