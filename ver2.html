@@ -997,7 +997,8 @@ function printA6(){
       const product=cells[0].textContent.trim();
 
       /* 単価 */
-      const price=Number(cells[1].textContent.trim())||0;
+const priceInput=cells[1].querySelector(".priceInput");
+const price=Number(priceInput.value)||0;
 
       const input=cells[col].querySelector("input");
 
