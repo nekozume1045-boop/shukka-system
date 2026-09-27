@@ -1403,7 +1403,39 @@ function createShippingDataListPage(){
 
   });
 
+    /* 合計金額 */
+
+  const summary=document.createElement("div");
+  summary.className="shippingListSummary";
+
+  const dailyTotal=document.getElementById(
+    "dailyTotalAmountValue"
+  );
+
+  const cumulativeTotal=document.getElementById(
+    "dailyCumulativeTotalAmount"
+  );
+
+  const dailyDiv=document.createElement("div");
+  dailyDiv.textContent=
+    "その日の合計金額　"+
+    (dailyTotal ? dailyTotal.textContent : "0")+
+    "円";
+
+  const cumulativeDiv=document.createElement("div");
+  cumulativeDiv.textContent=
+    "累計金額　"+
+    (cumulativeTotal ? cumulativeTotal.textContent : "0")+
+    "円";
+
+  summary.appendChild(dailyDiv);
+  summary.appendChild(cumulativeDiv);
+
+  page.appendChild(summary);
+
   return page;
+
+
 
 }
     
