@@ -613,6 +613,11 @@ name:name,
 price:price
 });
 
+localStorage.setItem(
+"vegetableItems",
+JSON.stringify(items)
+);
+
 createTable();
 recalc();
 
