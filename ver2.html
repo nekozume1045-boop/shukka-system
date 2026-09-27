@@ -597,7 +597,26 @@ const items=[
 {name:"えだまめ",price:200},
 {name:"きゅうり",price:180}
 ];
+document.getElementById("btnAddItem")
+.addEventListener("click",()=>{
 
+const name=prompt("追加する品目名を入力してください");
+
+if(!name) return;
+
+const price=Number(
+prompt("単価を入力してください")
+)||0;
+
+items.push({
+name:name,
+price:price
+});
+
+createTable();
+recalc();
+
+});
 const tableBody=document.getElementById("tableBody");
 const grandTotalValue=document.getElementById("grandTotalValue");
 const dailyTotalAmountValue=document.getElementById("dailyTotalAmount");
