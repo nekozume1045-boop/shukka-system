@@ -1144,6 +1144,82 @@ loadData();
 loadDailyTotals();
 displayDailyTotals();    
 recalc();
+    function createShippingDataList(){
+
+  const table=document.getElementById("shippingTable");
+
+  if(!table) return null;
+
+  const headers=table.querySelectorAll("thead th");
+  const rows=table.querySelectorAll("tbody tr");
+
+  const result={};
+
+  Object.keys(storeGroups).forEach(groupName=>{
+
+    result[groupName]=[];
+
+    storeGroups[groupName].forEach(storeName=>{
+
+      let storeData=[];
+
+      let storeColumn=-1;
+
+      for(let i=4;i<headers.length;i++){
+
+        if(headers[i].textContent.trim()===storeName){
+          storeColumn=i;
+          break;
+        }
+
+      }
+
+      if(storeColumn===-1) return;
+
+      rows.forEach(row=>{
+
+        const cells=row.querySelectorAll("td");
+
+        if(cells.length<=storeColumn) return;
+
+        const product=cells[0].textContent.trim();
+
+        const priceInput=cells[1].querySelector(".priceInput");
+        const price=Number(priceInput?.value)||0;
+
+        const quantityInput=
+          cells[storeColumn].querySelector("input");
+
+        if(!quantityInput) return;
+
+        const quantity=Number(quantityInput.value)||0;
+
+        if(quantity<=0) return;
+
+        storeData.push({
+          product:product,
+          quantity:quantity,
+          price:price
+        });
+
+      });
+
+      if(storeData.length>0){
+
+        result[groupName].push({
+          storeName:storeName,
+          items:storeData
+        });
+
+      }
+
+    });
+
+  });
+
+  return result;
+
+}
 function printA6(){
 
   const table=document.getElementById("shippingTable");
