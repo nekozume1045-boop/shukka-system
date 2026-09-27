@@ -1327,21 +1327,62 @@ function createShippingDataListPage(){
     const groupSection=document.createElement("div");
     groupSection.className="shippingGroup";
 
-    const groupTitle=document.createElement("h3");
-    groupTitle.textContent=groupName;
+    /* グループ名 */
+
+    const groupHeader=document.createElement("div");
+    groupHeader.className="shippingGroupHeader";
+
+    const groupTitle=document.createElement("span");
+
+    groupTitle.textContent=
+      groupName.replace("グループ","");
+
     groupTitle.className="shippingGroupTitle";
 
-    groupSection.appendChild(groupTitle);
+    groupHeader.appendChild(groupTitle);
+
+    /* グループ小計 */
 
     let groupTotal=0;
 
     storesData.forEach(store=>{
 
-      const storeTitle=document.createElement("h4");
+      store.items.forEach(item=>{
+
+        groupTotal+=item.quantity*item.price;
+
+      });
+
+    });
+
+    const groupTotalSpan=document.createElement("span");
+
+    groupTotalSpan.className="shippingGroupTotal";
+
+    groupTotalSpan.textContent=
+      "小計 "+
+      groupTotal.toLocaleString()+
+      "円";
+
+    groupHeader.appendChild(groupTotalSpan);
+
+    groupSection.appendChild(groupHeader);
+
+    /* 店舗を横並び */
+
+    const storesContainer=document.createElement("div");
+    storesContainer.className="shippingStores";
+
+    storesData.forEach(store=>{
+
+      const storeBox=document.createElement("div");
+      storeBox.className="shippingStoreBox";
+
+      const storeTitle=document.createElement("div");
       storeTitle.textContent=store.storeName;
       storeTitle.className="shippingStoreTitle";
 
-      groupSection.appendChild(storeTitle);
+      storeBox.appendChild(storeTitle);
 
       const table=document.createElement("table");
       table.className="shippingListTable";
@@ -1373,7 +1414,8 @@ function createShippingDataListPage(){
         quantityTd.textContent=item.quantity+"袋";
 
         const priceTd=document.createElement("td");
-        priceTd.textContent=item.price.toLocaleString()+"円";
+        priceTd.textContent=
+          item.price.toLocaleString()+"円";
 
         tr.appendChild(productTd);
         tr.appendChild(quantityTd);
@@ -1381,52 +1423,51 @@ function createShippingDataListPage(){
 
         tbody.appendChild(tr);
 
-        groupTotal+=item.quantity*item.price;
-
       });
 
       table.appendChild(tbody);
-      groupSection.appendChild(table);
+      storeBox.appendChild(table);
+
+      storesContainer.appendChild(storeBox);
 
     });
 
-    const groupTotalDiv=document.createElement("div");
-    groupTotalDiv.className="shippingGroupTotal";
-    groupTotalDiv.textContent=
-      "グループ小計　"+
-      groupTotal.toLocaleString()+
-      "円";
-
-    groupSection.appendChild(groupTotalDiv);
+    groupSection.appendChild(storesContainer);
 
     page.appendChild(groupSection);
 
   });
 
-    /* 合計金額 */
+  /* 合計金額 */
 
   const summary=document.createElement("div");
   summary.className="shippingListSummary";
 
   const dailyTotal=document.getElementById(
-  "dailyTotalAmount"
-);
+    "dailyTotalAmount"
+  );
 
   const cumulativeTotal=document.getElementById(
     "dailyCumulativeTotalAmount"
   );
 
   const dailyDiv=document.createElement("div");
+
   dailyDiv.textContent=
     "その日の合計金額　"+
     (dailyTotal ? dailyTotal.textContent : "0")+
     "円";
 
+  dailyDiv.className="shippingDailyTotal";
+
   const cumulativeDiv=document.createElement("div");
+
   cumulativeDiv.textContent=
     "累計金額　"+
     (cumulativeTotal ? cumulativeTotal.textContent : "0")+
     "円";
+
+  cumulativeDiv.className="shippingCumulativeTotal";
 
   summary.appendChild(dailyDiv);
   summary.appendChild(cumulativeDiv);
@@ -1434,8 +1475,6 @@ function createShippingDataListPage(){
   page.appendChild(summary);
 
   return page;
-
-
 
 }
     
