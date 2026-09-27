@@ -1034,11 +1034,13 @@ const rows=tableBody.querySelectorAll("tr");
 
 rows.forEach((row,rowIndex)=>{
 
+if(!data[rowIndex]) return;
+
 const inputs=row.querySelectorAll("input");
 
 inputs.forEach((input,colIndex)=>{
 
-if(data[rowIndex] && data[rowIndex][colIndex]!=null){
+if(data[rowIndex][colIndex] != null){
 
 input.value=data[rowIndex][colIndex];
 
@@ -1046,9 +1048,10 @@ input.value=data[rowIndex][colIndex];
 
 });
 
+});
 
+recalc();    
 
-recalc();
 });
 } 
 document.getElementById("btnSave")
