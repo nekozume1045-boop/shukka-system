@@ -1618,6 +1618,17 @@ page.appendChild(metaRow);
     printArea.appendChild(page);
 
   }
+      /* 出荷データ一覧を追加 */
+
+  const shippingListPage=createShippingDataListPage();
+
+  if(shippingListPage){
+
+    printArea.appendChild(shippingListPage);
+
+  }
+
+
 
   /* 印刷する店舗がない場合 */
   if(printArea.children.length===0){
