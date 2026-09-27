@@ -1377,7 +1377,7 @@ function createShippingDataListPage(){
     const groupSection=document.createElement("div");
     groupSection.className="shippingGroup";
 
-    /* グループ名 */
+     /* グループ名 */
 
     const groupHeader=document.createElement("div");
     groupHeader.className="shippingGroupHeader";
@@ -1390,6 +1390,7 @@ function createShippingDataListPage(){
     groupTitle.className="shippingGroupTitle";
 
     groupHeader.appendChild(groupTitle);
+
 
     /* グループ小計 */
 
@@ -1415,6 +1416,94 @@ function createShippingDataListPage(){
       "円";
 
     groupHeader.appendChild(groupTotalSpan);
+
+
+    /* 品目別の合計情報 */
+
+    const groupItemSummary=document.createElement("div");
+
+    groupItemSummary.style.display="flex";
+    groupItemSummary.style.flexWrap="nowrap";
+    groupItemSummary.style.alignItems="center";
+    groupItemSummary.style.gap="3mm";
+    groupItemSummary.style.marginLeft="3mm";
+    groupItemSummary.style.flex="1";
+    groupItemSummary.style.minWidth="0";
+    groupItemSummary.style.overflow="hidden";
+
+
+    const itemSummaryMap={};
+
+    storesData.forEach(store=>{
+
+      store.items.forEach(item=>{
+
+        if(!itemSummaryMap[item.product]){
+
+          itemSummaryMap[item.product]={
+            price:item.price,
+            quantity:0
+          };
+
+        }
+
+        itemSummaryMap[item.product].quantity+=item.quantity;
+
+      });
+
+    });
+
+
+    Object.keys(itemSummaryMap).forEach(product=>{
+
+      const data=itemSummaryMap[product];
+
+      const itemDiv=document.createElement("div");
+
+      itemDiv.style.display="inline-flex";
+      itemDiv.style.alignItems="center";
+      itemDiv.style.gap="1mm";
+      itemDiv.style.whiteSpace="nowrap";
+      itemDiv.style.fontSize="9px";
+      itemDiv.style.lineHeight="1.1";
+
+
+      const productSpan=document.createElement("span");
+
+      productSpan.textContent=product;
+
+
+      const priceSpan=document.createElement("span");
+
+      priceSpan.textContent=
+        data.price.toLocaleString()+"円";
+
+
+      const quantitySpan=document.createElement("span");
+
+      quantitySpan.textContent=
+        data.quantity.toLocaleString();
+
+
+      quantitySpan.style.fontWeight="700";
+
+
+      const bagLabel=document.createElement("span");
+
+      bagLabel.textContent="袋";
+
+
+      itemDiv.appendChild(productSpan);
+      itemDiv.appendChild(priceSpan);
+      itemDiv.appendChild(quantitySpan);
+      itemDiv.appendChild(bagLabel);
+
+      groupItemSummary.appendChild(itemDiv);
+
+    });
+
+
+    groupHeader.appendChild(groupItemSummary);
 
     groupSection.appendChild(groupHeader);
 
