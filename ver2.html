@@ -681,6 +681,44 @@ return;
 
 items.splice(index,1);
 
+/* 現在の出荷データからも削除した品目の行を削除 */
+const shippingData =
+JSON.parse(localStorage.getItem("vegetableShippingData"));
+
+if(shippingData){
+
+shippingData.splice(index,1);
+
+localStorage.setItem(
+"vegetableShippingData",
+JSON.stringify(shippingData)
+);
+
+}
+
+/* 日別の出荷データからも同じ品目の行を削除 */
+const dailyShippingData =
+JSON.parse(localStorage.getItem("vegetableDailyShippingData"));
+
+if(dailyShippingData){
+
+Object.keys(dailyShippingData).forEach(date=>{
+
+if(Array.isArray(dailyShippingData[date])){
+
+dailyShippingData[date].splice(index,1);
+
+}
+
+});
+
+localStorage.setItem(
+"vegetableDailyShippingData",
+JSON.stringify(dailyShippingData)
+);
+
+}
+
 localStorage.setItem(
 "vegetableItems",
 JSON.stringify(items)
