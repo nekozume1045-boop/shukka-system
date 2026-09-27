@@ -597,6 +597,25 @@ const items=[
 {name:"えだまめ",price:200},
 {name:"きゅうり",price:180}
 ];
+
+const savedItems =
+localStorage.getItem("vegetableItems");
+
+if(savedItems){
+
+const loadedItems=JSON.parse(savedItems);
+
+items.length=0;
+
+loadedItems.forEach(item=>{
+items.push({
+name:item.name,
+price:Number(item.price)||0
+});
+});
+
+}
+    
 document.getElementById("btnAddItem")
 .addEventListener("click",()=>{
 
