@@ -1173,6 +1173,108 @@ recalc();
         }
 
       }
+        function createShippingDataListPage(){
+
+  const data=createShippingDataList();
+
+  if(!data) return null;
+
+  const page=document.createElement("div");
+  page.className="shippingListPage";
+
+  const title=document.createElement("h2");
+  title.textContent="出荷データ一覧";
+  title.className="shippingListTitle";
+  page.appendChild(title);
+
+  Object.keys(data).forEach(groupName=>{
+
+    const storesData=data[groupName];
+
+    if(storesData.length===0) return;
+
+    const groupSection=document.createElement("div");
+    groupSection.className="shippingGroup";
+
+    const groupTitle=document.createElement("h3");
+    groupTitle.textContent=groupName;
+    groupTitle.className="shippingGroupTitle";
+
+    groupSection.appendChild(groupTitle);
+
+    let groupTotal=0;
+
+    storesData.forEach(store=>{
+
+      const storeTitle=document.createElement("h4");
+      storeTitle.textContent=store.storeName;
+      storeTitle.className="shippingStoreTitle";
+
+      groupSection.appendChild(storeTitle);
+
+      const table=document.createElement("table");
+      table.className="shippingListTable";
+
+      const thead=document.createElement("thead");
+      const headerRow=document.createElement("tr");
+
+      ["品目","袋数","単価"].forEach(text=>{
+
+        const th=document.createElement("th");
+        th.textContent=text;
+        headerRow.appendChild(th);
+
+      });
+
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody=document.createElement("tbody");
+
+      store.items.forEach(item=>{
+
+        const tr=document.createElement("tr");
+
+        const productTd=document.createElement("td");
+        productTd.textContent=item.product;
+
+        const quantityTd=document.createElement("td");
+        quantityTd.textContent=item.quantity+"袋";
+
+        const priceTd=document.createElement("td");
+        priceTd.textContent=item.price.toLocaleString()+"円";
+
+        tr.appendChild(productTd);
+        tr.appendChild(quantityTd);
+        tr.appendChild(priceTd);
+
+        tbody.appendChild(tr);
+
+        groupTotal+=item.quantity*item.price;
+
+      });
+
+      table.appendChild(tbody);
+      groupSection.appendChild(table);
+
+    });
+
+    const groupTotalDiv=document.createElement("div");
+    groupTotalDiv.className="shippingGroupTotal";
+    groupTotalDiv.textContent=
+      "グループ小計　"+
+      groupTotal.toLocaleString()+
+      "円";
+
+    groupSection.appendChild(groupTotalDiv);
+
+    page.appendChild(groupSection);
+
+  });
+
+  return page;
+
+}
 
       if(storeColumn===-1) return;
 
