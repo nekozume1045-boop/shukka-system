@@ -645,6 +645,52 @@ createTable();
 recalc();
 
 });
+
+ document.getElementById("btnDeleteItem")
+.addEventListener("click",()=>{
+
+if(items.length===0){
+alert("削除できる品目がありません");
+return;
+}
+
+const names=items.map((item,index)=>{
+return (index+1)+". "+item.name;
+}).join("\n");
+
+const answer=prompt(
+"削除する品目の番号を入力してください。\n\n"+names
+);
+
+if(answer===null) return;
+
+const index=Number(answer)-1;
+
+if(!Number.isInteger(index) || index<0 || index>=items.length){
+alert("正しい番号を入力してください");
+return;
+}
+
+const itemName=items[index].name;
+
+if(!confirm(
+itemName+" を削除しますか？\n\nこの操作は元に戻せません。"
+)){
+return;
+}
+
+items.splice(index,1);
+
+localStorage.setItem(
+"vegetableItems",
+JSON.stringify(items)
+);
+
+createTable();
+recalc();
+
+});   
+    
 const tableBody=document.getElementById("tableBody");
 const grandTotalValue=document.getElementById("grandTotalValue");
 const dailyTotalAmountValue=document.getElementById("dailyTotalAmount");
