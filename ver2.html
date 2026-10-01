@@ -566,7 +566,7 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
 .deliveryGrandTotal td:first-child{
     text-align:center;
 }
-/* 納品書の商品表を上下いっぱいに広げる */
+/* 納品書の商品表を下まで広げる */
 .deliveryTable{
     margin-top:0;
     flex:1;
@@ -574,12 +574,16 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
 
 .deliveryTable tbody tr:not(.deliveryGrandTotal){
-    height:auto;
+    height:18mm;
 }
 
 .deliveryTable tbody tr:not(.deliveryGrandTotal) td{
-    height:auto;
-}        
+    height:18mm;
+}
+
+.deliveryTable .deliveryGrandTotal{
+    height:11mm;
+} 
 </style>
 
 
