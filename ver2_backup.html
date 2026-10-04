@@ -1,1 +1,2070 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>野菜出荷管理 Ver1</title>
+<style>
 
+body{
+margin:0;
+padding:12px;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:#f3f6fa;
+color:#222;
+}
+
+.header{
+background:#2e7d32;
+color:#fff;
+padding:15px;
+border-radius:10px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.subTitle{
+margin:5px 0 0;
+font-size:13px;
+}
+
+.menu{
+display:flex;
+gap:8px;
+overflow-x:auto;
+margin-bottom:15px;
+}
+
+.menu button{
+
+background:#43a047;
+color:white;
+border:none;
+border-radius:8px;
+padding:10px 16px;
+font-size:15px;
+white-space:nowrap;
+
+}
+/* 10キー */
+#numPad{
+
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    position:relative;
+
+    width:520px;
+    margin:15px 15px 20px auto;
+    padding:8px;
+    
+display:inline-flex;
+align-items:center;
+justify-content:center;
+    
+    background:#fff;
+    border:2px solid #555;
+    border-radius:12px;
+
+    box-shadow:0 3px 12px rgba(0,0,0,.25);
+
+    text-align:center;
+}
+
+#numPad .numRow{
+    display:flex;
+    justify-content:center;
+}
+
+#numPad .numKey{
+    width:60px;
+    height:55px;
+    margin:3px;
+
+    font-size:24px;
+    font-weight:bold;
+
+    border:1px solid #888;
+    border-radius:8px;
+    background:#f5f5f5;
+}
+
+#numPad .direction{
+    background:#e8e8e8;
+}
+.tableWrap{
+
+overflow:auto;
+background:white;
+border-radius:10px;
+padding:10px;
+
+box-shadow:0 2px 6px rgba(0,0,0,.1);
+
+}
+
+#bottomArea{
+
+display:flex;
+
+align-items:flex-start;
+
+justify-content:space-between;
+
+width:100%;
+
+box-sizing:border-box;
+
+}    
+
+table{
+
+border-collapse:collapse;
+width:max-content;
+
+}
+
+th{
+
+background:#4caf50;
+color:white;
+padding:8px;
+border:1px solid #ddd;
+
+}
+
+td{
+
+border:1px solid #ddd;
+padding:5px;
+
+}
+
+input[type=number]{
+
+width:55px;
+padding:5px;
+text-align:center;
+
+}
+
+footer{
+
+margin:15px 0 20px 15px;
+    
+width:300px;
+
+display:inline-block;   
+
+background:white;
+
+padding:15px;
+
+border-radius:10px;
+
+font-size:22px;
+
+font-weight:bold;
+
+text-align:left;
+
+box-shadow:0 2px 6px rgba(0,0,0,.1);
+
+}
+#printArea {
+
+    visibility:hidden;
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+}
+    #numPad .enterKey{
+    height:177px;
+    width:70px;
+    flex-shrink:0;
+}
+    #numPad .keyArea{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+}
+    #numPad .directionArea{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    margin-left:5px;
+}
+
+#numPad .directionArea > div{
+    display:flex;
+}
+
+#numPad .directionArea .numKey{
+    width:60px;
+    height:55px;
+}
+    /* 数字・削除・Cキーを横に広げる */
+#numPad .keyArea .numKey{
+    width:90px;
+}
+    .dailyHistoryRow{
+  display:flex;
+  justify-content:space-between;
+  width:300px;
+  margin:4px 0;
+}
+    .dailyHistoryHeader{
+  display:flex;
+  justify-content:space-between;
+  width:300px;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+    #dailyTotal{
+  font-weight:bold;
+  margin-top:8px;
+}
+
+#dailyHistory{
+  margin-top:10px;
+}
+    @media print{
+
+    @page{
+        size:A4 portrait;
+        margin:0mm;
+    }
+
+    body *{
+        visibility:hidden;
+    }
+
+    #printArea,
+    #printArea *{
+        visibility:visible;
+    }
+
+    #printArea{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+        
+    }
+
+.printPage{
+    width:100%;
+    height:365mm;
+    margin:0 auto;
+    padding:3mm;
+    box-sizing:border-box;
+    page-break-after:always;
+    break-after:page;
+    overflow:hidden;
+    font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
+    color:#000;
+    display:flex;
+    flex-direction:column;
+}
+.shippingListPage{
+    width:270mm;
+    height:368mm;
+    margin:0;
+    padding:4mm;
+    box-sizing:border-box;
+    page-break-after:always;
+    break-after:page;
+    overflow:hidden;
+    font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
+    color:#000;
+    
+}
+
+.shippingListTitle{
+    text-align:center;
+    font-size:36px;
+    margin:0 0 4mm 0;
+    padding-bottom:2mm;
+    border-bottom:2px solid #000;
+}
+
+.shippingGroup{
+    margin-bottom:4mm;
+}
+
+.shippingGroupHeader{
+    display:flex;
+    align-items:center;
+    gap:6mm;
+    margin-bottom:1.5mm;
+    padding:1mm 2mm;
+    border-bottom:1.5px solid #000;
+}
+
+.shippingGroupTitle{
+    font-size:27px;
+    font-weight:bold;
+    margin:0;
+    padding:0;
+}
+
+.shippingGroupTotal{
+    font-size:21px;
+    font-weight:bold;
+    margin:0;
+}
+
+.shippingStores{
+    display:flex;
+    flex-wrap:wrap;
+    gap:2mm;
+    width:100%;
+}
+
+.shippingStoreBox{
+    flex:0 0 calc((100% - 4mm) / 3);
+    min-width:0;
+    box-sizing:border-box;
+}
+
+.shippingStoreTitle{
+    font-size:19px;
+    font-weight:bold;
+    margin:0;
+    padding:1mm;
+    text-align:center;
+    border:1px solid #000;
+    border-bottom:none;
+    white-space:nowrap;
+}
+
+.shippingListTable{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
+
+.shippingListTable th,
+.shippingListTable td{
+    border:1px solid #000;
+    padding:1.3mm 0.8mm;
+    font-size:20px;
+    line-height:1.2;
+}
+
+.shippingListTable th{
+    text-align:center;
+    font-weight:bold;
+    background:#eee;
+}
+
+.shippingListTable th:nth-child(1){
+    width:45%;
+}
+
+.shippingListTable th:nth-child(2){
+    width:25%;
+}
+
+.shippingListTable th:nth-child(3){
+    width:30%;
+}
+
+.shippingListTable td:nth-child(2),
+.shippingListTable td:nth-child(3){
+    text-align:center;
+}
+
+.shippingDailyTotal{
+    margin-top:4mm;
+    padding:2mm;
+    text-align:center;
+    border:2px solid #000;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.shippingCumulativeTotal{
+    margin-top:2mm;
+    padding:2mm;
+    text-align:center;
+    border:2px solid #000;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.shippingListSummary{
+    margin-top:3mm;
+}
+.shippingListTable td:nth-child(2){
+    font-weight:bold;
+}
+
+    /* タイトル */
+    .deliveryTitle{
+        text-align:center;
+        font-size:32px;
+        font-weight:bold;
+        margin:0 0 20mm 0;
+        letter-spacing:5px;
+    }
+
+/* 上部情報 */
+.deliveryInfo{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:8mm;
+    font-size:14px;
+}
+
+/* 店舗名 */
+.deliveryStoreLine{
+    height:115mm;
+    margin-bottom:20mm;
+    position:relative;
+    display:flex;
+    align-items:center;
+    border-bottom:none
+}
+
+.deliveryStoreLine .deliveryLabel{
+    width:28mm;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.deliveryStoreLine span:last-child{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    text-align:center;
+    font-size:280px;
+    font-weight:bold;
+    white-space:normal;
+    line-height:0.9;
+}
+
+/* 日付・七ツ森農業・会員名 */
+.deliveryMeta{
+    display:flex;
+    width:100%;
+    align-items:center;
+    gap:3mm;
+    white-space:nowrap;
+    border-top:1px solid #000;
+}
+
+.deliveryMeta .deliveryLine{
+    flex:1;
+    height:8mm;
+    margin-bottom:2mm;
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid #000;
+}
+
+.deliveryMeta .deliveryLabel{
+    width:auto;
+    margin-right:3mm;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.deliveryMeta .deliveryLine span:last-child{
+    font-size:40px;
+    font-weight:bold;
+}
+
+/* 会員名 */
+.deliveryMeta .deliveryLine:last-child span:last-child{
+    font-size:40px;
+    font-weight:bold;
+}
+
+/* 納品文 */
+.deliveryMessage{
+    font-size:30px;
+    margin:2mm 0;
+}
+/* 商品表 */
+.deliveryTable{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+    flex:none;
+    margin-top:0;
+}
+
+.deliveryTable th,
+.deliveryTable td{
+    border:1px solid #000;
+    padding:1mm 2mm;
+    font-size:14px;
+    box-sizing:border-box;
+}
+
+.deliveryTable th{
+    text-align:center;
+    font-weight:bold;
+    height:12mm;
+    font-size:22px;
+}
+
+.deliveryTable th:nth-child(1){
+    width:50%;
+}
+
+.deliveryTable th:nth-child(2){
+    width:25%;
+}
+
+.deliveryTable th:nth-child(3){
+    width:24%;
+}
+
+.deliveryTable td.productName{
+    text-align:left;
+    font-size:70px;
+    font-weight:bold;
+}
+
+.deliveryTable td.productNumber{
+    text-align:center;
+}
+
+.deliveryTable td.quantity{
+    text-align:center;
+    font-weight:bold;
+    font-size:66px;
+}
+.deliveryTable td:nth-child(3){
+    font-weight:bold;
+    font-size:66px;
+    text-align:center;
+}
+
+/* 商品5行だけ均等にする */
+.deliveryTable tbody tr:not(.deliveryGrandTotal){
+    height:28mm;
+}
+
+.deliveryTable tbody tr:not(.deliveryGrandTotal) td{
+    height:28mm;
+}
+
+/* 合計行 */
+.deliveryGrandTotal td{
+    height:11mm;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.deliveryGrandTotal td:first-child{
+    text-align:center;
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>🥬 野菜出荷管理</h1>
+
+<p class="subTitle">
+GitHub Pages版
+</p>
+
+</header>
+
+<nav class="menu">
+
+<button id="btnInput">
+出荷入力
+</button>
+
+<button id="btnPrint">
+納品書
+</button>
+
+<button id="btnSave">
+保存
+</button>
+
+<button id="btnLoad">
+読込
+</button>
+
+<button id="btnClear">
+クリア
+</button>
+
+<button id="btnAddItem">
+品目追加
+</button>
+
+<button id="btnDeleteItem">
+品目削除
+</button>
+
+<button id="btnPrintA6">
+🖨️ A6一括印刷
+</button>
+
+</nav>
+
+<main>
+
+<section id="shippingArea">
+
+<h2>
+
+今日の出荷
+
+</h2>
+
+<div class="tableWrap">
+
+<table id="shippingTable">
+
+<thead>
+
+<tr>
+
+<th>商品</th>
+
+<th>単価</th>
+
+<th>予定</th>
+
+<th>合計</th>
+
+<th>わさだ</th>
+
+<th>大在</th>
+
+<th>南大分</th>
+
+<th>本店</th>
+
+<th>竹田</th>
+
+<th>すごう</th>
+
+<th>天神</th>
+
+<th>サンリブ</th>
+
+<th>サンライフ</th>
+
+<th>道の駅あさじ</th>
+
+<th>古国府</th>
+
+<th>光吉</th>
+
+<th>日出</th>
+
+<th>高城</th>
+
+<th>志手</th>
+
+<th>高尾</th>
+
+<th>清川</th>
+
+<th>神楽苑</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+<!-- app.js が自動生成 -->
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+<div id="bottomArea">
+    
+<footer>
+
+<div id="grandTotal">
+
+総袋数
+
+<span id="grandTotalValue">
+
+0
+
+</span>
+
+</div>
+<div id="dailyTotal">
+
+1日の合計金額
+
+<span id="dailyTotalAmount">
+
+0
+
+</span> 円
+
+</div>
+
+<div id="dailyCumulativeTotal">
+
+累計金額
+
+<span id="dailyCumulativeTotalAmount">
+
+0
+
+</span> 円
+
+</div>
+
+<div id="dailyHistory">
+
+<div class="dailyHistoryHeader">
+  <span>日付</span>
+  <span>合計金額</span>
+</div>
+
+<div id="dailyHistoryList"></div>
+
+</div>
+</footer>
+
+
+<script>
+const stores=[
+"わさだ","大在","南大分","本店","竹田","すごう",
+"天神","サンリブ","サンライフ","道の駅あさじ",
+"古国府","光吉","日出","高城","志手",
+"高尾","清川","神楽苑"
+];
+
+const storeGroups={
+
+  "わかばグループ":[
+    "わさだ",
+    "大在",
+    "南大分",
+    "本店",
+    "竹田",
+    "すごう",
+    "天神",
+    "サンリブ"
+  ],
+
+  "あさじグループ":[
+    "サンライフ",
+    "道の駅あさじ"
+  ],
+
+  "とれたて市場グループ":[
+    "古国府",
+    "光吉",
+    "日出",
+    "高城",
+    "志手",
+    "高尾"
+  ],
+
+  "清川グループ":[
+    "清川"
+  ],
+
+  "神楽苑グループ":[
+    "神楽苑"
+  ]
+
+};
+
+const items=[
+{name:"人参",price:180},
+{name:"えだまめ",price:200},
+{name:"きゅうり",price:180}
+];
+
+const savedItems =
+localStorage.getItem("vegetableItems");
+
+if(savedItems){
+
+const loadedItems=JSON.parse(savedItems);
+
+items.length=0;
+
+loadedItems.forEach(item=>{
+items.push({
+name:item.name,
+price:Number(item.price)||0
+});
+});
+
+}
+    
+document.getElementById("btnAddItem")
+.addEventListener("click",()=>{
+
+const name=prompt("追加する品目名を入力してください");
+
+if(!name) return;
+
+const price=Number(
+prompt("単価を入力してください")
+)||0;
+
+items.push({
+name:name,
+price:price
+});
+
+localStorage.setItem(
+"vegetableItems",
+JSON.stringify(items)
+);
+
+createTable();
+recalc();
+
+});
+
+ document.getElementById("btnDeleteItem")
+.addEventListener("click",()=>{
+
+if(items.length===0){
+alert("削除できる品目がありません");
+return;
+}
+
+const names=items.map((item,index)=>{
+return (index+1)+". "+item.name;
+}).join("\n");
+
+const answer=prompt(
+"削除する品目の番号を入力してください。\n\n"+names
+);
+
+if(answer===null) return;
+
+const index=Number(answer)-1;
+
+if(!Number.isInteger(index) || index<0 || index>=items.length){
+alert("正しい番号を入力してください");
+return;
+}
+
+const itemName=items[index].name;
+
+if(!confirm(
+itemName+" を削除しますか？\n\nこの操作は元に戻せません。"
+)){
+return;
+}
+
+items.splice(index,1);
+
+/* 現在の出荷データからも削除した品目の行を削除 */
+const shippingData =
+JSON.parse(localStorage.getItem("vegetableShippingData"));
+
+if(shippingData){
+
+shippingData.splice(index,1);
+
+localStorage.setItem(
+"vegetableShippingData",
+JSON.stringify(shippingData)
+);
+
+}
+
+/* 日別の出荷データからも同じ品目の行を削除 */
+const dailyShippingData =
+JSON.parse(localStorage.getItem("vegetableDailyShippingData"));
+
+if(dailyShippingData){
+
+Object.keys(dailyShippingData).forEach(date=>{
+
+if(Array.isArray(dailyShippingData[date])){
+
+dailyShippingData[date].splice(index,1);
+
+}
+
+});
+
+localStorage.setItem(
+"vegetableDailyShippingData",
+JSON.stringify(dailyShippingData)
+);
+
+}
+
+localStorage.setItem(
+"vegetableItems",
+JSON.stringify(items)
+);
+
+createTable();
+recalc();
+
+});   
+    
+const tableBody=document.getElementById("tableBody");
+const grandTotalValue=document.getElementById("grandTotalValue");
+const dailyTotalAmountValue=document.getElementById("dailyTotalAmount");
+let dailyTotalAmount=0;    
+let dailyTotals={};
+let editingDate=null;
+const dailyCumulativeTotalAmountValue =
+document.getElementById("dailyCumulativeTotalAmount");
+function getTodayKey(){
+
+const now=new Date();
+
+return now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+
+}
+function loadDailyTotals(){
+
+const data=localStorage.getItem("vegetableDailyTotals");
+
+if(data){
+
+dailyTotals=JSON.parse(data);
+
+}
+
+}  
+function saveDailyTotal(){
+
+const today=getTodayKey();
+
+const saveDate=editingDate || today;
+
+dailyTotals[saveDate]=dailyTotalAmount;
+
+localStorage.setItem(
+"vegetableDailyTotals",
+JSON.stringify(dailyTotals)
+);
+
+}
+function displayDailyTotals(){
+
+const list=document.getElementById("dailyHistoryList");
+
+list.innerHTML="";
+let cumulative=0;
+
+const dates=Object.keys(dailyTotals).sort().reverse();
+
+dates.forEach(date=>{
+cumulative += Number(dailyTotals[date]) || 0;
+const div=document.createElement("div");
+
+div.className="dailyHistoryRow";
+
+const amountSpan=document.createElement("span");
+
+amountSpan.textContent=
+Number(dailyTotals[date]).toLocaleString()+" 円";
+
+const deleteButton=document.createElement("button");
+
+deleteButton.textContent="削除";
+
+deleteButton.addEventListener("click",()=>{
+
+if(!confirm(date+" のデータを削除します。\nよろしいですか？")){
+return;
+}
+
+delete dailyTotals[date];
+
+localStorage.setItem(
+"vegetableDailyTotals",
+JSON.stringify(dailyTotals)
+);
+
+displayDailyTotals();
+
+});
+
+const dateSpan=document.createElement("span");
+
+dateSpan.textContent=date;
+
+dateSpan.style.cursor="pointer";
+dateSpan.style.textDecoration="underline";
+
+div.appendChild(dateSpan);
+dateSpan.addEventListener("click",()=>{
+editingDate=date;
+const dailyShippingData=JSON.parse(
+localStorage.getItem("vegetableDailyShippingData")
+) || {};
+
+const data=dailyShippingData[date];
+
+if(!data){
+
+alert("この日の出荷データは保存されていません。");
+
+return;
+
+}
+
+createTable();
+const rows=tableBody.querySelectorAll("tr");
+
+rows.forEach((row,rowIndex)=>{
+
+const inputs=row.querySelectorAll("input");
+
+inputs.forEach((input,colIndex)=>{
+
+if(data[rowIndex] && data[rowIndex][colIndex]!=null){
+
+input.value=data[rowIndex][colIndex];
+
+}
+
+});
+
+});
+
+recalc();
+
+alert(date+" の出荷データを読み込みました");
+
+});
+
+div.appendChild(amountSpan);
+
+div.appendChild(deleteButton);
+
+list.appendChild(div);
+
+});
+dailyCumulativeTotalAmountValue.textContent =
+cumulative.toLocaleString();
+}    
+function createTable(){
+
+tableBody.innerHTML="";
+
+items.forEach(item=>{
+
+const tr=document.createElement("tr");
+
+let html="";
+
+html+=`<td>${item.name}</td>`;
+
+html+=`<td>
+<input type="number"
+value="${item.price}"
+min="0"
+inputmode="none"
+class="priceInput">
+</td>`;
+
+html+=`<td>
+<input type="number"
+value="0"
+min="0"
+inputmode="none"
+class="planInput">
+</td>`;
+
+html+=`<td class="total">0</td>`;
+
+stores.forEach(()=>{
+
+html+=`<td>
+<input type="number"
+value="0"
+min="0"
+inputmode="none">
+</td>`;
+
+});
+
+tr.innerHTML=html;
+
+tableBody.appendChild(tr);
+
+});
+}
+  function recalc(){
+
+let grand=0;
+dailyTotalAmount=0;
+const rows=tableBody.querySelectorAll("tr");
+
+rows.forEach(row=>{
+
+const inputs=row.querySelectorAll("input:not(.priceInput):not(.planInput)");
+
+let sum=0;
+
+inputs.forEach(input=>{
+sum+=Number(input.value)||0;
+});
+
+ const priceInput =
+row.querySelector(".priceInput");
+
+const price =
+Number(priceInput.value)||0;
+
+dailyTotalAmount+=sum*price;   
+
+row.querySelector(".total").textContent=sum;
+
+grand+=sum;
+
+});
+
+grandTotalValue.textContent=grand;
+dailyTotalAmountValue.textContent=dailyTotalAmount.toLocaleString();
+  }
+tableBody.addEventListener("input",e=>{
+
+if(e.target.classList.contains("priceInput")){
+
+const row=e.target.closest("tr");
+const rowIndex=Array.from(tableBody.querySelectorAll("tr")).indexOf(row);
+
+if(rowIndex>=0){
+items[rowIndex].price=Number(e.target.value)||0;
+}
+
+}
+
+recalc();
+
+});
+function saveData(){
+
+const data=[];
+
+tableBody.querySelectorAll("tr").forEach(row=>{
+
+const rowData=[];
+
+row.querySelectorAll("input").forEach(input=>{
+
+rowData.push(Number(input.value)||0);
+
+});
+
+data.push(rowData);
+
+});
+
+localStorage.setItem(
+"vegetableShippingData",
+JSON.stringify(data)
+);
+
+}
+function saveDailyShippingData(){
+
+const today=getTodayKey();
+
+
+const saveDate=editingDate || today;
+const data=[];
+
+tableBody.querySelectorAll("tr").forEach(row=>{
+
+const rowData=[];
+
+row.querySelectorAll("input").forEach(input=>{
+
+rowData.push(Number(input.value)||0);
+
+});
+
+data.push(rowData);
+
+});
+
+let dailyShippingData=JSON.parse(
+localStorage.getItem("vegetableDailyShippingData")
+) || {};
+
+dailyShippingData[saveDate]=data;
+
+localStorage.setItem(
+"vegetableDailyShippingData",
+JSON.stringify(dailyShippingData)
+);
+
+}
+function loadData(){
+
+const data=JSON.parse(
+localStorage.getItem("vegetableShippingData")
+);
+
+if(!data)return;
+
+createTable();    
+
+const rows=tableBody.querySelectorAll("tr");
+
+rows.forEach((row,rowIndex)=>{
+
+if(!data[rowIndex]) return;
+
+const inputs=row.querySelectorAll("input");
+
+inputs.forEach((input,colIndex)=>{
+
+if(data[rowIndex][colIndex] != null){
+
+input.value=data[rowIndex][colIndex];
+
+}
+
+});
+
+});
+
+recalc();    
+
+
+} 
+document.getElementById("btnSave")
+.addEventListener("click",()=>{
+
+saveData();
+
+saveDailyShippingData();
+saveDailyTotal();
+displayDailyTotals();
+
+editingDate=null;
+
+alert("保存しました");
+
+});
+
+document.getElementById("btnLoad")
+.addEventListener("click",()=>{
+
+    loadData();
+
+    alert("読み込みました");
+
+});
+
+
+document.getElementById("btnClear")
+.addEventListener("click",()=>{
+
+    if(!confirm("入力したデータをすべて削除します。\nよろしいですか？")){
+        return;
+    }
+
+    document
+.querySelectorAll("input[type='number']:not(.priceInput)")
+.forEach(input=>{
+    input.value=0;
+});
+
+    recalc();
+
+    localStorage.removeItem("vegetableShippingData");
+
+    alert("データを削除しました");
+
+});
+
+createTable();
+loadData();
+loadDailyTotals();
+displayDailyTotals();    
+recalc();
+    function createShippingDataList(){
+
+  const table=document.getElementById("shippingTable");
+
+  if(!table) return null;
+
+  const headers=table.querySelectorAll("thead th");
+  const rows=table.querySelectorAll("tbody tr");
+
+  const result={};
+
+  Object.keys(storeGroups).forEach(groupName=>{
+
+    result[groupName]=[];
+
+    storeGroups[groupName].forEach(storeName=>{
+
+      let storeData=[];
+
+      let storeColumn=-1;
+
+      for(let i=4;i<headers.length;i++){
+
+        if(headers[i].textContent.trim()===storeName){
+          storeColumn=i;
+          break;
+        }
+
+      }
+        
+
+      if(storeColumn===-1) return;
+
+      rows.forEach(row=>{
+
+        const cells=row.querySelectorAll("td");
+
+        if(cells.length<=storeColumn) return;
+
+        const product=cells[0].textContent.trim();
+
+        const priceInput=cells[1].querySelector(".priceInput");
+        const price=Number(priceInput?.value)||0;
+
+        const quantityInput=
+          cells[storeColumn].querySelector("input");
+
+        if(!quantityInput) return;
+
+        const quantity=Number(quantityInput.value)||0;
+
+        if(quantity<=0) return;
+
+        storeData.push({
+          product:product,
+          quantity:quantity,
+          price:price
+        });
+
+      });
+
+      if(storeData.length>0){
+
+        result[groupName].push({
+          storeName:storeName,
+          items:storeData
+        });
+
+      }
+
+    });
+
+  });
+
+  return result;
+
+}
+
+function createShippingDataListPage(){
+
+  const data=createShippingDataList();
+
+  if(!data) return null;
+
+  const page=document.createElement("div");
+  page.className="shippingListPage";
+
+  const title=document.createElement("h2");
+  title.textContent="出荷データ一覧";
+  title.className="shippingListTitle";
+  page.appendChild(title);
+
+  Object.keys(data).forEach(groupName=>{
+
+    const storesData=data[groupName];
+
+    if(storesData.length===0) return;
+
+    const groupSection=document.createElement("div");
+    groupSection.className="shippingGroup";
+
+     /* グループ名 */
+
+    const groupHeader=document.createElement("div");
+    groupHeader.className="shippingGroupHeader";
+
+    const groupTitle=document.createElement("span");
+
+    groupTitle.textContent=
+      groupName.replace("グループ","");
+
+    groupTitle.className="shippingGroupTitle";
+
+    groupHeader.appendChild(groupTitle);
+
+
+    /* グループ小計 */
+
+    let groupTotal=0;
+
+    storesData.forEach(store=>{
+
+      store.items.forEach(item=>{
+
+        groupTotal+=item.quantity*item.price;
+
+      });
+
+    });
+
+    const groupTotalSpan=document.createElement("span");
+
+    groupTotalSpan.className="shippingGroupTotal";
+
+    groupTotalSpan.textContent=
+      "小計 "+
+      groupTotal.toLocaleString()+
+      "円";
+
+    groupHeader.appendChild(groupTotalSpan);
+
+
+    /* 品目別の合計情報 */
+
+    const groupItemSummary=document.createElement("div");
+
+    groupItemSummary.style.display="flex";
+    groupItemSummary.style.flexWrap="wrap";
+    groupItemSummary.style.alignItems="center";
+    groupItemSummary.style.gap="3mm";
+    groupItemSummary.style.marginLeft="3mm";
+    groupItemSummary.style.flex="1";
+    groupItemSummary.style.minWidth="0";
+    groupItemSummary.style.overflow="hidden";
+
+
+    const itemSummaryMap={};
+
+    storesData.forEach(store=>{
+
+      store.items.forEach(item=>{
+
+        if(!itemSummaryMap[item.product]){
+
+          itemSummaryMap[item.product]={
+            price:item.price,
+            quantity:0
+          };
+
+        }
+
+        itemSummaryMap[item.product].quantity+=item.quantity;
+
+      });
+
+    });
+
+
+    Object.keys(itemSummaryMap).forEach(product=>{
+
+      const data=itemSummaryMap[product];
+
+      const itemDiv=document.createElement("div");
+
+      itemDiv.style.display="inline-flex";
+      itemDiv.style.alignItems="center";
+      itemDiv.style.gap="1mm";
+      itemDiv.style.whiteSpace="nowrap";
+      itemDiv.style.fontSize="18px";
+      itemDiv.style.lineHeight="1.1";
+　　　　itemDiv.style.flex="0 0 48%";
+
+      const productSpan=document.createElement("span");
+
+      productSpan.textContent=product;
+
+
+      const priceSpan=document.createElement("span");
+
+      priceSpan.textContent=
+        data.price.toLocaleString()+"円";
+
+
+      const quantitySpan=document.createElement("span");
+
+      quantitySpan.textContent=
+        data.quantity.toLocaleString();
+
+
+      quantitySpan.style.fontWeight="bold";
+quantitySpan.style.fontSize="20px";
+
+
+      const bagLabel=document.createElement("span");
+
+      bagLabel.textContent="袋";
+
+
+      itemDiv.appendChild(productSpan);
+      itemDiv.appendChild(priceSpan);
+      itemDiv.appendChild(quantitySpan);
+      itemDiv.appendChild(bagLabel);
+
+      groupItemSummary.appendChild(itemDiv);
+
+    });
+
+
+    groupHeader.appendChild(groupItemSummary);
+
+    groupSection.appendChild(groupHeader);
+
+    /* 店舗を横並び */
+
+    const storesContainer=document.createElement("div");
+    storesContainer.className="shippingStores";
+
+    storesData.forEach(store=>{
+
+      const storeBox=document.createElement("div");
+      storeBox.className="shippingStoreBox";
+
+      const storeTitle=document.createElement("div");
+      storeTitle.textContent=store.storeName;
+      storeTitle.className="shippingStoreTitle";
+
+      storeBox.appendChild(storeTitle);
+
+      const table=document.createElement("table");
+      table.className="shippingListTable";
+
+      const thead=document.createElement("thead");
+      const headerRow=document.createElement("tr");
+
+      ["品目","袋数","単価"].forEach(text=>{
+
+        const th=document.createElement("th");
+        th.textContent=text;
+        headerRow.appendChild(th);
+
+      });
+
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody=document.createElement("tbody");
+
+      store.items.forEach(item=>{
+
+        const tr=document.createElement("tr");
+
+        const productTd=document.createElement("td");
+        productTd.textContent=item.product;
+
+        const quantityTd=document.createElement("td");
+        quantityTd.textContent=item.quantity+"袋";
+
+        const priceTd=document.createElement("td");
+        priceTd.textContent=
+          item.price.toLocaleString()+"円";
+
+        tr.appendChild(productTd);
+        tr.appendChild(quantityTd);
+        tr.appendChild(priceTd);
+
+        tbody.appendChild(tr);
+
+      });
+
+      table.appendChild(tbody);
+      storeBox.appendChild(table);
+
+      storesContainer.appendChild(storeBox);
+
+    });
+
+    groupSection.appendChild(storesContainer);
+
+    page.appendChild(groupSection);
+
+  });
+
+  /* 合計金額 */
+
+  const summary=document.createElement("div");
+  summary.className="shippingListSummary";
+
+  const dailyTotal=document.getElementById(
+    "dailyTotalAmount"
+  );
+
+  const cumulativeTotal=document.getElementById(
+    "dailyCumulativeTotalAmount"
+  );
+
+  const dailyDiv=document.createElement("div");
+
+  dailyDiv.textContent=
+    "その日の合計金額　"+
+    (dailyTotal ? dailyTotal.textContent : "0")+
+    "円";
+
+  dailyDiv.className="shippingDailyTotal";
+
+  const cumulativeDiv=document.createElement("div");
+
+  cumulativeDiv.textContent=
+    "累計金額　"+
+    (cumulativeTotal ? cumulativeTotal.textContent : "0")+
+    "円";
+
+  cumulativeDiv.className="shippingCumulativeTotal";
+
+  summary.appendChild(dailyDiv);
+  summary.appendChild(cumulativeDiv);
+
+  page.appendChild(summary);
+
+  return page;
+
+}
+    
+function printA6(){
+
+  const table=document.getElementById("shippingTable");
+
+  if(!table){
+    alert("出荷表が見つかりません");
+    return;
+  }
+
+  const printArea=document.createElement("div");
+  printArea.id="printArea";
+
+  const headers=table.querySelectorAll("thead th");
+  const rows=table.querySelectorAll("tbody tr");
+
+  /* 店舗ごとにページを作る */
+  for(let col=4;col<headers.length;col++){
+
+    const storeName=headers[col].textContent.trim();
+
+    if(!storeName) continue;
+
+    const itemsForStore=[];
+
+    let storeTotal=0;
+
+    rows.forEach(row=>{
+
+      const cells=row.querySelectorAll("td");
+
+      if(cells.length<=col) return;
+
+      const product=cells[0].textContent.trim();
+
+      /* 単価 */
+const priceInput=cells[1].querySelector(".priceInput");
+const price=Number(priceInput.value)||0;
+
+      const input=cells[col].querySelector("input");
+
+      if(!input) return;
+
+      const quantity=Number(input.value)||0;
+
+      /* 0袋の商品は印刷しない */
+      if(quantity<=0) return;
+
+      const amount=quantity*price;
+
+      storeTotal+=amount;
+
+      itemsForStore.push({
+        product:product,
+        quantity:quantity,
+        price:price,
+        amount:amount
+      });
+
+    });
+
+    /* 商品がない店舗は印刷しない */
+    if(itemsForStore.length===0) continue;
+
+    /* ページ */
+    const page=document.createElement("div");
+    page.className="printPage";
+
+    /* タイトル */
+    const title=document.createElement("h2");
+    title.className="deliveryTitle";
+    title.textContent="納　品　書";
+    page.appendChild(title);
+
+/* 上部情報 */
+const info=document.createElement("div");
+info.className="deliveryInfo";
+
+/* 店舗名 */
+const destination=document.createElement("div");
+destination.className="deliveryLine deliveryStoreLine";
+destination.innerHTML=
+  '<span class="deliveryLabel">出荷先：</span>'+
+  '<span>'+storeName+'</span>';
+
+info.appendChild(destination);
+
+/* 日付・七ツ森農業・会員名 */
+const metaRow=document.createElement("div");
+metaRow.className="deliveryMeta";
+
+/* 日付 */
+const dateLine=document.createElement("div");
+dateLine.className="deliveryLine";
+
+const today=new Date();
+
+const year=today.getFullYear();
+const month=today.getMonth()+1;
+const day=today.getDate();
+
+dateLine.innerHTML=
+  '<span class="deliveryLabel">年月日：</span>'+
+  '<span>'+year+'年　'+month+'月　'+day+'日</span>';
+
+metaRow.appendChild(dateLine);
+
+/* 七ツ森農業 */
+const groupLine=document.createElement("div");
+groupLine.className="deliveryLine";
+groupLine.innerHTML=
+  '<span>七ツ森農業</span>';
+
+metaRow.appendChild(groupLine);
+
+/* 会員名 */
+const memberName=document.createElement("div");
+memberName.className="deliveryLine";
+memberName.innerHTML=
+  '<span class="deliveryLabel">会員名</span>'+
+  '<span>佐藤利彦</span>';
+
+metaRow.appendChild(memberName);
+
+page.appendChild(info);
+page.appendChild(metaRow);
+    /* 納品文 */
+    const message=document.createElement("div");
+    message.className="deliveryMessage";
+    message.textContent="下記のとおり納品いたしました";
+    page.appendChild(message);
+　　
+ 
+
+    /* 商品表 */
+    const deliveryTable=document.createElement("table");
+    deliveryTable.className="deliveryTable";
+
+    const thead=document.createElement("thead");
+    const headerRow=document.createElement("tr");
+
+    ["品　名","数量","単価(税抜)"]
+      .forEach(text=>{
+        const th=document.createElement("th");
+        th.textContent=text;
+        headerRow.appendChild(th);
+      });
+
+    thead.appendChild(headerRow);
+    deliveryTable.appendChild(thead);
+
+    const tbody=document.createElement("tbody");
+
+    /* 商品 */
+    itemsForStore.forEach(item=>{
+
+      const tr=document.createElement("tr");
+
+      const productTd=document.createElement("td");
+      productTd.className="productName";
+      productTd.textContent=item.product;
+
+      
+
+      const quantityTd=document.createElement("td");
+      quantityTd.className="quantity";
+      quantityTd.textContent=item.quantity+"袋";
+
+      const priceTd=document.createElement("td");
+      priceTd.textContent=
+        item.price.toLocaleString()+"円";
+
+      
+
+      tr.appendChild(productTd);
+     
+      tr.appendChild(quantityTd);
+      tr.appendChild(priceTd);
+      
+
+      tbody.appendChild(tr);
+
+    });
+
+    /* 空白行を追加 */
+    const blankRows=Math.max(0,5-itemsForStore.length);
+
+    for(let i=0;i<blankRows;i++){
+
+      const tr=document.createElement("tr");
+
+      for(let j=0;j<3;j++){
+        const td=document.createElement("td");
+
+        if(j===0){
+          td.className="productName";
+        }
+
+        tr.appendChild(td);
+      }
+
+      tbody.appendChild(tr);
+    }
+
+    
+
+    deliveryTable.appendChild(tbody);
+
+    page.appendChild(deliveryTable);
+
+    printArea.appendChild(page);
+
+  }
+      /* 出荷データ一覧を追加 */
+
+  const shippingListPage=createShippingDataListPage();
+
+  if(shippingListPage){
+
+    printArea.appendChild(shippingListPage);
+
+  }
+
+
+
+  /* 印刷する店舗がない場合 */
+  if(printArea.children.length===0){
+    alert("印刷する出荷データがありません");
+    return;
+      
+  }
+
+  document.body.appendChild(printArea);
+
+  window.addEventListener("afterprint",()=>{
+    printArea.remove();
+  },{once:true});
+
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      window.print();
+    });
+  });
+
+}
+
+document.getElementById("btnPrintA6")
+.addEventListener("click",()=>{
+    printA6();
+});
+ /* 10キー用：現在選択している入力欄 */
+let activeInput = null;
+
+tableBody.addEventListener("focusin",(event)=>{
+    if(event.target.matches('input[type="number"]')){
+        activeInput = event.target;
+    }
+});
+  
+</script>
+<!-- 10キー -->
+<div id="numPad">
+
+<div class="keyArea">
+
+  <div class="numRow">
+    <button class="numKey">1</button>
+    <button class="numKey">2</button>
+    <button class="numKey">3</button>
+    <button class="numKey">⌫</button>
+  </div>
+
+  <div class="numRow">
+    <button class="numKey">4</button>
+    <button class="numKey">5</button>
+    <button class="numKey">6</button>
+    <button class="numKey">C</button>
+  </div>
+
+  <div class="numRow">
+    <button class="numKey">7</button>
+    <button class="numKey">8</button>
+    <button class="numKey">9</button>
+    <button class="numKey">0</button>
+  </div>
+</div>
+
+<button class="numKey direction enterKey">Enter</button>
+
+<div class="directionArea">
+
+  <button class="numKey direction">↑</button>
+  <button class="numKey direction">←</button>
+  <button class="numKey direction">↓</button>
+
+</div>
+
+</div>
+
+</div>   
+    
+<script>
+
+/* 10キーの数字入力 */
+document.querySelectorAll("#numPad .numKey").forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        const value=button.textContent;
+
+        if(!/^[0-9]$/.test(value)) return;
+
+        if(!activeInput) return;
+
+        if(activeInput.value==="0"){
+    activeInput.value=value;
+}else{
+    activeInput.value+=value;
+}
+
+activeInput.dispatchEvent(new Event("input",{bubbles:true}));
+
+    });
+
+});
+    /* 10キーのCボタン */
+document.querySelectorAll("#numPad .numKey").forEach(button=>{
+
+    if(button.textContent!=="C") return;
+
+    button.addEventListener("click",()=>{
+
+        if(!activeInput) return;
+
+        activeInput.value="0";
+
+        activeInput.dispatchEvent(
+            new Event("input",{bubbles:true})
+        );
+
+    });
+
+});
+    /* 10キーの1桁削除 */
+document.querySelectorAll("#numPad .numKey").forEach(button=>{
+
+    if(button.textContent!=="⌫") return;
+
+    button.addEventListener("click",()=>{
+
+        if(!activeInput) return;
+
+        let value=activeInput.value;
+
+        if(value.length<=1){
+            activeInput.value="0";
+        }else{
+            activeInput.value=value.slice(0,-1);
+        }
+
+        activeInput.dispatchEvent(
+            new Event("input",{bubbles:true})
+        );
+
+    });
+
+});
+/* 10キーの十字キー */
+document.querySelectorAll("#numPad .direction").forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        if(!activeInput) return;
+
+        const inputs=[
+            ...tableBody.querySelectorAll('input[type="number"]')
+        ];
+
+        const index=inputs.indexOf(activeInput);
+
+        if(index===-1) return;
+
+        let nextIndex=index;
+
+        if(button.textContent==="Enter"){
+            nextIndex=index+1;
+        }
+
+        if(button.textContent==="←"){
+            nextIndex=index-1;
+        }
+
+        if(button.textContent==="↓"){
+            nextIndex=index+stores.length;
+        }
+
+        if(button.textContent==="↑"){
+            nextIndex=index-stores.length;
+        }
+
+        if(nextIndex<0) return;
+        if(nextIndex>=inputs.length) return;
+
+        inputs[nextIndex].focus();
+
+        activeInput=inputs[nextIndex];
+
+    });
+
+});
+</script>
+</body>
+
+</html>
