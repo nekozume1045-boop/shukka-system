@@ -118,7 +118,13 @@ function displayGroups(){
       store.className="store";
       store.textContent=storeName;
 
-      group.appendChild(store);
+store.addEventListener("click",function(){
+
+  store.classList.toggle("selected");
+
+});
+
+group.appendChild(store);
 
     });
 
