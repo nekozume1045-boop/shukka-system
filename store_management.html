@@ -156,7 +156,12 @@ document.getElementById("addGroupButton").addEventListener("click",function(){
 
   storeGroups[groupName]=[];
 
-  displayGroups();
+localStorage.setItem(
+  "storeGroupsData",
+  JSON.stringify(storeGroups)
+);
+
+displayGroups();
 
 });
   
