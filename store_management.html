@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>店舗管理</title>
+
+<style>
+body{
+  font-family:sans-serif;
+  margin:0;
+  padding:20px;
+  background:#f5f5f5;
+}
+
+h1{
+  margin-top:0;
+}
+
+#groupArea{
+  margin-top:20px;
+}
+
+.group{
+  background:white;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+.groupTitle{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.store{
+  display:inline-block;
+  background:#eeeeee;
+  padding:10px 15px;
+  margin:5px;
+  border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>店舗管理</h1>
+
+<div id="groupArea"></div>
+
+<script>
+
+const storeGroups={
+  "わかばグループ":[
+    "わさだ",
+    "大在",
+    "南大分",
+    "本店",
+    "竹田",
+    "すごう",
+    "天神",
+    "サンリブ"
+  ],
+
+  "あさじグループ":[
+    "サンライフ",
+    "道の駅あさじ"
+  ],
+
+  "とれたて市場グループ":[
+    "古国府",
+    "光吉",
+    "日出",
+    "高城",
+    "志手",
+    "高尾"
+  ],
+
+  "清川グループ":[
+    "清川"
+  ],
+
+  "神楽苑グループ":[
+    "神楽苑"
+  ]
+};
+
+function displayGroups(){
+
+  const area=document.getElementById("groupArea");
+
+  area.innerHTML="";
+
+  Object.keys(storeGroups).forEach(groupName=>{
+
+    const group=document.createElement("div");
+    group.className="group";
+
+    const title=document.createElement("div");
+    title.className="groupTitle";
+    title.textContent=groupName;
+
+    group.appendChild(title);
+
+    storeGroups[groupName].forEach(storeName=>{
+
+      const store=document.createElement("div");
+      store.className="store";
+      store.textContent=storeName;
+
+      group.appendChild(store);
+
+    });
+
+    area.appendChild(group);
+
+  });
+
+}
+
+displayGroups();
+
+</script>
+
+</body>
+</html>
