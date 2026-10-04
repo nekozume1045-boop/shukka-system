@@ -136,7 +136,19 @@ group.appendChild(store);
 
 }
 
+const savedStores=JSON.parse(
+  localStorage.getItem("selectedShippingStores") || "[]"
+);
+
 displayGroups();
+
+document.querySelectorAll(".store").forEach(store=>{
+
+  if(savedStores.includes(store.textContent)){
+    store.classList.add("selected");
+  }
+
+});
 
 document.getElementById("saveStoresButton").addEventListener("click",function(){
 
