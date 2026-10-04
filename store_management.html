@@ -136,11 +136,26 @@ group.appendChild(store);
 
 }
 
-<h1>店舗管理</h1>
+displayGroups();
 
-<button id="saveStoresButton">選択店舗を保存</button>
+document.getElementById("saveStoresButton").addEventListener("click",function(){
 
-<div id="groupArea"></div>
+  const selectedStores=[];
+
+  document.querySelectorAll(".store.selected").forEach(store=>{
+    selectedStores.push(store.textContent);
+  });
+
+  localStorage.setItem(
+    "selectedShippingStores",
+    JSON.stringify(selectedStores)
+  );
+
+  alert("選択店舗を保存しました");
+
+});
+
+</script>
 
 </script>
 
