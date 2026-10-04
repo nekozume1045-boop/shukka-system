@@ -141,6 +141,25 @@ const savedStores=JSON.parse(
   localStorage.getItem("selectedShippingStores") || "[]"
 );
 
+document.getElementById("addGroupButton").addEventListener("click",function(){
+
+  const groupName=prompt("追加するグループ名を入力してください");
+
+  if(!groupName){
+    return;
+  }
+
+  if(storeGroups[groupName]){
+    alert("そのグループはすでに存在します");
+    return;
+  }
+
+  storeGroups[groupName]=[];
+
+  displayGroups();
+
+});
+  
 displayGroups();
 
 document.querySelectorAll(".store").forEach(store=>{
