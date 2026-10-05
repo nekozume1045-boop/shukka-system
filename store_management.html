@@ -149,6 +149,32 @@ const addStoreButton=document.createElement("button");
 addStoreButton.textContent="店舗を追加";
 addStoreButton.className="addStoreButton";
 
+addStoreButton.addEventListener("click",function(){
+
+  const storeName=prompt(
+    "追加する店舗名を入力してください"
+  );
+
+  if(!storeName){
+    return;
+  }
+
+  if(storeGroups[groupName].includes(storeName)){
+    alert("その店舗はすでに登録されています");
+    return;
+  }
+
+  storeGroups[groupName].push(storeName);
+
+  localStorage.setItem(
+    "storeGroupsData",
+    JSON.stringify(storeGroups)
+  );
+
+  displayGroups();
+
+});
+
 group.appendChild(addStoreButton);
 
 storeGroups[groupName].forEach(storeName=>{
