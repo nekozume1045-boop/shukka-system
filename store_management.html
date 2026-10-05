@@ -116,10 +116,15 @@ const storeGroups=savedStoreGroups
     group.className="group";
 
     const title=document.createElement("div");
-    title.className="groupTitle";
-    title.textContent=groupName;
+title.className="groupTitle";
+title.textContent=groupName;
 
-    group.appendChild(title);
+const deleteButton=document.createElement("button");
+deleteButton.textContent="グループ削除";
+deleteButton.className="deleteGroupButton";
+
+group.appendChild(title);
+group.appendChild(deleteButton);
 
     storeGroups[groupName].forEach(storeName=>{
 
