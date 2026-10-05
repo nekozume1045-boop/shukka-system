@@ -210,27 +210,7 @@ storeGroups[groupName].forEach(storeName=>{
       JSON.stringify(storeGroups)
     );
 
-    const savedStores=JSON.parse(
-  localStorage.getItem("selectedShippingStores") || "[]"
-);
-
-function restoreSelectedStores(){
-
-  document.querySelectorAll(".store").forEach(store=>{
-
-    const storeName=store.querySelector("span").textContent;
-
-    if(savedStores.includes(storeName)){
-      store.classList.add("selected");
-    }
-
-  });
-
-}
-
-displayGroups();
-
-restoreSelectedStores();
+    displayGroups();
 
 document.getElementById("addGroupButton").addEventListener("click",function(){
 
