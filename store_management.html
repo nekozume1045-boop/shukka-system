@@ -104,8 +104,12 @@ const storeGroups=savedStoreGroups
   ? JSON.parse(savedStoreGroups)
   : defaultStoreGroups;
 
-　function displayGroups(){
-  
+const savedStores=JSON.parse(
+  localStorage.getItem("selectedShippingStores") || "[]"
+);
+
+function displayGroups(){
+
   const area=document.getElementById("groupArea");
 
   area.innerHTML="";
@@ -116,105 +120,150 @@ const storeGroups=savedStoreGroups
     group.className="group";
 
     const title=document.createElement("div");
-title.className="groupTitle";
-title.textContent=groupName;
+    title.className="groupTitle";
+    title.textContent=groupName;
 
-const deleteButton=document.createElement("button");
-deleteButton.textContent="グループ削除";
-deleteButton.className="deleteGroupButton";
-deleteButton.addEventListener("click",function(){
+    const deleteButton=document.createElement("button");
+    deleteButton.textContent="グループ削除";
+    deleteButton.className="deleteGroupButton";
 
-  const result=confirm(
-    "「"+groupName+"」を削除しますか？"
-  );
+    deleteButton.addEventListener("click",function(){
 
-  if(!result){
-    return;
-  }
+      const result=confirm(
+        "「"+groupName+"」を削除しますか？"
+      );
 
-  delete storeGroups[groupName];
+      if(!result){
+        return;
+      }
 
-  localStorage.setItem(
-    "storeGroupsData",
-    JSON.stringify(storeGroups)
-  );
+      delete storeGroups[groupName];
 
-  displayGroups();
+      localStorage.setItem(
+        "storeGroupsData",
+        JSON.stringify(storeGroups)
+      );
 
-});
-group.appendChild(title);
-group.appendChild(deleteButton);
+      displayGroups();
 
-const addStoreButton=document.createElement("button");
-addStoreButton.textContent="店舗を追加";
-addStoreButton.className="addStoreButton";
+      restoreSelectedStores();
 
-addStoreButton.addEventListener("click",function(){
+    });
 
-  const storeName=prompt(
-    "追加する店舗名を入力してください"
-  );
+    group.appendChild(title);
+    group.appendChild(deleteButton);
 
-  if(!storeName){
-    return;
-  }
+    const addStoreButton=document.createElement("button");
+    addStoreButton.textContent="店舗を追加";
+    addStoreButton.className="addStoreButton";
 
-  if(storeGroups[groupName].includes(storeName)){
-    alert("その店舗はすでに登録されています");
-    return;
-  }
+    addStoreButton.addEventListener("click",function(){
 
-  storeGroups[groupName].push(storeName);
+      const storeName=prompt(
+        "追加する店舗名を入力してください"
+      );
 
-  localStorage.setItem(
-    "storeGroupsData",
-    JSON.stringify(storeGroups)
-  );
+      if(!storeName){
+        return;
+      }
 
-  displayGroups();
+      if(storeGroups[groupName].includes(storeName)){
+        alert("その店舗はすでに登録されています");
+        return;
+      }
 
-});
+      storeGroups[groupName].push(storeName);
 
-group.appendChild(addStoreButton);
+      localStorage.setItem(
+        "storeGroupsData",
+        JSON.stringify(storeGroups)
+      );
 
-storeGroups[groupName].forEach(storeName=>{
+      displayGroups();
 
-  const store=document.createElement("div");
-  store.className="store";
+      restoreSelectedStores();
 
-  const storeNameSpan=document.createElement("span");
-  storeNameSpan.textContent=storeName;
+    });
 
-  const deleteStoreButton=document.createElement("button");
-  deleteStoreButton.textContent="削除";
-  deleteStoreButton.className="deleteStoreButton";
+    group.appendChild(addStoreButton);
 
-  deleteStoreButton.addEventListener("click",function(event){
+    storeGroups[groupName].forEach(storeName=>{
 
-    event.stopPropagation();
+      const store=document.createElement("div");
+      store.className="store";
 
-    const result=confirm(
-      "「"+storeName+"」を削除しますか？"
-    );
+      const storeNameSpan=document.createElement("span");
+      storeNameSpan.textContent=storeName;
 
-    if(!result){
-      return;
+      const deleteStoreButton=document.createElement("button");
+      deleteStoreButton.textContent="削除";
+      deleteStoreButton.className="deleteStoreButton";
+
+      deleteStoreButton.addEventListener("click",function(event){
+
+        event.stopPropagation();
+
+        const result=confirm(
+          "「"+storeName+"」を削除しますか？"
+        );
+
+        if(!result){
+          return;
+        }
+
+        storeGroups[groupName]=storeGroups[groupName].filter(
+          name=>name!==storeName
+        );
+
+        localStorage.setItem(
+          "storeGroupsData",
+          JSON.stringify(storeGroups)
+        );
+
+        displayGroups();
+
+        restoreSelectedStores();
+
+      });
+
+      store.appendChild(storeNameSpan);
+      store.appendChild(deleteStoreButton);
+
+      store.addEventListener("click",function(){
+
+        store.classList.toggle("selected");
+
+      });
+
+      group.appendChild(store);
+
+    });
+
+    area.appendChild(group);
+
+  });
+
+}
+
+function restoreSelectedStores(){
+
+  document.querySelectorAll(".store").forEach(store=>{
+
+    const storeName=store.querySelector("span").textContent;
+
+    if(savedStores.includes(storeName)){
+      store.classList.add("selected");
     }
 
-    storeGroups[groupName]=storeGroups[groupName].filter(
-      name=>name!==storeName
-    );
+  });
 
-    localStorage.setItem(
-      "storeGroupsData",
-      JSON.stringify(storeGroups)
-    );
+}
 
-    displayGroups();
-    });
 document.getElementById("addGroupButton").addEventListener("click",function(){
 
-  const groupName=prompt("追加するグループ名を入力してください");
+  const groupName=prompt(
+    "追加するグループ名を入力してください"
+  );
 
   if(!groupName){
     return;
@@ -227,22 +276,14 @@ document.getElementById("addGroupButton").addEventListener("click",function(){
 
   storeGroups[groupName]=[];
 
-localStorage.setItem(
-  "storeGroupsData",
-  JSON.stringify(storeGroups)
-);
+  localStorage.setItem(
+    "storeGroupsData",
+    JSON.stringify(storeGroups)
+  );
 
-displayGroups();
+  displayGroups();
 
-});
-  
-displayGroups();
-
-document.querySelectorAll(".store").forEach(store=>{
-
-  if(savedStores.includes(store.textContent)){
-    store.classList.add("selected");
-  }
+  restoreSelectedStores();
 
 });
 
@@ -251,7 +292,11 @@ document.getElementById("saveStoresButton").addEventListener("click",function(){
   const selectedStores=[];
 
   document.querySelectorAll(".store.selected").forEach(store=>{
-    selectedStores.push(store.textContent);
+
+    const storeName=store.querySelector("span").textContent;
+
+    selectedStores.push(storeName);
+
   });
 
   localStorage.setItem(
@@ -263,7 +308,9 @@ document.getElementById("saveStoresButton").addEventListener("click",function(){
 
 });
 
-</script>
+displayGroups();
+
+restoreSelectedStores();
 
 </script>
 
