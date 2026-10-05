@@ -210,32 +210,27 @@ storeGroups[groupName].forEach(storeName=>{
       JSON.stringify(storeGroups)
     );
 
-    displayGroups();
+    const savedStores=JSON.parse(
+  localStorage.getItem("selectedShippingStores") || "[]"
+);
 
-  });
+function restoreSelectedStores(){
 
-  store.appendChild(storeNameSpan);
-  store.appendChild(deleteStoreButton);
+  document.querySelectorAll(".store").forEach(store=>{
 
-  store.addEventListener("click",function(){
+    const storeName=store.querySelector("span").textContent;
 
-    store.classList.toggle("selected");
-
-  });
-
-  group.appendChild(store);
-
-});
-
-    area.appendChild(group);
+    if(savedStores.includes(storeName)){
+      store.classList.add("selected");
+    }
 
   });
 
 }
 
-const savedStores=JSON.parse(
-  localStorage.getItem("selectedShippingStores") || "[]"
-);
+displayGroups();
+
+restoreSelectedStores();
 
 document.getElementById("addGroupButton").addEventListener("click",function(){
 
