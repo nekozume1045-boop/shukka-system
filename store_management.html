@@ -145,7 +145,13 @@ deleteButton.addEventListener("click",function(){
 group.appendChild(title);
 group.appendChild(deleteButton);
 
-    storeGroups[groupName].forEach(storeName=>{
+const addStoreButton=document.createElement("button");
+addStoreButton.textContent="店舗を追加";
+addStoreButton.className="addStoreButton";
+
+group.appendChild(addStoreButton);
+
+storeGroups[groupName].forEach(storeName=>{
 
       const store=document.createElement("div");
       store.className="store";
