@@ -122,7 +122,26 @@ title.textContent=groupName;
 const deleteButton=document.createElement("button");
 deleteButton.textContent="グループ削除";
 deleteButton.className="deleteGroupButton";
+deleteButton.addEventListener("click",function(){
 
+  const result=confirm(
+    "「"+groupName+"」を削除しますか？"
+  );
+
+  if(!result){
+    return;
+  }
+
+  delete storeGroups[groupName];
+
+  localStorage.setItem(
+    "storeGroupsData",
+    JSON.stringify(storeGroups)
+  );
+
+  displayGroups();
+
+});
 group.appendChild(title);
 group.appendChild(deleteButton);
 
