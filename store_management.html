@@ -179,19 +179,53 @@ group.appendChild(addStoreButton);
 
 storeGroups[groupName].forEach(storeName=>{
 
-      const store=document.createElement("div");
-      store.className="store";
-      store.textContent=storeName;
+  const store=document.createElement("div");
+  store.className="store";
 
-store.addEventListener("click",function(){
+  const storeNameSpan=document.createElement("span");
+  storeNameSpan.textContent=storeName;
 
-  store.classList.toggle("selected");
+  const deleteStoreButton=document.createElement("button");
+  deleteStoreButton.textContent="削除";
+  deleteStoreButton.className="deleteStoreButton";
+
+  deleteStoreButton.addEventListener("click",function(event){
+
+    event.stopPropagation();
+
+    const result=confirm(
+      "「"+storeName+"」を削除しますか？"
+    );
+
+    if(!result){
+      return;
+    }
+
+    storeGroups[groupName]=storeGroups[groupName].filter(
+      name=>name!==storeName
+    );
+
+    localStorage.setItem(
+      "storeGroupsData",
+      JSON.stringify(storeGroups)
+    );
+
+    displayGroups();
+
+  });
+
+  store.appendChild(storeNameSpan);
+  store.appendChild(deleteStoreButton);
+
+  store.addEventListener("click",function(){
+
+    store.classList.toggle("selected");
+
+  });
+
+  group.appendChild(store);
 
 });
-
-group.appendChild(store);
-
-    });
 
     area.appendChild(group);
 
