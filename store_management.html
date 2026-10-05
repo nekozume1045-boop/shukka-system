@@ -63,7 +63,7 @@ h1{
 
 <script>
 
-const storeGroups={
+const defaultStoreGroups={
   "わかばグループ":[
     "わさだ",
     "大在",
@@ -98,7 +98,11 @@ const storeGroups={
   ]
 };
 
-function displayGroups(){
+const savedStoreGroups=localStorage.getItem("storeGroupsData");
+
+const storeGroups=savedStoreGroups
+  ? JSON.parse(savedStoreGroups)
+  : defaultStoreGroups;
 
   const area=document.getElementById("groupArea");
 
