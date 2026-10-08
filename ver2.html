@@ -1049,6 +1049,29 @@ list.appendChild(div);
 dailyCumulativeTotalAmountValue.textContent =
 cumulative.toLocaleString();
 }    
+
+function updateStoreHeaders(){
+
+const headerRow =
+document.querySelector(”#shippingTable thead tr”);
+
+const oldHeaders =
+headerRow.querySelectorAll(”#storeHeaders”);
+
+oldHeaders.forEach(header=>header.remove());
+
+stores.forEach(store=>{
+
+const th=document.createElement(“th”);
+
+th.textContent=store;
+
+headerRow.appendChild(th);
+
+});
+
+}
+    
 function createTable(){
 
 tableBody.innerHTML="";
