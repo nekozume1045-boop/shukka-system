@@ -740,7 +740,17 @@ localStorage.getItem("selectedShippingStores") || "[]"
 return saved.filter(store=>allStores.includes(store));
 
 }
-    
+function getDisplayedStores(){
+
+const selected=getSelectedStores();
+
+if(selected.length===0){
+return allStores;
+}
+
+return allStores.filter(store=>selected.includes(store));
+
+}    
 const stores=[
 "わさだ","大在","南大分","本店","竹田","すごう",
 "天神","サンリブ","サンライフ","道の駅あさじ",
