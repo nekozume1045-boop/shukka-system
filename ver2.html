@@ -725,16 +725,16 @@ GitHub Pages版
 
 <script>
 const allStores=[
-“わさだ”,“大在”,“南大分”,“本店”,“竹田”,“すごう”,
-“天神”,“サンリブ”,“サンライフ”,“道の駅あさじ”,
-“古国府”,“光吉”,“日出”,“高城”,“志手”,
-“高尾”,“清川”,“神楽苑”
+"わさだ","大在","南大分","本店","竹田","すごう",
+"天神","サンリブ","サンライフ","道の駅あさじ",
+"古国府","光吉","日出","高城","志手",
+"高尾","清川","神楽苑"
 ];
 
 function getSelectedStores(){
 
 const saved=JSON.parse(
-localStorage.getItem(“selectedShippingStores”) || “[]”
+localStorage.getItem("selectedShippingStores") || "[]"
 );
 
 return saved.filter(store=>allStores.includes(store));
