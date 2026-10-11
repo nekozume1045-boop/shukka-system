@@ -1080,18 +1080,18 @@ cumulative.toLocaleString();
 function updateStoreHeaders(){
 
 const headerRow =
-document.querySelector(”#shippingTable thead tr”);
+document.querySelector("#shippingTable thead tr");
 
-headerRow.querySelectorAll(”.storeHeader”).forEach(
+headerRow.querySelectorAll(".storeHeader").forEach(
 header=>header.remove()
 );
 
 allStores.forEach(store=>{
 
-const th=document.createElement(“th”);
+const th=document.createElement("th");
 
 th.textContent=store;
-th.className=“storeHeader”;
+th.className="storeHeader";
 
 headerRow.appendChild(th);
 
