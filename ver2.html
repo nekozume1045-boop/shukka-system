@@ -1080,22 +1080,24 @@ cumulative.toLocaleString();
 function updateStoreHeaders(){
 
 const headerRow =
-document.querySelector("#shippingTable thead tr");
+document.querySelector(”#shippingTable thead tr”);
 
-const oldHeaders =
-headerRow.querySelectorAll("#storeHeaders");
-
-oldHeaders.forEach(header=>header.remove());
+headerRow.querySelectorAll(”.storeHeader”).forEach(
+header=>header.remove()
+);
 
 allStores.forEach(store=>{
 
-const th=document.createElement("th");
+const th=document.createElement(“th”);
 
 th.textContent=store;
+th.className=“storeHeader”;
 
 headerRow.appendChild(th);
 
 });
+
+updateStoreVisibility();
 
 }
     
