@@ -1100,7 +1100,49 @@ headerRow.appendChild(th);
 updateStoreVisibility();
 
 }
-    
+function updateStoreVisibility(){
+
+const selected=getSelectedStores();
+
+const visibleStores=
+selected.length===0 ? allStores : selected;
+
+const headerCells=
+document.querySelectorAll(
+"#shippingTable thead th"
+);
+
+headerCells.forEach((cell,index)=>{
+
+if(index<4) return;
+
+const store=allStores[index-4];
+
+cell.style.display=
+visibleStores.includes(store) ? "" : "none";
+
+});
+
+const rows=tableBody.querySelectorAll("tr");
+
+rows.forEach(row=>{
+
+const cells=row.querySelectorAll("td");
+
+cells.forEach((cell,index)=>{
+
+if(index<4) return;
+
+const store=allStores[index-4];
+
+cell.style.display=
+visibleStores.includes(store) ? "" : "none";
+
+});
+
+});
+
+}   
 function createTable(){
 updateStoreHeaders();
 tableBody.innerHTML="";
