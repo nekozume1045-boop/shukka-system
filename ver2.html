@@ -826,7 +826,13 @@ document.getElementById("btnStoreSelect")
     "_blank"
   );
 
-});    
+});
+
+window.addEventListener("focus",()=>{
+
+  updateStoreVisibility();
+
+});
 document.getElementById("btnAddItem")
 .addEventListener("click",()=>{
 
