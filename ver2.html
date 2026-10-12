@@ -2099,7 +2099,6 @@ document.querySelectorAll("#numPad .numKey").forEach(button=>{
 });
 /* 10キーの十字キー */
 document.querySelectorAll("#numPad .direction").forEach(button=>{
-
 button.addEventListener("click",()=>{
 
     if(!activeInput) return;
@@ -2117,34 +2116,65 @@ button.addEventListener("click",()=>{
 
     if(index===-1) return;
 
-    let nextIndex=index;
+    let target=null;
 
     if(button.textContent==="Enter"){
-        nextIndex=index+1;
+        target=visibleInputs[index+1] || null;
     }
 
     if(button.textContent==="←"){
-        nextIndex=index-1;
+        target=visibleInputs[index-1] || null;
     }
 
-    if(button.textContent==="↓"){
-        nextIndex=index+stores.length;
+    if(button.textContent==="↑" || button.textContent==="↓"){
+
+        const currentRect=activeInput.getBoundingClientRect();
+        const currentCenter=currentRect.left+currentRect.width/2;
+
+        let bestDistance=Infinity;
+
+        visibleInputs.forEach(input=>{
+
+            if(input===activeInput) return;
+
+            const rect=input.getBoundingClientRect();
+            const center=rect.left+rect.width/2;
+
+            if(button.textContent==="↑" && rect.bottom<=currentRect.top+2){
+
+                const verticalDistance=currentRect.top-rect.bottom;
+                const horizontalDistance=Math.abs(center-currentCenter);
+                const score=verticalDistance*1000+horizontalDistance;
+
+                if(score<bestDistance){
+                    bestDistance=score;
+                    target=input;
+                }
+            }
+
+            if(button.textContent==="↓" && rect.top>=currentRect.bottom-2){
+
+                const verticalDistance=rect.top-currentRect.bottom;
+                const horizontalDistance=Math.abs(center-currentCenter);
+                const score=verticalDistance*1000+horizontalDistance;
+
+                if(score<bestDistance){
+                    bestDistance=score;
+                    target=input;
+                }
+            }
+
+        });
+
     }
 
-    if(button.textContent==="↑"){
-        nextIndex=index-stores.length;
-    }
+    if(!target) return;
 
-    if(nextIndex<0) return;
-    if(nextIndex>=visibleInputs.length) return;
-
-    visibleInputs[nextIndex].focus();
-
-    activeInput=visibleInputs[nextIndex];
-
-});   
+    target.focus();
+    activeInput=target;
 
 });
+
 </script>
 </body>
 
