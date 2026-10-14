@@ -830,7 +830,44 @@ document.getElementById("btnStoreSelect")
 
 window.addEventListener("focus",()=>{
 
+  const latestStores=getAllStores();
+
+  const newStores=latestStores.filter(
+    store=>!allStores.includes(store)
+  );
+
+  if(newStores.length===0){
+    updateStoreVisibility();
+    return;
+  }
+
+  newStores.forEach(store=>{
+    allStores.push(store);
+  });
+
+  updateStoreHeaders();
+
+  tableBody.querySelectorAll("tr").forEach(row=>{
+
+    newStores.forEach(()=>{
+
+      const td=document.createElement("td");
+
+      const input=document.createElement("input");
+      input.type="number";
+      input.value="0";
+      input.min="0";
+      input.setAttribute("inputmode","none");
+
+      td.appendChild(input);
+      row.appendChild(td);
+
+    });
+
+  });
+
   updateStoreVisibility();
+  recalc();
 
 });
 document.getElementById("btnAddItem")
