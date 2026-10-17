@@ -1242,6 +1242,9 @@ function getCurrentShippingDataByName(){
 }
     
 function createTable(){
+
+const previousData = getCurrentShippingDataByName();
+
 updateStoreHeaders();
 tableBody.innerHTML="";
 
