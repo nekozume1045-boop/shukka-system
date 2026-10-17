@@ -852,14 +852,14 @@ window.addEventListener("focus",()=>{
 
   const latestStores=getAllStores();
 
-  const newStores=latestStores.filter(
-    store=>!allStores.includes(store)
-  );
+  allStores.splice(0,allStores.length,...latestStores);
+  stores.splice(0,stores.length,...latestStores);
 
-  if(newStores.length===0){
-    updateStoreVisibility();
-    return;
-  }
+  createTable();
+  loadData();
+  recalc();
+
+});
 
   newStores.forEach(store=>{
     allStores.push(store);
