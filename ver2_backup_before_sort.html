@@ -732,22 +732,23 @@ const defaultAllStores=[
 "高尾","清川","神楽苑"
 ];
 
+
 function getAllStores(){
 
-const savedGroups=JSON.parse(
-localStorage.getItem("storeGroupsData") || "null"
-);
+  const savedGroups = JSON.parse(
+    localStorage.getItem("storeGroupsData") || "null"
+  );
 
-const groupStores=savedGroups
-  ? Object.values(savedGroups).flat()
-  : [];
+  if (!savedGroups) {
+    return [...defaultAllStores];
+  }
 
-return [
-  ...defaultAllStores,
-  ...groupStores.filter(store=>!defaultAllStores.includes(store))
-];
+  const groupStores = Object.values(savedGroups).flat();
+
+  return [...new Set(groupStores)];
 
 }
+
 
 const allStores=getAllStores();
 
