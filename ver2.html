@@ -724,12 +724,32 @@ GitHub Pages版
 
 
 <script>
-const allStores=[
+
+const defaultAllStores=[
 "わさだ","大在","南大分","本店","竹田","すごう",
 "天神","サンリブ","サンライフ","道の駅あさじ",
 "古国府","光吉","日出","高城","志手",
 "高尾","清川","神楽苑"
 ];
+
+function getAllStores(){
+
+const savedGroups=JSON.parse(
+localStorage.getItem("storeGroupsData") || "null"
+);
+
+const groupStores=savedGroups
+  ? Object.values(savedGroups).flat()
+  : [];
+
+return [
+  ...defaultAllStores,
+  ...groupStores.filter(store=>!defaultAllStores.includes(store))
+];
+
+}
+
+const allStores=getAllStores();
 
 function getSelectedStores(){
 
@@ -740,12 +760,17 @@ localStorage.getItem("selectedShippingStores") || "[]"
 return saved.filter(store=>allStores.includes(store));
 
 }
+
 function getDisplayedStores(){
 
 const selected=getSelectedStores();
 
 if(selected.length===0){
 return allStores;
+}
+
+return allStores.filter(store=>selected.includes(store));
+
 }
 
 return allStores.filter(store=>selected.includes(store));
