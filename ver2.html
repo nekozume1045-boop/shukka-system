@@ -1425,40 +1425,40 @@ JSON.stringify(dailyShippingData)
 );
 
 }
+
+
 function loadData(){
 
-const data=JSON.parse(
-localStorage.getItem("vegetableShippingData")
-);
+  const data = JSON.parse(
+    localStorage.getItem("vegetableShippingData")
+  );
 
-if(!data)return;
+  if(!data) return;
 
-createTable();    
+  createTable();
 
-const rows=tableBody.querySelectorAll("tr");
+  const rows = tableBody.querySelectorAll("tr");
 
-rows.forEach((row,rowIndex)=>{
+  rows.forEach((row,rowIndex)=>{
 
-if(!data[rowIndex]) return;
+    if(!data[rowIndex]) return;
 
-const inputs=row.querySelectorAll("input");
+    const inputs = row.querySelectorAll("input");
 
-inputs.forEach((input,colIndex)=>{
+    inputs.forEach((input,colIndex)=>{
 
-if(data[rowIndex][colIndex] != null){
+      if(data[rowIndex][colIndex] != null){
+        input.value = data[rowIndex][colIndex];
+      }
 
-input.value=data[rowIndex][colIndex];
+    });
+
+  });
+
+  recalc();
 
 }
-
-});
-
-});
-
-recalc();    
-
-
-} 
+    
 document.getElementById("btnSave")
 .addEventListener("click",()=>{
 
