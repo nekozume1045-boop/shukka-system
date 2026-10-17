@@ -1285,13 +1285,39 @@ inputmode="none">
 
 });
 
+
 tr.innerHTML=html;
+
+const savedItem = previousData[item.name];
+
+if(savedItem){
+
+  const inputs = tr.querySelectorAll("input");
+
+  if(inputs[0]) inputs[0].value = savedItem.price;
+  if(inputs[1]) inputs[1].value = savedItem.plan;
+
+  allStores.forEach((store,index)=>{
+
+    const input = inputs[index + 2];
+
+    if(input && savedItem.quantities[store] != null){
+      input.value = savedItem.quantities[store];
+    }
+
+  });
+
+}
 
 tableBody.appendChild(tr);
 
 });
-updateStoreVisibility();    
+
+updateStoreVisibility();
+recalc();
+
 }
+
   function recalc(){
 
 let grand=0;
