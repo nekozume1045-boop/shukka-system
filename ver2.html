@@ -856,36 +856,35 @@ window.addEventListener("focus",()=>{
     store=>!allStores.includes(store)
   );
 
+  if(newStores.length===0){
+    updateStoreVisibility();
+    return;
+  }
+
   newStores.forEach(store=>{
     allStores.push(store);
-});
+  });
 
-  if(newStores.length>0){
+  updateStoreHeaders();
 
-    const headerRow=document.querySelector(
-      "#shippingTable thead tr"
-    );
+  tableBody.querySelectorAll("tr").forEach(row=>{
 
-    newStores.forEach(store=>{
-
-      const th=document.createElement("th");
-      th.textContent=store;
-      th.className="storeHeader";
-      headerRow.appendChild(th);
-
-    });
-
-    tableBody.querySelectorAll("tr").forEach(row=>{
+    newStores.forEach(()=>{
 
       const td=document.createElement("td");
 
-      td.innerHTML=`<input type="number" value="0" min="0" inputmode="none">`;
+      const input=document.createElement("input");
+      input.type="number";
+      input.value="0";
+      input.min="0";
+      input.setAttribute("inputmode","none");
 
+      td.appendChild(input);
       row.appendChild(td);
 
     });
 
-  }
+  });
 
   updateStoreVisibility();
   recalc();
