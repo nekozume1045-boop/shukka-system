@@ -852,39 +852,41 @@ window.addEventListener("focus",()=>{
 
   const latestStores=getAllStores();
 
-  allStores.splice(0,allStores.length,...latestStores);
-  stores.splice(0,stores.length,...latestStores);
-
-  createTable();
-  loadData();
-  recalc();
-
-});
+  const newStores=latestStores.filter(
+    store=>!allStores.includes(store)
+  );
 
   newStores.forEach(store=>{
     allStores.push(store);
+    stores.push(store);
   });
 
-  updateStoreHeaders();
+  if(newStores.length>0){
 
-  tableBody.querySelectorAll("tr").forEach(row=>{
+    const headerRow=document.querySelector(
+      "#shippingTable thead tr"
+    );
 
-    newStores.forEach(()=>{
+    newStores.forEach(store=>{
+
+      const th=document.createElement("th");
+      th.textContent=store;
+      th.className="storeHeader";
+      headerRow.appendChild(th);
+
+    });
+
+    tableBody.querySelectorAll("tr").forEach(row=>{
 
       const td=document.createElement("td");
 
-      const input=document.createElement("input");
-      input.type="number";
-      input.value="0";
-      input.min="0";
-      input.setAttribute("inputmode","none");
+      td.innerHTML=`<input type="number" value="0" min="0" inputmode="none">`;
 
-      td.appendChild(input);
       row.appendChild(td);
 
     });
 
-  });
+  }
 
   updateStoreVisibility();
   recalc();
