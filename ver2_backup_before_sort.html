@@ -1204,6 +1204,43 @@ visibleStores.includes(store) ? "" : "none";
 });
 
 }   
+ function getCurrentShippingDataByName(){
+
+  const result = {};
+
+  tableBody.querySelectorAll("tr").forEach(row=>{
+
+    const cells = row.querySelectorAll("td");
+    if(cells.length < 4) return;
+
+    const productName = cells[0].textContent.trim();
+
+    const priceInput = cells[1].querySelector("input");
+    const planInput = cells[2].querySelector("input");
+
+    const quantities = {};
+
+    allStores.forEach((store,index)=>{
+
+      const input = cells[index + 4]?.querySelector("input");
+
+      if(input){
+        quantities[store] = Number(input.value) || 0;
+      }
+
+    });
+
+    result[productName] = {
+      price: Number(priceInput?.value) || 0,
+      plan: Number(planInput?.value) || 0,
+      quantities: quantities
+    };
+
+  });
+
+  return result;
+
+}   
 function createTable(){
 updateStoreHeaders();
 tableBody.innerHTML="";
