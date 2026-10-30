@@ -1087,38 +1087,65 @@ dateSpan.style.textDecoration="underline";
 
 div.appendChild(dateSpan);
 dateSpan.addEventListener("click",()=>{
-editingDate=date;
-const dailyShippingData=JSON.parse(
-localStorage.getItem("vegetableDailyShippingData")
-) || {};
 
-const data=dailyShippingData[date];
+  const dailyShippingData = JSON.parse(
+    localStorage.getItem("vegetableDailyShippingData")
+  ) || {};
 
-if(!data){
+  const data = dailyShippingData[date];
 
-alert("この日の出荷データは保存されていません。");
+  if(!data){
 
-return;
+    alert("この日の出荷データは保存されていません。");
+    return;
 
-}
+  }
 
-createTable();
-const rows=tableBody.querySelectorAll("tr");
+  editingDate = date;
 
-rows.forEach((row,rowIndex)=>{
+  createTable();
 
-const inputs=row.querySelectorAll("input");
+  const rows = tableBody.querySelectorAll("tr");
 
-inputs.forEach((input,colIndex)=>{
+  rows.forEach((row,rowIndex)=>{
 
-if(data[rowIndex] && data[rowIndex][colIndex]!=null){
+    if(!data[rowIndex]) return;
 
-input.value=data[rowIndex][colIndex];
+    const inputs = row.querySelectorAll("input");
+    const oldRow = data[rowIndex];
 
-}
+    // 単価と予定数を復元
+    if(oldRow[0] != null){
+      inputs[0].value = oldRow[0];
+    }
+
+    if(oldRow[1] != null){
+      inputs[1].value = oldRow[1];
+    }
+
+    // 元の店舗順から店舗名を照合して数量を復元
+    allStores.forEach((store,index)=>{
+
+      const oldStoreIndex = defaultAllStores.indexOf(store);
+
+      if(oldStoreIndex === -1) return;
+
+      const input = inputs[index + 2];
+      const oldValue = oldRow[oldStoreIndex + 2];
+
+      if(input && oldValue != null){
+        input.value = oldValue;
+      }
+
+    });
+
+  });
+
+  recalc();
+
+  alert(date+" の出荷データを読み込みました");
 
 });
-
 });
 
 recalc();
