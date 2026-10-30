@@ -1268,9 +1268,10 @@ visibleStores.includes(store) ? "" : "none";
   return result;
 
 }   
-function createTable(){
+function createTable(previousDataOverride){
 
-  const previousData = getCurrentShippingDataByName();
+  const previousData =
+    previousDataOverride || getCurrentShippingDataByName();
 
   updateStoreHeaders();
   tableBody.innerHTML = "";
