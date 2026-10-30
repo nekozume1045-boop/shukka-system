@@ -848,20 +848,21 @@ document.getElementById("btnStoreSelect")
 
 window.addEventListener("focus",()=>{
 
-  const latestStores=getAllStores();
+  // 現在の数量を店舗名ごとに退避
+  const previousData = getCurrentShippingDataByName();
 
-  const newStores=latestStores.filter(
-    store=>!allStores.includes(store)
-  );
+  // 店舗管理画面の最新グループ順を取得
+  const latestStores = getAllStores();
 
-  if(newStores.length===0){
-    updateStoreVisibility();
-    return;
-  }
+  // 店舗一覧を最新の順番に更新
+  allStores.splice(0,allStores.length,...latestStores);
 
-  newStores.forEach(store=>{
-    allStores.push(store);
-  });
+  // 店舗列を作り直して数量を店舗名で復元
+  createTable(previousData);
+
+  recalc();
+
+});
 
   updateStoreHeaders();
 
