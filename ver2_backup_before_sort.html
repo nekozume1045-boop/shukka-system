@@ -892,56 +892,26 @@ window.addEventListener("focus",()=>{
 document.getElementById("btnAddItem")
 .addEventListener("click",()=>{
 
-const name=prompt("追加する品目名を入力してください");
+  const name=prompt("追加する品目名を入力してください");
 
-if(!name) return;
+  if(!name) return;
 
-const price=Number(
-prompt("単価を入力してください")
-)||0;
+  const price=Number(
+    prompt("単価を入力してください")
+  )||0;
 
-items.push({
-name:name,
-price:price
-});
+  items.push({
+    name:name,
+    price:price
+  });
 
+  localStorage.setItem(
+    "vegetableItems",
+    JSON.stringify(items)
+  );
 
-localStorage.setItem(
-"vegetableShippingDataByName",
-JSON.stringify(namedShippingData)
-);
-
-}
-
-/* 新形式の日別出荷データからも削除 */
-const namedDailyShippingData =
-JSON.parse(localStorage.getItem("vegetableDailyShippingDataByName"));
-
-if(namedDailyShippingData){
-
-Object.keys(namedDailyShippingData).forEach(date=>{
-
-if(Array.isArray(namedDailyShippingData[date])){
-
-namedDailyShippingData[date].splice(index,1);
-
-}
-
-});
-
-localStorage.setItem(
-"vegetableDailyShippingDataByName",
-JSON.stringify(namedDailyShippingData)
-);
-
-}
-localStorage.setItem(
-"vegetableItems",
-JSON.stringify(items)
-);
-
-createTable();
-recalc();
+  createTable();
+  recalc();
 
 });
 
