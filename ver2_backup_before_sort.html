@@ -1089,11 +1089,15 @@ dateSpan.style.textDecoration="underline";
 div.appendChild(dateSpan);
 dateSpan.addEventListener("click",()=>{
 
-  const dailyShippingData = JSON.parse(
+  const namedDailyData = JSON.parse(
+    localStorage.getItem("vegetableDailyShippingDataByName")
+  ) || {};
+
+  const oldDailyData = JSON.parse(
     localStorage.getItem("vegetableDailyShippingData")
   ) || {};
 
-  const data = dailyShippingData[date];
+  const data = namedDailyData[date] || oldDailyData[date];
 
   if(!data){
 
@@ -1110,21 +1114,36 @@ dateSpan.addEventListener("click",()=>{
 
   rows.forEach((row,rowIndex)=>{
 
-    if(!data[rowIndex]) return;
-
     const inputs = row.querySelectorAll("input");
-    const oldRow = data[rowIndex];
+    const savedItem = data[rowIndex];
 
-    // 単価と予定数を復元
-    if(oldRow[0] != null){
-      inputs[0].value = oldRow[0];
+    if(!savedItem) return;
+
+    // 新しい店舗名付きデータ
+    if(!Array.isArray(savedItem)){
+
+      inputs[0].value = savedItem.price ?? 0;
+      inputs[1].value = savedItem.plan ?? 0;
+
+      allStores.forEach((store,index)=>{
+
+        const input = inputs[index + 2];
+        const value = savedItem.quantities?.[store];
+
+        if(input && value != null){
+          input.value = value;
+        }
+
+      });
+
+      return;
+
     }
 
-    if(oldRow[1] != null){
-      inputs[1].value = oldRow[1];
-    }
+    // 従来の列番号データ
+    inputs[0].value = savedItem[0] ?? 0;
+    inputs[1].value = savedItem[1] ?? 0;
 
-    // 元の店舗順から店舗名を照合して数量を復元
     allStores.forEach((store,index)=>{
 
       const oldStoreIndex = defaultAllStores.indexOf(store);
@@ -1132,13 +1151,21 @@ dateSpan.addEventListener("click",()=>{
       if(oldStoreIndex === -1) return;
 
       const input = inputs[index + 2];
-      const oldValue = oldRow[oldStoreIndex + 2];
+      const value = savedItem[oldStoreIndex + 2];
 
-      if(input && oldValue != null){
-        input.value = oldValue;
+      if(input && value != null){
+        input.value = value;
       }
 
     });
+
+  });
+
+  recalc();
+
+  alert(date+" の出荷データを読み込みました");
+
+});
 
   });
 
