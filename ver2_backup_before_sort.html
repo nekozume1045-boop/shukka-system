@@ -1425,38 +1425,54 @@ JSON.stringify(dailyShippingData)
 }
 function loadData(){
 
-const data=JSON.parse(
-localStorage.getItem("vegetableShippingData")
-);
+  const data = JSON.parse(
+    localStorage.getItem("vegetableShippingData")
+  );
 
-if(!data)return;
+  if(!data) return;
 
-createTable();    
+  createTable();
 
-const rows=tableBody.querySelectorAll("tr");
+  const rows = tableBody.querySelectorAll("tr");
 
-rows.forEach((row,rowIndex)=>{
+  rows.forEach((row,rowIndex)=>{
 
-if(!data[rowIndex]) return;
+    if(!data[rowIndex]) return;
 
-const inputs=row.querySelectorAll("input");
+    const inputs = row.querySelectorAll("input");
+    const oldRow = data[rowIndex];
 
-inputs.forEach((input,colIndex)=>{
+    // 単価と予定数を復元
+    if(oldRow[0] != null){
+      inputs[0].value = oldRow[0];
+    }
 
-if(data[rowIndex][colIndex] != null){
+    if(oldRow[1] != null){
+      inputs[1].value = oldRow[1];
+    }
 
-input.value=data[rowIndex][colIndex];
+    // 元の店舗順を店舗名に変換して数量を復元
+    allStores.forEach((store,index)=>{
+
+      const oldStoreIndex = defaultAllStores.indexOf(store);
+
+      if(oldStoreIndex === -1) return;
+
+      const input = inputs[index + 2];
+      const oldValue = oldRow[oldStoreIndex + 2];
+
+      if(input && oldValue != null){
+        input.value = oldValue;
+      }
+
+    });
+
+  });
+
+  recalc();
 
 }
 
-});
-
-});
-
-recalc();    
-
-
-} 
 document.getElementById("btnSave")
 .addEventListener("click",()=>{
 
