@@ -1494,11 +1494,15 @@ function saveDailyShippingData(){
 }
 function loadData(){
 
-  const data = JSON.parse(
+  const namedData = JSON.parse(
+    localStorage.getItem("vegetableShippingDataByName")
+  );
+
+  const oldData = JSON.parse(
     localStorage.getItem("vegetableShippingData")
   );
 
-  if(!data) return;
+  if(!namedData && !oldData) return;
 
   createTable();
 
@@ -1506,41 +1510,60 @@ function loadData(){
 
   rows.forEach((row,rowIndex)=>{
 
-    if(!data[rowIndex]) return;
-
     const inputs = row.querySelectorAll("input");
-    const oldRow = data[rowIndex];
 
-    // 単価と予定数を復元
-    if(oldRow[0] != null){
-      inputs[0].value = oldRow[0];
+    // 新しい店舗名付きデータがある場合
+    if(namedData && namedData[rowIndex]){
+
+      const savedItem = namedData[rowIndex];
+
+      inputs[0].value = savedItem.price ?? 0;
+      inputs[1].value = savedItem.plan ?? 0;
+
+      allStores.forEach((store,index)=>{
+
+        const input = inputs[index + 2];
+        const value = savedItem.quantities?.[store];
+
+        if(input && value != null){
+          input.value = value;
+        }
+
+      });
+
+      return;
     }
 
-    if(oldRow[1] != null){
-      inputs[1].value = oldRow[1];
+    // 新しいデータがない場合は旧形式から読み込む
+    if(oldData && oldData[rowIndex]){
+
+      const oldRow = oldData[rowIndex];
+
+      inputs[0].value = oldRow[0] ?? 0;
+      inputs[1].value = oldRow[1] ?? 0;
+
+      allStores.forEach((store,index)=>{
+
+        const oldStoreIndex = defaultAllStores.indexOf(store);
+
+        if(oldStoreIndex === -1) return;
+
+        const input = inputs[index + 2];
+        const value = oldRow[oldStoreIndex + 2];
+
+        if(input && value != null){
+          input.value = value;
+        }
+
+      });
+
     }
-
-    // 元の店舗順を店舗名に変換して数量を復元
-    allStores.forEach((store,index)=>{
-
-      const oldStoreIndex = defaultAllStores.indexOf(store);
-
-      if(oldStoreIndex === -1) return;
-
-      const input = inputs[index + 2];
-      const oldValue = oldRow[oldStoreIndex + 2];
-
-      if(input && oldValue != null){
-        input.value = oldValue;
-      }
-
-    });
 
   });
 
   recalc();
 
-}
+}    
 
 document.getElementById("btnSave")
 .addEventListener("click",()=>{
