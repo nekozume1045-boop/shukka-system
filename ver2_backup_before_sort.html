@@ -904,13 +904,7 @@ items.push({
 name:name,
 price:price
 });
-/* 新形式の現在の出荷データからも削除 */
-const namedShippingData =
-JSON.parse(localStorage.getItem("vegetableShippingDataByName"));
 
-if(namedShippingData){
-
-namedShippingData.splice(index,1);
 
 localStorage.setItem(
 "vegetableShippingDataByName",
