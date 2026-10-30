@@ -1427,18 +1427,25 @@ function saveData(){
 
   tableBody.querySelectorAll("tr").forEach(row=>{
 
-    const rowData = [];
-
     const inputs = row.querySelectorAll("input");
+    const quantities = {};
+
+    allStores.forEach((store,index)=>{
+
+      quantities[store] =
+        Number(inputs[index + 2]?.value) || 0;
+
+    });
+
+    const rowData = [];
 
     rowData.push(Number(inputs[0]?.value) || 0);
     rowData.push(Number(inputs[1]?.value) || 0);
 
-    allStores.forEach((store,index)=>{
+    // 旧形式は元の18店舗の順番で保存
+    defaultAllStores.forEach(store=>{
 
-      const input = inputs[index + 2];
-
-      rowData.push(Number(input?.value) || 0);
+      rowData.push(quantities[store] || 0);
 
     });
 
@@ -1451,7 +1458,7 @@ function saveData(){
     JSON.stringify(data)
   );
 
-  // 店舗名付きの保存データも別に保持
+  // 店舗名付きの新形式データ
   const namedData = [];
 
   tableBody.querySelectorAll("tr").forEach(row=>{
