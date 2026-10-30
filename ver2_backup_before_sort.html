@@ -1242,52 +1242,79 @@ visibleStores.includes(store) ? "" : "none";
 
 }   
 function createTable(){
-updateStoreHeaders();
-tableBody.innerHTML="";
 
-items.forEach(item=>{
+  const previousData = getCurrentShippingDataByName();
 
-const tr=document.createElement("tr");
+  updateStoreHeaders();
+  tableBody.innerHTML = "";
 
-let html="";
+  items.forEach(item=>{
 
-html+=`<td>${item.name}</td>`;
+    const tr = document.createElement("tr");
 
-html+=`<td>
-<input type="number"
-value="${item.price}"
-min="0"
-inputmode="none"
-class="priceInput">
-</td>`;
+    let html = "";
 
-html+=`<td>
-<input type="number"
-value="0"
-min="0"
-inputmode="none"
-class="planInput">
-</td>`;
+    html += `<td>${item.name}</td>`;
 
-html+=`<td class="total">0</td>`;
+    html += `<td>
+      <input type="number"
+      value="${item.price}"
+      min="0"
+      inputmode="none"
+      class="priceInput">
+    </td>`;
 
-stores.forEach(()=>{
+    html += `<td>
+      <input type="number"
+      value="0"
+      min="0"
+      inputmode="none"
+      class="planInput">
+    </td>`;
 
-html+=`<td>
-<input type="number"
-value="0"
-min="0"
-inputmode="none">
-</td>`;
+    html += `<td class="total">0</td>`;
 
-});
+    allStores.forEach(()=>{
 
-tr.innerHTML=html;
+      html += `<td>
+        <input type="number"
+        value="0"
+        min="0"
+        inputmode="none">
+      </td>`;
 
-tableBody.appendChild(tr);
+    });
 
-});
-updateStoreVisibility();    
+    tr.innerHTML = html;
+
+    const savedItem = previousData[item.name];
+
+    if(savedItem){
+
+      const inputs = tr.querySelectorAll("input");
+
+      if(inputs[0]) inputs[0].value = savedItem.price;
+      if(inputs[1]) inputs[1].value = savedItem.plan;
+
+      allStores.forEach((store,index)=>{
+
+        const input = inputs[index + 2];
+
+        if(input && savedItem.quantities[store] != null){
+          input.value = savedItem.quantities[store];
+        }
+
+      });
+
+    }
+
+    tableBody.appendChild(tr);
+
+  });
+
+  updateStoreVisibility();
+  recalc();
+
 }
   function recalc(){
 
