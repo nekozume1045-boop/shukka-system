@@ -833,13 +833,27 @@ const loadedItems=JSON.parse(savedItems);
 items.length=0;
 
 loadedItems.forEach(item=>{
-items.push({
-name:item.name,
-price:Number(item.price)||0
-});
-});
 
-}
+  let itemId = Number(item.id);
+
+  if(!itemId){
+
+    itemId = nextItemId;
+    nextItemId++;
+
+  }else if(itemId >= nextItemId){
+
+    nextItemId = itemId + 1;
+
+  }
+
+  items.push({
+    id:itemId,
+    name:item.name,
+    price:Number(item.price)||0
+  });
+
+});
 document.getElementById("btnStoreSelect")
 .addEventListener("click",()=>{
 
