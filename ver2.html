@@ -842,11 +842,9 @@ if(itemId>=nextItemId){
 }
 
 items.push({
-id:itemId,
-name:item.name,
-price:Number(item.price)||0
-});
-
+id:nextItemId++,
+name:name,
+price:price
 });
 
 localStorage.setItem(
