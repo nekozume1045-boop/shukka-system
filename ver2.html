@@ -1457,6 +1457,31 @@ loadData();
 loadDailyTotals();
 displayDailyTotals();    
 recalc();
+
+document.getElementById("btnStoreSelect")
+
+.addEventListener("click",()=>{
+
+  window.location.href = "store_management.html";
+
+});
+
+window.addEventListener("focus",()=>{
+
+  const previousData = getCurrentShippingDataByName();
+
+  const latestStores = getAllStores();
+
+  allStores.splice(0,allStores.length,...latestStores);
+
+  createTable(previousData);
+
+  recalc();
+
+});
+
+
+    
     function createShippingDataList(){
 
   const table=document.getElementById("shippingTable");
