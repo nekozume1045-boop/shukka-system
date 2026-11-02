@@ -816,10 +816,12 @@ const storeGroups={
 };
 
 const items=[
-{name:"人参",price:180},
-{name:"えだまめ",price:200},
-{name:"きゅうり",price:180}
+{id:1,name:"人参",price:180},
+{id:2,name:"えだまめ",price:200},
+{id:3,name:"きゅうり",price:180}
 ];
+
+let nextItemId = 4;
 
 const savedItems =
 localStorage.getItem("vegetableItems");
