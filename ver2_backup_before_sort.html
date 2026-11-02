@@ -976,28 +976,7 @@ JSON.stringify(shippingData)
 
 }
 
-/* 日別の出荷データからも同じ品目の行を削除 */
-const dailyShippingData =
-JSON.parse(localStorage.getItem("vegetableDailyShippingData"));
 
-if(dailyShippingData){
-
-Object.keys(dailyShippingData).forEach(date=>{
-
-if(Array.isArray(dailyShippingData[date])){
-
-dailyShippingData[date].splice(index,1);
-
-}
-
-});
-
-localStorage.setItem(
-"vegetableDailyShippingData",
-JSON.stringify(dailyShippingData)
-);
-
-}
 /* 新形式の現在の出荷データからも削除 */
 const namedShippingData =
 JSON.parse(localStorage.getItem("vegetableShippingDataByName"));
