@@ -813,10 +813,12 @@ const storeGroups={
 };
 
 const items=[
-{name:"人参",price:180},
-{name:"えだまめ",price:200},
-{name:"きゅうり",price:180}
+{id:1,name:"人参",price:180},
+{id:2,name:"えだまめ",price:200},
+{id:3,name:"きゅうり",price:180}
 ];
+
+let nextItemId=4;
 
 const savedItems =
 localStorage.getItem("vegetableItems");
@@ -828,79 +830,23 @@ const loadedItems=JSON.parse(savedItems);
 items.length=0;
 
 loadedItems.forEach(item=>{
+
+let itemId=Number(item.id);
+
+if(!Number.isInteger(itemId)||itemId<=0){
+  itemId=nextItemId;
+}
+
+if(itemId>=nextItemId){
+  nextItemId=itemId+1;
+}
+
 items.push({
+id:itemId,
 name:item.name,
 price:Number(item.price)||0
 });
-});
 
-}
-document.getElementById("btnStoreSelect")
-.addEventListener("click",()=>{
-
-  window.open(
-    "store_management.html",
-    "_blank"
-  );
-
-});
-
-window.addEventListener("focus",()=>{
-
-  const latestStores=getAllStores();
-
-  const newStores=latestStores.filter(
-    store=>!allStores.includes(store)
-  );
-
-  if(newStores.length===0){
-    updateStoreVisibility();
-    return;
-  }
-
-  newStores.forEach(store=>{
-    allStores.push(store);
-  });
-
-  updateStoreHeaders();
-
-  tableBody.querySelectorAll("tr").forEach(row=>{
-
-    newStores.forEach(()=>{
-
-      const td=document.createElement("td");
-
-      const input=document.createElement("input");
-      input.type="number";
-      input.value="0";
-      input.min="0";
-      input.setAttribute("inputmode","none");
-
-      td.appendChild(input);
-      row.appendChild(td);
-
-    });
-
-  });
-
-  updateStoreVisibility();
-  recalc();
-
-});
-document.getElementById("btnAddItem")
-.addEventListener("click",()=>{
-
-const name=prompt("追加する品目名を入力してください");
-
-if(!name) return;
-
-const price=Number(
-prompt("単価を入力してください")
-)||0;
-
-items.push({
-name:name,
-price:price
 });
 
 localStorage.setItem(
@@ -908,6 +854,7 @@ localStorage.setItem(
 JSON.stringify(items)
 );
 
+}
 createTable();
 recalc();
 
