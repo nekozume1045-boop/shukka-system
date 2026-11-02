@@ -863,6 +863,42 @@ window.addEventListener("focus",()=>{
 
 });
 
+document.getElementById("btnBackup")
+.addEventListener("click",()=>{
+
+  const backupData = {};
+
+  for(let i=0;i<localStorage.length;i++){
+
+    const key = localStorage.key(i);
+
+    if(key){
+
+      backupData[key] = localStorage.getItem(key);
+
+    }
+
+  }
+
+  const blob = new Blob(
+    [JSON.stringify(backupData,null,2)],
+    {type:"application/json"}
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "出荷管理バックアップ.json";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+
+  alert("バックアップファイルを作成しました。");
+
+});    
   
 document.getElementById("btnAddItem")
 .addEventListener("click",()=>{
