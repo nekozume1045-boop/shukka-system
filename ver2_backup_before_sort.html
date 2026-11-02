@@ -1136,16 +1136,41 @@ dateSpan.addEventListener("click",()=>{
 
   createTable();
 
+  
   const rows = tableBody.querySelectorAll("tr");
+
+  // ID付きの新形式データがあるか確認
+  const hasItemIds = data.some(savedItem =>
+    savedItem &&
+    !Array.isArray(savedItem) &&
+    savedItem.id != null
+  );
 
   rows.forEach((row,rowIndex)=>{
 
     const inputs = row.querySelectorAll("input");
-    const savedItem = data[rowIndex];
+
+    let savedItem;
+
+    if(hasItemIds){
+
+      // 品目IDで照合
+      savedItem = data.find(entry =>
+        entry &&
+        !Array.isArray(entry) &&
+        entry.id === items[rowIndex].id
+      );
+
+    }else{
+
+      // 古い履歴は従来どおり行番号で照合
+      savedItem = data[rowIndex];
+
+    }
 
     if(!savedItem) return;
 
-    // 新しい店舗名付きデータ
+    // 新形式データ
     if(!Array.isArray(savedItem)){
 
       inputs[0].value = savedItem.price ?? 0;
@@ -1164,6 +1189,30 @@ dateSpan.addEventListener("click",()=>{
 
       return;
 
+    }
+
+    // 従来の列番号データ
+    inputs[0].value = savedItem[0] ?? 0;
+    inputs[1].value = savedItem[1] ?? 0;
+
+    allStores.forEach((store,index)=>{
+
+      const oldStoreIndex = defaultAllStores.indexOf(store);
+
+      if(oldStoreIndex === -1) return;
+
+      const input = inputs[index + 2];
+      const value = savedItem[oldStoreIndex + 2];
+
+      if(input && value != null){
+        input.value = value;
+      }
+
+    });
+
+  });
+
+  recalc();
     }
 
     // 従来の列番号データ
