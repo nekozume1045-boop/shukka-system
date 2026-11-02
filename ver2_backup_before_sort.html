@@ -1191,50 +1191,7 @@ dateSpan.addEventListener("click",()=>{
 
     }
 
-    // 従来の列番号データ
-    inputs[0].value = savedItem[0] ?? 0;
-    inputs[1].value = savedItem[1] ?? 0;
-
-    allStores.forEach((store,index)=>{
-
-      const oldStoreIndex = defaultAllStores.indexOf(store);
-
-      if(oldStoreIndex === -1) return;
-
-      const input = inputs[index + 2];
-      const value = savedItem[oldStoreIndex + 2];
-
-      if(input && value != null){
-        input.value = value;
-      }
-
-    });
-
-  });
-
-  recalc();
-    }
-
-    // 従来の列番号データ
-    inputs[0].value = savedItem[0] ?? 0;
-    inputs[1].value = savedItem[1] ?? 0;
-
-    allStores.forEach((store,index)=>{
-
-      const oldStoreIndex = defaultAllStores.indexOf(store);
-
-      if(oldStoreIndex === -1) return;
-
-      const input = inputs[index + 2];
-      const value = savedItem[oldStoreIndex + 2];
-
-      if(input && value != null){
-        input.value = value;
-      }
-
-    });
-
-  });
+ 
 
   recalc();
 
