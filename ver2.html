@@ -738,14 +738,13 @@ const savedGroups=JSON.parse(
 localStorage.getItem("storeGroupsData") || "null"
 );
 
-const groupStores=savedGroups
-  ? Object.values(savedGroups).flat()
-  : [];
+if(savedGroups){
 
-return [
-  ...defaultAllStores,
-  ...groupStores.filter(store=>!defaultAllStores.includes(store))
-];
+  return Object.values(savedGroups).flat();
+
+}
+
+return [...defaultAllStores];
 
 }
 
