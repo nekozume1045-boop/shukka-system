@@ -1126,12 +1126,34 @@ dateSpan.addEventListener("click",()=>{
 
   const data = namedDailyData[date] || oldDailyData[date];
 
-  if(!data){
-
+    if(!data){
     alert("この日の出荷データは保存されていません。");
     return;
-
   }
+
+  const checkText = data.map((item,index)=>{
+
+    if(Array.isArray(item)){
+
+      const total = item.slice(2).reduce(
+        (sum,value)=>sum+(Number(value)||0),0
+      );
+
+      return (index+1)+"行目 : 旧形式 : "+total+"袋";
+
+    }
+
+    const quantities = item.quantities || {};
+
+    const total = Object.values(quantities).reduce(
+      (sum,value)=>sum+(Number(value)||0),0
+    );
+
+    return "ID:"+item.id+" : "+item.name+" : "+total+"袋";
+
+  }).join("\n");
+
+  alert("保存されている日別データ\n"+checkText);
 
   editingDate = date;
 
