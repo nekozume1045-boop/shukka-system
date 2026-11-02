@@ -929,10 +929,11 @@ document.getElementById("btnAddItem")
     prompt("単価を入力してください")
   )||0;
 
-  items.push({
-    name:name,
-    price:price
-  });
+items.push({
+  id:nextItemId++,
+  name:name,
+  price:price
+});
 
   localStorage.setItem(
     "vegetableItems",
