@@ -1294,16 +1294,16 @@ visibleStores.includes(store) ? "" : "none";
 });
 
 }   
- function getCurrentShippingDataByName(){
+function getCurrentShippingDataByName(){
 
   const result = {};
 
-  tableBody.querySelectorAll("tr").forEach(row=>{
+  tableBody.querySelectorAll("tr").forEach((row,rowIndex)=>{
 
     const cells = row.querySelectorAll("td");
     if(cells.length < 4) return;
 
-    const productName = cells[0].textContent.trim();
+    const itemId = items[rowIndex].id;
 
     const priceInput = cells[1].querySelector("input");
     const planInput = cells[2].querySelector("input");
@@ -1320,7 +1320,7 @@ visibleStores.includes(store) ? "" : "none";
 
     });
 
-    result[productName] = {
+    result[itemId] = {
       price: Number(priceInput?.value) || 0,
       plan: Number(planInput?.value) || 0,
       quantities: quantities
@@ -1330,7 +1330,7 @@ visibleStores.includes(store) ? "" : "none";
 
   return result;
 
-}   
+}
 function createTable(previousDataOverride){
 
   const previousData =
