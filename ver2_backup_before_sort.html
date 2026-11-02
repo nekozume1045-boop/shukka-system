@@ -1155,11 +1155,23 @@ dateSpan.addEventListener("click",()=>{
 
   alert("保存されている日別データ\n"+checkText);
 
-  editingDate = date;
+    editingDate = date;
 
   createTable();
 
-  
+  // 保存データがない品目に以前の数量を残さない
+  tableBody.querySelectorAll("tr").forEach(row=>{
+
+    row.querySelectorAll("input").forEach((input,index)=>{
+
+      if(index >= 2){
+        input.value = 0;
+      }
+
+    });
+
+  });
+
   const rows = tableBody.querySelectorAll("tr");
 
   // ID付きの新形式データがあるか確認
