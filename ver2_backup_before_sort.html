@@ -2207,11 +2207,15 @@ function createWakabaDeliveryPage(storeName,itemsForStore){
   const info=document.createElement("div");
   info.className="wakabaInfo";
 
+  const leftInfo=document.createElement("div");
+  leftInfo.className="wakabaLeftInfo";
+
+  /* 出荷先 */
   const storeRow=document.createElement("div");
   storeRow.className="wakabaInfoRow";
 
   const storeLabel=document.createElement("span");
-  storeLabel.textContent="納品先";
+  storeLabel.textContent="出荷先：";
 
   const storeValue=document.createElement("span");
   storeValue.className="wakabaStoreName";
@@ -2219,28 +2223,24 @@ function createWakabaDeliveryPage(storeName,itemsForStore){
 
   storeRow.appendChild(storeLabel);
   storeRow.appendChild(storeValue);
-  info.appendChild(storeRow);
 
-  const meta=document.createElement("div");
-  meta.className="wakabaMeta";
+  /* 年月日 */
+  const dateRow=document.createElement("div");
+  dateRow.className="wakabaInfoRow";
 
   const today=new Date();
 
   const dateText=
-    today.getFullYear()+"年"+
-    (today.getMonth()+1)+"月"+
+    today.getFullYear()+"年　"+
+    (today.getMonth()+1)+"月　"+
     today.getDate()+"日";
 
-  const dateSpan=document.createElement("span");
-  dateSpan.textContent="年月日："+dateText;
+  dateRow.textContent="年月日："+dateText;
 
-  const memberSpan=document.createElement("span");
-  memberSpan.textContent="会員名：佐藤利彦";
+  leftInfo.appendChild(storeRow);
+  leftInfo.appendChild(dateRow);
 
-  meta.appendChild(dateSpan);
-  meta.appendChild(memberSpan);
-
-  info.appendChild(meta);
+  info.appendChild(leftInfo);
   page.appendChild(info);
 
   /* 納品文 */
