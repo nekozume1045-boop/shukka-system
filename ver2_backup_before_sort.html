@@ -2681,7 +2681,19 @@ page.appendChild(metaRow);
       
   }
 
-  document.body.appendChild(printArea);
+  printArea.querySelectorAll(
+  ".wakabaPrintPage, .printPage, .shippingListPage"
+).forEach((page,index,allPages)=>{
+
+  page.style.breakAfter =
+    index < allPages.length - 1 ? "page" : "auto";
+
+  page.style.pageBreakAfter =
+    index < allPages.length - 1 ? "always" : "auto";
+
+});
+
+document.body.appendChild(printArea);
 
   window.addEventListener("afterprint",()=>{
     printArea.remove();
