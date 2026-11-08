@@ -2415,7 +2415,29 @@ const price=Number(priceInput.value)||0;
     /* 商品がない店舗は印刷しない */
     if(itemsForStore.length===0) continue;
 
-    /* ページ */
+    /* 最新の店舗グループを取得 */
+    const savedGroups=JSON.parse(
+      localStorage.getItem("storeGroupsData") || "null"
+    );
+
+    const currentGroups=savedGroups || storeGroups;
+
+    const wakabaStores=
+      currentGroups["わかばグループ"] || [];
+
+    /* わかばグループは専用納品書 */
+    if(wakabaStores.includes(storeName)){
+
+      const wakabaPage=
+        createWakabaDeliveryPage(storeName,itemsForStore);
+
+      printArea.appendChild(wakabaPage);
+
+      continue;
+
+    }
+
+    /* それ以外は従来の納品書 */
     const page=document.createElement("div");
     page.className="printPage";
 
