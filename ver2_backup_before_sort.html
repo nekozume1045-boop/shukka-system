@@ -2185,7 +2185,173 @@ quantitySpan.style.fontSize="20px";
   return page;
 
 }
-    
+
+/* =========================
+   わかばグループ専用納品書
+========================= */
+
+function createWakabaDeliveryPage(storeName,itemsForStore){
+
+  const page=document.createElement("div");
+  page.className="wakabaPrintPage";
+
+  /* タイトル */
+  const title=document.createElement("div");
+  title.className="wakabaTitle";
+  title.textContent="納　品　書";
+  page.appendChild(title);
+
+  const subtitle=document.createElement("div");
+  subtitle.className="wakabaSubtitle";
+  subtitle.textContent="七ツ森農業";
+  page.appendChild(subtitle);
+
+  /* 店舗・日付 */
+  const info=document.createElement("div");
+  info.className="wakabaInfo";
+
+  const storeRow=document.createElement("div");
+  storeRow.className="wakabaInfoRow";
+
+  const storeLabel=document.createElement("span");
+  storeLabel.textContent="納品先";
+
+  const storeValue=document.createElement("span");
+  storeValue.className="wakabaStoreName";
+  storeValue.textContent=storeName;
+
+  storeRow.appendChild(storeLabel);
+  storeRow.appendChild(storeValue);
+  info.appendChild(storeRow);
+
+  const meta=document.createElement("div");
+  meta.className="wakabaMeta";
+
+  const today=new Date();
+
+  const dateText=
+    today.getFullYear()+"年"+
+    (today.getMonth()+1)+"月"+
+    today.getDate()+"日";
+
+  const dateSpan=document.createElement("span");
+  dateSpan.textContent="年月日："+dateText;
+
+  const memberSpan=document.createElement("span");
+  memberSpan.textContent="会員名：佐藤利彦";
+
+  meta.appendChild(dateSpan);
+  meta.appendChild(memberSpan);
+
+  info.appendChild(meta);
+  page.appendChild(info);
+
+  /* 納品文 */
+  const message=document.createElement("div");
+  message.className="wakabaMessage";
+  message.textContent="下記のとおり納品いたしました";
+  page.appendChild(message);
+
+  /* 商品表 */
+  const table=document.createElement("table");
+  table.className="wakabaTable";
+
+  const thead=document.createElement("thead");
+  const headerRow=document.createElement("tr");
+
+  ["商品名","商品番号","数量","単価","金額"].forEach(text=>{
+
+    const th=document.createElement("th");
+    th.textContent=text;
+    headerRow.appendChild(th);
+
+  });
+
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody=document.createElement("tbody");
+
+  let grandTotal=0;
+
+  itemsForStore.forEach(item=>{
+
+    const tr=document.createElement("tr");
+
+    const productTd=document.createElement("td");
+    productTd.textContent=item.product;
+
+    const numberTd=document.createElement("td");
+    numberTd.textContent="";
+
+    const quantityTd=document.createElement("td");
+    quantityTd.textContent=item.quantity+"袋";
+
+    const priceTd=document.createElement("td");
+    priceTd.textContent=item.price.toLocaleString()+"円";
+
+    const amountTd=document.createElement("td");
+    amountTd.textContent=item.amount.toLocaleString()+"円";
+
+    tr.appendChild(productTd);
+    tr.appendChild(numberTd);
+    tr.appendChild(quantityTd);
+    tr.appendChild(priceTd);
+    tr.appendChild(amountTd);
+
+    tbody.appendChild(tr);
+
+    grandTotal+=item.amount;
+
+  });
+
+  /* 手書き用の空白行 */
+  const blankRows=Math.max(0,8-itemsForStore.length);
+
+  for(let i=0;i<blankRows;i++){
+
+    const tr=document.createElement("tr");
+
+    for(let j=0;j<5;j++){
+
+      const td=document.createElement("td");
+      tr.appendChild(td);
+
+    }
+
+    tbody.appendChild(tr);
+
+  }
+
+  /* 合計金額 */
+  const totalRow=document.createElement("tr");
+  totalRow.className="wakabaGrandTotal";
+
+  const totalLabel=document.createElement("td");
+  totalLabel.colSpan=4;
+  totalLabel.textContent="合計金額";
+
+  const totalValue=document.createElement("td");
+  totalValue.textContent=grandTotal.toLocaleString()+"円";
+
+  totalRow.appendChild(totalLabel);
+  totalRow.appendChild(totalValue);
+
+  tbody.appendChild(totalRow);
+
+  table.appendChild(tbody);
+  page.appendChild(table);
+
+  /* 下部 */
+  const footer=document.createElement("div");
+  footer.className="wakabaFooter";
+  footer.textContent="七ツ森農業";
+  page.appendChild(footer);
+
+  return page;
+
+}
+
 function printA6(){
 
   const table=document.getElementById("shippingTable");
