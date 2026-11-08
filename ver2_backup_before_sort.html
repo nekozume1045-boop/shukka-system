@@ -241,20 +241,17 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
         size:A4 portrait;
         margin:0mm;
     }
+body > *:not(#printArea){
+    display:none !important;
+}
 
-    body *{
-        visibility:hidden;
-    }
-
-    #printArea,
-    #printArea *{
-        visibility:visible;
-    }
+#printArea,
+#printArea *{
+    visibility:visible;
+}
 
 #printArea{
-    position:absolute;
-    left:0;
-    top:0;
+    position:static;
     width:100%;
     margin:0;
     padding:0;
