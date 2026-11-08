@@ -581,15 +581,16 @@ break-after:page;
     margin:0;
     padding:3mm;
     box-sizing:border-box;
-    page-break-after:always;
-    break-after:page;
     overflow:hidden;
     font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
     color:#000;
     display:flex;
     flex-direction:column;
 }
-
+.wakabaPrintPage:not(:last-child){
+    page-break-after:always;
+    break-after:page;
+}
 .wakabaTitle{
     text-align:center;
     font-size:30px;
