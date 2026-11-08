@@ -2250,7 +2250,24 @@ function createWakabaDeliveryPage(storeName,itemsForStore){
   leftInfo.appendChild(storeRow);
   leftInfo.appendChild(dateRow);
 
-  info.appendChild(leftInfo);
+    info.appendChild(leftInfo);
+
+  /* 右側の会員情報 */
+  const rightInfo=document.createElement("div");
+  rightInfo.className="wakabaRightInfo";
+
+  const memberNumber=document.createElement("div");
+  memberNumber.className="wakabaMemberLine";
+  memberNumber.textContent="会員番号";
+
+  const memberName=document.createElement("div");
+  memberName.className="wakabaMemberLine";
+  memberName.textContent="会員名　佐藤利彦";
+
+  rightInfo.appendChild(memberNumber);
+  rightInfo.appendChild(memberName);
+
+  info.appendChild(rightInfo);
   page.appendChild(info);
 
   /* 納品文 */
