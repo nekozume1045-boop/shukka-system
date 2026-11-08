@@ -571,6 +571,144 @@ box-shadow:0 2px 6px rgba(0,0,0,.1);
     text-align:center;
 }
 
+/* =========================
+   わかばグループ専用納品書
+========================= */
+
+.wakabaPrintPage{
+    width:210mm;
+    height:297mm;
+    margin:0;
+    padding:3mm;
+    box-sizing:border-box;
+    page-break-after:always;
+    break-after:page;
+    overflow:hidden;
+    font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
+    color:#000;
+    display:flex;
+    flex-direction:column;
+}
+
+.wakabaTitle{
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing:5px;
+    margin:2mm 0 4mm 0;
+}
+
+.wakabaSubtitle{
+    text-align:center;
+    font-size:13px;
+    margin-bottom:4mm;
+}
+
+.wakabaInfo{
+    font-size:16px;
+    margin-bottom:4mm;
+}
+
+.wakabaInfoRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    min-height:10mm;
+    border-bottom:1px solid #000;
+}
+
+.wakabaStoreName{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.wakabaMeta{
+    display:flex;
+    justify-content:space-between;
+    gap:3mm;
+    font-size:15px;
+    margin:3mm 0;
+}
+
+.wakabaMessage{
+    font-size:17px;
+    margin:3mm 0;
+}
+
+.wakabaTable{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
+
+.wakabaTable th,
+.wakabaTable td{
+    border:1px solid #000;
+    box-sizing:border-box;
+    padding:1.5mm;
+}
+
+.wakabaTable th{
+    height:11mm;
+    font-size:16px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.wakabaTable th:nth-child(1){
+    width:32%;
+}
+
+.wakabaTable th:nth-child(2){
+    width:17%;
+}
+
+.wakabaTable th:nth-child(3){
+    width:14%;
+}
+
+.wakabaTable th:nth-child(4){
+    width:17%;
+}
+
+.wakabaTable th:nth-child(5){
+    width:20%;
+}
+
+.wakabaTable tbody tr{
+    height:17mm;
+}
+
+.wakabaTable td{
+    font-size:17px;
+}
+
+.wakabaTable td:nth-child(1){
+    font-weight:bold;
+    font-size:19px;
+}
+
+.wakabaTable td:nth-child(2),
+.wakabaTable td:nth-child(3),
+.wakabaTable td:nth-child(4),
+.wakabaTable td:nth-child(5){
+    text-align:center;
+}
+
+.wakabaGrandTotal{
+    height:15mm;
+    font-size:22px;
+    font-weight:bold;
+    text-align:right;
+    padding-right:5mm;
+}
+
+.wakabaFooter{
+    margin-top:auto;
+    font-size:12px;
+    text-align:center;
+}
+
 </style>
 
 
