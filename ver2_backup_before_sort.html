@@ -2294,6 +2294,30 @@ function createWakabaDeliveryPage(storeName,itemsForStore){
   message.textContent="下記のとおり納品いたしました";
   page.appendChild(message);
 
+    /* 商品表の上に合計金額を表示 */
+  const topTotal=document.createElement("div");
+  topTotal.className="wakabaTopTotal";
+
+  const topTotalLabel=document.createElement("span");
+  topTotalLabel.textContent="合計金額";
+
+  const topTotalValue=document.createElement("span");
+
+  const totalAmount=itemsForStore.reduce(
+    (sum,item)=>sum+item.amount,
+    0
+  );
+
+  topTotalValue.textContent=
+    totalAmount.toLocaleString()+"円";
+
+  topTotal.appendChild(topTotalLabel);
+  topTotal.appendChild(topTotalValue);
+
+  page.appendChild(topTotal);
+
+  /* 商品表 */  
+
   /* 商品表 */
   const table=document.createElement("table");
   table.className="wakabaTable";
