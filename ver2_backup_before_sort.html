@@ -2681,15 +2681,21 @@ page.appendChild(metaRow);
       
   }
 
-  printArea.querySelectorAll(
+printArea.querySelectorAll(
   ".wakabaPrintPage, .printPage, .shippingListPage"
-).forEach((page,index,allPages)=>{
+).forEach((page,index)=>{
 
-  page.style.breakAfter =
-    index < allPages.length - 1 ? "page" : "auto";
+  const needBreak = index > 0;
 
-  page.style.pageBreakAfter =
-    index < allPages.length - 1 ? "always" : "auto";
+  page.style.breakBefore =
+    needBreak ? "page" : "auto";
+
+  page.style.pageBreakBefore =
+    needBreak ? "always" : "auto";
+
+  page.style.breakAfter = "auto";
+
+  page.style.pageBreakAfter = "auto";
 
 });
 
