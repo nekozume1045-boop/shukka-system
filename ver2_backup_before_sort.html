@@ -2307,11 +2307,28 @@ dateRow.appendChild(dateValue);
 
     const memberNumber=document.createElement("div");
   memberNumber.className="wakabaMemberLine";
-  memberNumber.textContent="会員番号　1419";
+ const memberNumberLabel=document.createElement("span");
+memberNumberLabel.textContent="会員番号　";
 
-  const memberName=document.createElement("div");
-  memberName.className="wakabaMemberLine";
-  memberName.textContent="会員名　佐藤利彦";
+const memberNumberValue=document.createElement("span");
+memberNumberValue.className="wakabaInfoValue";
+memberNumberValue.textContent="1419";
+
+memberNumber.appendChild(memberNumberLabel);
+memberNumber.appendChild(memberNumberValue);
+
+const memberName=document.createElement("div");
+memberName.className="wakabaMemberLine";
+
+const memberNameLabel=document.createElement("span");
+memberNameLabel.textContent="会員名　";
+
+const memberNameValue=document.createElement("span");
+memberNameValue.className="wakabaInfoValue";
+memberNameValue.textContent="佐藤利彦";
+
+memberName.appendChild(memberNameLabel);
+memberName.appendChild(memberNameValue); 
 
   rightInfo.appendChild(memberNumber);
   rightInfo.appendChild(memberName);
