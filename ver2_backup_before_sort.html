@@ -2280,7 +2280,15 @@ function createWakabaDeliveryPage(storeName,itemsForStore){
     (today.getMonth()+1)+"月　"+
     today.getDate()+"日";
 
-  dateRow.textContent="年月日："+dateText;
+  const dateLabel=document.createElement("span");
+dateLabel.textContent="年月日：";
+
+const dateValue=document.createElement("span");
+dateValue.className="wakabaInfoValue";
+dateValue.textContent=dateText;
+
+dateRow.appendChild(dateLabel);
+dateRow.appendChild(dateValue);
 
   leftInfo.appendChild(storeRow);
   leftInfo.appendChild(dateRow);
