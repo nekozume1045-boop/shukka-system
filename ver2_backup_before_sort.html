@@ -1075,7 +1075,26 @@ document.getElementById("btnStoreSelect")
   window.location.href = "store_management.html";
 
 });
+// 商品番号登録画面へ切り替え
+document.getElementById("btnProductNumber")
+.addEventListener("click",()=>{
 
+  document.getElementById("shippingArea").style.display="none";
+
+  document.getElementById("productNumberArea").style.display="block";
+
+});
+
+// 出荷入力画面へ戻る
+document.getElementById("btnProductNumberBack")
+.addEventListener("click",()=>{
+
+  document.getElementById("productNumberArea").style.display="none";
+
+  document.getElementById("shippingArea").style.display="block";
+
+});
+    
 window.addEventListener("focus",()=>{
 
   // 現在の数量を店舗名ごとに退避
