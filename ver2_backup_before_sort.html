@@ -1651,6 +1651,65 @@ function createTable(previousDataOverride){
   recalc();
 
 }
+// わかばグループ用 商品番号データ
+let wakabaProductNumbers =
+JSON.parse(
+  localStorage.getItem("wakabaProductNumbers") || "{}"
+);
+
+// 商品番号登録一覧を表示
+function createProductNumberList(){
+
+  const list =
+  document.getElementById("productNumberList");
+
+  list.innerHTML = "";
+
+  items.forEach(item=>{
+
+    const row = document.createElement("div");
+
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.gap = "10px";
+    row.style.marginBottom = "12px";
+
+    const name = document.createElement("span");
+
+    name.textContent = item.name;
+    name.style.width = "120px";
+
+    const number = document.createElement("input");
+
+    number.type = "text";
+    number.placeholder = "商品番号";
+    number.value = wakabaProductNumbers[item.id] || "";
+
+    number.addEventListener("change",()=>{
+
+      const value = number.value.trim();
+
+      if(value){
+        wakabaProductNumbers[item.id] = value;
+      }else{
+        delete wakabaProductNumbers[item.id];
+      }
+
+      localStorage.setItem(
+        "wakabaProductNumbers",
+        JSON.stringify(wakabaProductNumbers)
+      );
+
+    });
+
+    row.appendChild(name);
+    row.appendChild(number);
+
+    list.appendChild(row);
+
+  });
+
+}    
   function recalc(){
 
 let grand=0;
