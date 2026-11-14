@@ -2502,8 +2502,15 @@ memberName.appendChild(memberNameValue);
     const productTd=document.createElement("td");
     productTd.textContent=item.product;
 
-    const numberTd=document.createElement("td");
-    numberTd.textContent="";
+   const numberTd=document.createElement("td");
+
+const registeredNumber =
+  items.find(master=>master.name===item.product);
+
+numberTd.textContent =
+  registeredNumber
+  ? (wakabaProductNumbers[registeredNumber.id] || "")
+  : "";
 
     const quantityTd=document.createElement("td");
     quantityTd.textContent=item.quantity+"袋";
