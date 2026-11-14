@@ -1079,6 +1079,14 @@ document.getElementById("btnStoreSelect")
 document.getElementById("btnProductNumber")
 .addEventListener("click",()=>{
 
+  document.getElementById("shippingArea").style.display="none";
+
+  document.getElementById("productNumberArea").style.display="block";
+
+  createProductNumberList();
+
+});
+
 
 
   document.getElementById("shippingArea").style.display="none";
