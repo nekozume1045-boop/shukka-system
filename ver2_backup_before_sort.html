@@ -1660,17 +1660,8 @@ JSON.parse(
 // 商品番号登録一覧を表示
 function createProductNumberList(){
 
-  const list =
-  document.getElementById("btnProductNumber")
-.addEventListener("click",()=>{
-
-  document.getElementById("shippingArea").style.display="none";
-
-  document.getElementById("productNumberArea").style.display="block";
-
-  createProductNumberList();
-
-});
+    const list =
+  document.getElementById("productNumberList");
 
   list.innerHTML = "";
 
