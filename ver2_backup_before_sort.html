@@ -1303,6 +1303,49 @@ function displayShippingDate(){
     Number(parts[2])+"日の出荷";
 
 }    
+ function displayShippingAmountSummary(){
+
+  const date=editingDate || getTodayKey();
+
+  const monthKey=date.substring(0,7);
+  const month=Number(date.split("-")[1]);
+
+  let monthTotal=0;
+  let selectedDateFound=false;
+
+  Object.keys(dailyTotals).forEach(savedDate=>{
+
+    if(savedDate.substring(0,7)===monthKey){
+
+      if(savedDate===date){
+
+        monthTotal+=dailyTotalAmount;
+        selectedDateFound=true;
+
+      }else{
+
+        monthTotal+=Number(dailyTotals[savedDate])||0;
+
+      }
+
+    }
+
+  });
+
+  if(!selectedDateFound){
+    monthTotal+=dailyTotalAmount;
+  }
+
+  document.getElementById("selectedDayAmount").textContent=
+    dailyTotalAmount.toLocaleString();
+
+  document.getElementById("selectedMonthLabel").textContent=
+    month+"月";
+
+  document.getElementById("selectedMonthAmount").textContent=
+    monthTotal.toLocaleString();
+
+}   
 function loadDailyTotals(){
 
 const data=localStorage.getItem("vegetableDailyTotals");
