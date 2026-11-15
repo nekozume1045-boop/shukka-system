@@ -1323,18 +1323,11 @@ function displayShippingAmountSummary(){
   const monthKey=date.substring(0,7);
   const month=Number(date.split("-")[1]);
 
-  const savedAmount=dailyTotals[date];
-
-  const dayAmount=
-    savedAmount !== undefined
-    ? Number(savedAmount)
-    : dailyTotalAmount;
-
   let monthTotal=0;
 
   Object.keys(dailyTotals).forEach(savedDate=>{
 
-    if(savedDate.substring(0,7)===monthKey){
+    if(savedDate.substring(0,7)===monthKey && savedDate!==date){
 
       monthTotal+=Number(dailyTotals[savedDate])||0;
 
@@ -1342,12 +1335,10 @@ function displayShippingAmountSummary(){
 
   });
 
-  if(savedAmount===undefined){
-    monthTotal+=dailyTotalAmount;
-  }
+  monthTotal+=dailyTotalAmount;
 
   document.getElementById("selectedDayAmount").textContent=
-    dayAmount.toLocaleString();
+    dailyTotalAmount.toLocaleString();
 
   document.getElementById("selectedMonthLabel").textContent=
     month+"月";
