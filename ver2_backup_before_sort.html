@@ -1818,7 +1818,9 @@ grand+=sum;
 
 grandTotalValue.textContent=grand;
 dailyTotalAmountValue.textContent=dailyTotalAmount.toLocaleString();
+displayShippingAmountSummary(); 
   }
+    
 tableBody.addEventListener("input",e=>{
 
 if(e.target.classList.contains("priceInput")){
