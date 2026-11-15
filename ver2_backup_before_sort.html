@@ -1275,6 +1275,22 @@ const now=new Date();
 return now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
 
 }
+function displayShippingDate(){
+
+  const title=document.getElementById("shippingDateTitle");
+
+  if(!title) return;
+
+  const date=editingDate || getTodayKey();
+
+  const parts=date.split("-");
+
+  title.textContent=
+    Number(parts[0])+"年"+
+    Number(parts[1])+"月"+
+    Number(parts[2])+"日の出荷";
+
+}    
 function loadDailyTotals(){
 
 const data=localStorage.getItem("vegetableDailyTotals");
