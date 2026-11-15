@@ -761,19 +761,28 @@ body > *:not(#printArea){
     font-size:12px;
     text-align:center;
 }
+#shippingHeaderLine{
+    display:flex;
+    align-items:center;
+    flex-wrap:nowrap;
+    gap:20px;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
 #shippingDateTitle{
-    display:inline-block;
-    margin-right:15px;
-    vertical-align:middle;
+    margin:0;
+    flex-shrink:0;
+    font-size:1.5em;
 }
 
 #shippingAmountSummary{
-    display:inline-flex;
-    flex-wrap:wrap;
-    gap:8px 20px;
+    display:flex;
+    align-items:center;
+    flex-wrap:nowrap;
+    gap:20px;
     font-size:1.5em;
     font-weight:bold;
-    vertical-align:middle;
 }
 </style>
 
@@ -844,7 +853,7 @@ GitHub Pages版
 <main>
 
 <section id="shippingArea">
-
+<div id="shippingHeaderLine">
 <h2 id="shippingDateTitle">
 今日の出荷
 </h2>
@@ -861,6 +870,7 @@ GitHub Pages版
   </span>
 
 </div>
+</div>     
 <div class="tableWrap">
 
 <table id="shippingTable">
