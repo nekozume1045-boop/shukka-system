@@ -1533,7 +1533,14 @@ displayShippingDate();
   });
 
   recalc(); 
+  dailyTotals[date]=dailyTotalAmount;
 
+  localStorage.setItem(
+    "vegetableDailyTotals",
+    JSON.stringify(dailyTotals)
+  );
+
+  displayDailyTotals();
   
 
   alert(date+" の出荷データを読み込みました");
